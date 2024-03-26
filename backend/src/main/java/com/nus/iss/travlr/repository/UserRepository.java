@@ -14,4 +14,5 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
     // Automatic custom queries - generate queries from method names
     Optional<UserEntity> findUserByUsername(String username);
     Optional<UserEntity> findUserById(int id);
+    boolean existsByUsername(String username);
 }

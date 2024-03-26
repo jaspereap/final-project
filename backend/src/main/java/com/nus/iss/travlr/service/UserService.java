@@ -1,6 +1,8 @@
 package com.nus.iss.travlr.service;
 
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -8,21 +10,22 @@ import org.springframework.stereotype.Service;
 
 import com.nus.iss.travlr.models.RegisterRequest;
 import com.nus.iss.travlr.models.Role;
+import com.nus.iss.travlr.models.RoleEnum;
 import com.nus.iss.travlr.models.UserEntity;
+import com.nus.iss.travlr.repository.RoleRepository;
 import com.nus.iss.travlr.repository.UserRepository;
 
 @Service
 public class UserService {
     @Autowired private UserRepository userRepo;
+    @Autowired private RoleRepository roleRepo;
     @Autowired PasswordEncoder passwordEncoder;
 
-    public UserEntity registerUser(RegisterRequest request, Role role) {
-        // Implement registration logic (e.g., checking if username exists)
-        UserEntity user = new UserEntity();
-        user.setUsername(request.getUsername());
-        user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setEmail(request.getEmail());
-        user.setRole(role);
+    public UserEntity registerUser(UserEntity user) {
+        Set<Role> roles = new HashSet<>();
+        Role role = roleRepo.findByName(RoleEnum.USER).orElseThrow(() -> new RuntimeException("Role doesn't exist"));
+        roles.add(role);
+        user.setRoles(roles);
         return userRepo.save(user);
     }
 

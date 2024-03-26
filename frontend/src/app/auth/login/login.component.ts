@@ -30,7 +30,7 @@ export class LoginComponent {
     this.authService.login(username, password).subscribe(
       (resp) => {
         console.log('server auth response: ', resp)
-        this.localStore.setAuthToken(resp.authToken)
+        this.localStore.setIdToken(resp.authToken)
       }
     )
   }

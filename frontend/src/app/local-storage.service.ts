@@ -7,10 +7,13 @@ export class LocalStorageService {
 
   constructor() { }
 
-  setAuthToken(token: string) {
-    localStorage.setItem('authToken', token);
+  setIdToken(token: string) {
+    localStorage.setItem('id_token', token);
   }
-  getAuthToken(): string {
-    return localStorage.getItem('authToken') ?? '';
+  getIdToken(): string {
+    return localStorage.getItem('id_token') ?? '';
+  }
+  clearIdToken() {
+    localStorage.removeItem('id_token');
   }
 }

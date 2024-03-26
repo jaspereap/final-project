@@ -20,7 +20,7 @@ import com.nus.iss.travlr.models.UserEntity;
 import com.nus.iss.travlr.repository.UserRepository;
 
 @Service
-public class AuthService implements UserDetailsService {
+public class JwtUserDetailsService implements UserDetailsService {
     @Autowired private UserRepository userRepo;
 
     @Override
@@ -30,13 +30,6 @@ public class AuthService implements UserDetailsService {
             throw new UsernameNotFoundException("Username not found!");
         }
         UserEntity user = optUser.get();
-        return new User(user.getUsername(), user.getPassword(), mapRoleToAuthorities(user.getRole()));
-    }
-    
-    private Collection<GrantedAuthority> mapRoleToAuthorities(Role role) {
-        Collection<GrantedAuthority> ga = new ArrayList<GrantedAuthority>();
-        ga.add(new SimpleGrantedAuthority(role.toString()));
-        return ga;
-        // return roles.stream().map(role -> new SimpleGrantedAuthority(role.toString())).collect(Collectors.toList());
+        return user;
     }
 }

@@ -6,15 +6,18 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './auth/login/login.component';
 import { MainComponent } from './main/main.component';
 import { RegisterComponent } from './auth/register/register.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { LogoutComponent } from './auth/logout/logout.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     MainComponent,
-    RegisterComponent
+    RegisterComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,

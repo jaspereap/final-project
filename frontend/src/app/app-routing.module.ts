@@ -4,9 +4,11 @@ import { AppComponent } from './app.component';
 import { MainComponent } from './main/main.component';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
+import { LogoutComponent } from './auth/logout/logout.component';
 
 const routes: Routes = [
   {path: 'account/login', component: LoginComponent},
+  {path: 'account/logout', component: LogoutComponent},
   {path: 'account/register', component: RegisterComponent},
   {path: '', component: MainComponent},
   {path: '**', redirectTo: '/login', pathMatch: 'full'}

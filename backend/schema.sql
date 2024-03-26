@@ -11,3 +11,7 @@ CREATE TABLE users (
     updatedOn TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 -- End Users
+-- Role
+INSERT INTO role (id, name) VALUES (1, 'ADMIN');
+INSERT INTO role (id, name) VALUES (2, 'USER');
+-- End Role

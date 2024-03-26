@@ -29,6 +29,7 @@ public class TravlrApplication implements CommandLineRunner {
 		// System.out.println(retrievedUser.getRoles());
 		// UserEntity retrievedUser = userRepo.findUserById(1).get();
 		// System.out.println(retrievedUser);
+		// userRepo.deleteById(3L);
 	}
 
 }
