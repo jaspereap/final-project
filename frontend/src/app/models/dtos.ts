@@ -12,3 +12,9 @@ export interface LoginRequest {
 export interface AuthData {
     authToken: string
 }
+
+export enum MessageType {
+    ACK = 'ACK',
+    USER_JOINED = 'USER_JOINED',
+    USER_LEFT = 'USER_LEFT',
+}
