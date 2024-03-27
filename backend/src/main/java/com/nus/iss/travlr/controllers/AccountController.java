@@ -24,7 +24,7 @@ import com.nus.iss.travlr.models.DTO.UserDTO;
 import com.nus.iss.travlr.models.User.Role;
 import com.nus.iss.travlr.models.User.UserEntity;
 import com.nus.iss.travlr.repository.UserRepository;
-import com.nus.iss.travlr.service.JwtService;
+import com.nus.iss.travlr.security.JwtService;
 import com.nus.iss.travlr.service.UserService;
 
 import jakarta.json.Json;

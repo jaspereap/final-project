@@ -1,4 +1,4 @@
-package com.nus.iss.travlr.service;
+package com.nus.iss.travlr.security;
 
 import java.util.ArrayList;
 import java.util.Collection;

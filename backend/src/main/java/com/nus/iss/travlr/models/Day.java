@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Document
+// @Document
 public class Day {
     Date date;
     List<Lodging> lodgings;

@@ -27,7 +27,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.nus.iss.travlr.security.JwtAuthenticationFilter;
-import com.nus.iss.travlr.service.JwtUserDetailsService;
+import com.nus.iss.travlr.security.JwtUserDetailsService;
 
 import lombok.RequiredArgsConstructor;
 

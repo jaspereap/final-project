@@ -1,37 +1,34 @@
 package com.nus.iss.travlr.service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.nus.iss.travlr.models.Itinerary;
-import com.nus.iss.travlr.repository.ItineraryRepository;
+import com.nus.iss.travlr.models.Day;
+import com.nus.iss.travlr.models.Place;
+import com.nus.iss.travlr.models.Trip;
+import com.nus.iss.travlr.repository.TripRepository;
 
 @Service
 public class ItineraryService {
-    @Autowired ItineraryRepository itiRepo;
+    @Autowired private TripRepository tripRepo;
+    
+    public Trip addPlaceToItineraryDay(String tripId, Date targetDate, Place place) {
+        // Find the trip by ID
+        Trip trip = tripRepo.findById(tripId)
+                .orElseThrow(() -> new RuntimeException("Trip not found with id: " + tripId));
 
-    public Optional<Itinerary> getItineraryById(String id) {
-        return itiRepo.findById(id);
-    }
+        // Find the specific Day within the Itinerary
+        Day targetDay = trip.getItinerary().getDays().stream()
+                .filter(day -> day.getDate().equals(targetDate))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Day not found in itinerary"));
 
-    public void addUserToItinerary(String itineraryId, Long userId) {
-        Itinerary itinerary = itiRepo.findById(itineraryId)
-                .orElseThrow(() -> new RuntimeException("Itinerary not found"));
-        itinerary.getTripMatesId().add(userId);
-        itiRepo.save(itinerary);
-    }
+        // Add the new place to the day's activities
+        targetDay.getActivities().add(place);
 
-    public List<Itinerary> getAccessibleItineraries(Long userId) {
-        List<Itinerary> owned = itiRepo.findByOwnerId(userId);
-        List<Itinerary> invited = itiRepo.findByTripMatesIdContains(userId);
-        // Combine and return the lists; ensure there are no duplicates
-        return Stream.concat(owned.stream(), invited.stream())
-                .distinct()
-                .collect(Collectors.toList());
+        // Save the updated trip back to MongoDB
+        return tripRepo.save(trip);
     }
 }
