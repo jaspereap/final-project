@@ -5,4 +5,5 @@ public enum MessageType {
     JOIN_ROOM,
     USER_JOINED,
     USER_LEFT,
+    CHAT
 }

@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { User } from '../../models/dtos';
+
 
 @Component({
   selector: 'app-register',
@@ -13,13 +14,16 @@ export class RegisterComponent {
   constructor(private fb: FormBuilder, private authService: AuthService) {
     this.registerForm = this.initRegisterForm();
   }
-
+  
+  
   initRegisterForm(): FormGroup {
     return this.fb.group({
-      username: this.fb.control<string>('bob'),
-      email: this.fb.control<string>('bob@email.com'),
-      password: this.fb.control<string>('1234'),
-      confirmPassword: this.fb.control<string>('1234'),
+      username: this.fb.control<string>('bob', [Validators.required, Validators.minLength(3)]),
+      firstName: this.fb.control<string>('bobby', [Validators.required]),
+      lastName: this.fb.control<string>('lee', [Validators.required]),
+      email: this.fb.control<string>('bob@email.com', [Validators.required, Validators.email]),
+      password: this.fb.control<string>('1234', [Validators.required, Validators.minLength(4)]),
+      confirmPassword: this.fb.control<string>('1234', [Validators.required]),
     })
   }
   register() {

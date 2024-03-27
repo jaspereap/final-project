@@ -21,6 +21,7 @@ import com.nus.iss.travlr.models.AuthData;
 import com.nus.iss.travlr.models.LoginRequest;
 import com.nus.iss.travlr.models.RegisterRequest;
 import com.nus.iss.travlr.models.Role;
+import com.nus.iss.travlr.models.UserDTO;
 import com.nus.iss.travlr.models.UserEntity;
 import com.nus.iss.travlr.repository.UserRepository;
 import com.nus.iss.travlr.service.JwtService;
@@ -52,7 +53,7 @@ public class AccountController {
             
             String token = jwtService.generateToken(userDetails);
             System.out.println("TOKEN: " + token);
-            return ResponseEntity.ok(new AuthData(token));
+            return ResponseEntity.ok(new AuthData(token, new UserDTO(userDetails)));
             
         } catch (AuthenticationException e) {
             System.out.println(e);

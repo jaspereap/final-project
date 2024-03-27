@@ -6,13 +6,18 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './auth/login/login.component';
 import { MainComponent } from './main/main.component';
 import { RegisterComponent } from './auth/register/register.component';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LogoutComponent } from './auth/logout/logout.component';
-import { MessageService } from './message.service';
+import { MessageService } from './shared/message.service';
 import { RxStompService } from './rx-stomp/rx-stomp.service';
 import { rxStompServiceFactory } from './rx-stomp/rx-stomp-service-factory';
-
+import { ChatroomComponent } from './chat/chatroom/chatroom.component';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { MaterialModule } from './libraries/material.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { PrimengModule } from './libraries/primeng.module';
+import { LoginMainComponent } from './auth/login/login-main.component';
 
 @NgModule({
   declarations: [
@@ -20,20 +25,26 @@ import { rxStompServiceFactory } from './rx-stomp/rx-stomp-service-factory';
     LoginComponent,
     MainComponent,
     RegisterComponent,
-    LogoutComponent
+    LogoutComponent,
+    ChatroomComponent,
+    LoginMainComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MaterialModule,
+    PrimengModule,
   ],
   providers: [
     MessageService,
     {
       provide: RxStompService,
       useFactory: rxStompServiceFactory
-    }
+    },
+    provideAnimationsAsync()
   ],
   bootstrap: [AppComponent]
 })

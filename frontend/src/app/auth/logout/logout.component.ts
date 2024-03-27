@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { LocalStorageService } from '../../local-storage.service';
+import { LocalStorageService } from '../../shared/local-storage.service';
 
 @Component({
   selector: 'app-logout',
@@ -9,6 +9,6 @@ import { LocalStorageService } from '../../local-storage.service';
 export class LogoutComponent {
   constructor(private localStore: LocalStorageService) {}
   logout() {
-    this.localStore.clearIdToken();
+    this.localStore.clearToken();
   }
 }

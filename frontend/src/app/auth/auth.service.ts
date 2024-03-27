@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { AuthData, LoginRequest, User } from '../models/dtos';
 import { Observable } from 'rxjs';
 import { environment as env } from "../../environments/environment";
-import { LocalStorageService } from '../local-storage.service';
+import { LocalStorageService } from '../shared/local-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,11 +21,11 @@ export class AuthService {
   }
 
   logout() {
-    this.localStore.clearIdToken();
+    this.localStore.clearToken();
   }
 
   isAuthenticated(): boolean {
-    const id_token = this.localStore.getIdToken();
+    const id_token = this.localStore.getToken();
     return id_token != null;
   }
 

@@ -10,11 +10,11 @@ public class MessageService {
     @Autowired private WebSocketService webSocketService;
 
     public void publishToRoom(String roomId, String data, MessageType type) {
-        webSocketService.publishToTopic(roomId, data, type);
+        webSocketService.publishToTopic("chat/" + roomId, data, type);
     }
 
-    public void publishToUser(String roomId, String playerName, String data, MessageType type) {
-        webSocketService.publishToTopic("%s/%s".formatted(roomId, playerName), data, type);
-    }
+    // public void publishToRoom(String roomId, String playerName, String data, MessageType type) {
+    //     webSocketService.publishToTopic("%s/%s".formatted(roomId, playerName), data, type);
+    // }
 
 }

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { environment as env } from "../environments/environment";
+import { environment as env } from "../../environments/environment";
 import { map, tap } from 'rxjs';
-import { RxStompService } from './rx-stomp/rx-stomp.service';
-import { MessageType } from './models/dtos';
+import { RxStompService } from '../rx-stomp/rx-stomp.service';
+import { MessageType } from '../models/dtos';
 @Injectable({
   providedIn: 'root'
 })
@@ -28,10 +28,11 @@ export class MessageService {
   unsubscribe() {
     this.rxStompService.deactivate();
   }
-  publish(topic: string, playerName: string, type: MessageType) {
+  
+  publish(topic: string, message: string, type: MessageType) {
     console.log(`SENDING: ${env.outboundPrefix}/${topic}`);
     const headers = {'type': type.toString()};
-    const body = playerName;
+    const body = message;
     console.log('OUTGOING headers: ', headers)
     console.log('OUTGOING body: ', body)
     this.rxStompService.publish({
