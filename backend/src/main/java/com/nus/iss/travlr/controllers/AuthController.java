@@ -1,7 +1,5 @@
 package com.nus.iss.travlr.controllers;
 
-import java.io.StringReader;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,19 +19,15 @@ import com.nus.iss.travlr.models.DTO.AuthData;
 import com.nus.iss.travlr.models.DTO.LoginRequest;
 import com.nus.iss.travlr.models.DTO.RegisterRequest;
 import com.nus.iss.travlr.models.DTO.UserDTO;
-import com.nus.iss.travlr.models.User.Role;
 import com.nus.iss.travlr.models.User.UserEntity;
 import com.nus.iss.travlr.repository.UserRepository;
 import com.nus.iss.travlr.security.JwtService;
 import com.nus.iss.travlr.service.UserService;
 
-import jakarta.json.Json;
-import jakarta.json.JsonObject;
-
 @RestController
 @RequestMapping(path = "/api/v1/auth")
 @CrossOrigin(origins = "*")
-public class AccountController {
+public class AuthController {
     @Autowired private UserService userService;
     @Autowired private UserRepository userRepo;
     @Autowired private JwtService jwtService;

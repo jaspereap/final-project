@@ -1,5 +1,4 @@
 package com.nus.iss.travlr.models;
-import java.sql.Time;
 import java.util.Date;
 
 import org.springframework.data.annotation.Id;

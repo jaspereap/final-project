@@ -1,15 +1,10 @@
 package com.nus.iss.travlr.service;
 
-import java.util.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.nus.iss.travlr.models.Day;
 import com.nus.iss.travlr.models.Flight;
-import com.nus.iss.travlr.models.Place;
 import com.nus.iss.travlr.models.Trip;
-import com.nus.iss.travlr.models.DTO.PlaceDTO;
 import com.nus.iss.travlr.repository.TripRepository;
 
 @Service

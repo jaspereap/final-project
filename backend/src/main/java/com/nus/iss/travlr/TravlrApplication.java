@@ -1,6 +1,5 @@
 package com.nus.iss.travlr;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -20,8 +19,6 @@ import com.nus.iss.travlr.models.Itinerary;
 import com.nus.iss.travlr.models.Lodging;
 import com.nus.iss.travlr.models.Place;
 import com.nus.iss.travlr.models.Trip;
-import com.nus.iss.travlr.models.User.Role;
-import com.nus.iss.travlr.models.User.UserEntity;
 import com.nus.iss.travlr.repository.TripRepository;
 import com.nus.iss.travlr.repository.UserRepository;
 import com.nus.iss.travlr.service.TripService;
