@@ -1,4 +1,4 @@
-package com.nus.iss.travlr.models;
+package com.nus.iss.travlr.models.User;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

@@ -1,4 +1,6 @@
-package com.nus.iss.travlr.models;
+package com.nus.iss.travlr.models.DTO;
+
+import com.nus.iss.travlr.models.User.UserEntity;
 
 import lombok.Data;
 

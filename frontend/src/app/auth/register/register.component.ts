@@ -7,7 +7,7 @@ import { User } from '../../models/dtos';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrl: './register.component.css'
+  styleUrl: './register.component.scss'
 })
 export class RegisterComponent {
   registerForm!: FormGroup;

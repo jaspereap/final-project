@@ -3,7 +3,7 @@ package com.nus.iss.travlr.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.nus.iss.travlr.models.MessageType;
+import com.nus.iss.travlr.models.DTO.MessageType;
 
 @Service
 public class MessageService {

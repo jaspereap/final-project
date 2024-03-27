@@ -17,12 +17,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.nus.iss.travlr.models.AuthData;
-import com.nus.iss.travlr.models.LoginRequest;
-import com.nus.iss.travlr.models.RegisterRequest;
-import com.nus.iss.travlr.models.Role;
-import com.nus.iss.travlr.models.UserDTO;
-import com.nus.iss.travlr.models.UserEntity;
+import com.nus.iss.travlr.models.DTO.AuthData;
+import com.nus.iss.travlr.models.DTO.LoginRequest;
+import com.nus.iss.travlr.models.DTO.RegisterRequest;
+import com.nus.iss.travlr.models.DTO.UserDTO;
+import com.nus.iss.travlr.models.User.Role;
+import com.nus.iss.travlr.models.User.UserEntity;
 import com.nus.iss.travlr.repository.UserRepository;
 import com.nus.iss.travlr.service.JwtService;
 import com.nus.iss.travlr.service.UserService;

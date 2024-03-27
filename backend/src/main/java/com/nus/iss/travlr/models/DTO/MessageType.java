@@ -1,4 +1,4 @@
-package com.nus.iss.travlr.models;
+package com.nus.iss.travlr.models.DTO;
 
 public enum MessageType {
     ACK,

@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+// @import "tailwindcss/base";
+// @import "tailwindcss/components";
+// @import "tailwindcss/utilities";
+@import "@angular/material/prebuilt-themes/deeppurple-amber.css";
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Poppins'
+}
+
+table, th, td {
+  border: 1px solid black;
+  border-radius: 10px;
+}

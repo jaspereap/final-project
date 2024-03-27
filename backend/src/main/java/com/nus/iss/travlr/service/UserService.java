@@ -8,10 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.nus.iss.travlr.models.RegisterRequest;
-import com.nus.iss.travlr.models.Role;
-import com.nus.iss.travlr.models.RoleEnum;
-import com.nus.iss.travlr.models.UserEntity;
+import com.nus.iss.travlr.models.DTO.RegisterRequest;
+import com.nus.iss.travlr.models.User.Role;
+import com.nus.iss.travlr.models.User.RoleEnum;
+import com.nus.iss.travlr.models.User.UserEntity;
 import com.nus.iss.travlr.repository.RoleRepository;
 import com.nus.iss.travlr.repository.UserRepository;
 

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.nus.iss.travlr.models.MessageType;
+import com.nus.iss.travlr.models.DTO.MessageType;
 import com.nus.iss.travlr.service.MessageService;
 
 import jakarta.json.Json;

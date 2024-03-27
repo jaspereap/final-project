@@ -15,8 +15,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.nus.iss.travlr.models.Role;
-import com.nus.iss.travlr.models.UserEntity;
+import com.nus.iss.travlr.models.User.Role;
+import com.nus.iss.travlr.models.User.UserEntity;
 import com.nus.iss.travlr.repository.UserRepository;
 
 @Service

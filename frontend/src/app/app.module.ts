@@ -18,6 +18,8 @@ import { MaterialModule } from './libraries/material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PrimengModule } from './libraries/primeng.module';
 import { LoginMainComponent } from './auth/login/login-main.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { TripSummaryComponent } from './main/home/trip-summary.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import { LoginMainComponent } from './auth/login/login-main.component';
     RegisterComponent,
     LogoutComponent,
     ChatroomComponent,
-    LoginMainComponent
+    LoginMainComponent,
+    NavbarComponent,
+    TripSummaryComponent
   ],
   imports: [
     BrowserModule,

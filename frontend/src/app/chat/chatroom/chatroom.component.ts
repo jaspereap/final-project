@@ -8,7 +8,7 @@ import { ChatService } from '../chat.service';
 @Component({
   selector: 'app-chatroom',
   templateUrl: './chatroom.component.html',
-  styleUrl: './chatroom.component.css'
+  styleUrl: './chatroom.component.scss'
 })
 export class ChatroomComponent implements OnInit {
   constructor(private http: HttpClient, 

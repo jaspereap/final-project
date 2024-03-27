@@ -1,4 +1,4 @@
-package com.nus.iss.travlr.models;
+package com.nus.iss.travlr.models.User;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
