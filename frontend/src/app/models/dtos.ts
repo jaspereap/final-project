@@ -20,3 +20,9 @@ export enum MessageType {
     USER_LEFT = 'USER_LEFT',
     CHAT = 'CHAT'
 }
+
+export interface TripRequest {
+    country: string
+    start: Date
+    end: Date
+}

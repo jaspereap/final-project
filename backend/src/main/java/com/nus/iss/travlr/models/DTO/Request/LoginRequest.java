@@ -1,4 +1,4 @@
-package com.nus.iss.travlr.models.DTO;
+package com.nus.iss.travlr.models.DTO.Request;
 
 import lombok.Data;
 

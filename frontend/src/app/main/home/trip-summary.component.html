@@ -1,1 +1,11 @@
-<h1 class="text-3xl">Your trips at a glance</h1>
+<div class="">
+    <span>
+        <div class="text-3xl">Your trips at a glance</div>
+        @for (trip of trips; track trip; let i = $index) {
+            <div>{{ trip }} {{ i }}</div>
+        }
+        <button (click)="newTrip()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+            + Add a new trip
+        </button>
+    </span>
+</div>

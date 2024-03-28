@@ -1,0 +1,84 @@
+<p>new-trip works!</p>
+<div class="flex min-h-full justify-center px-6 py-12 lg:px-8">
+    <form [formGroup]="form" (submit)="submit()">
+        <mat-form-field appearance="fill" class="w-full">
+            <mat-label>Country</mat-label>
+            <input matInput 
+                placeholder="Destination Country" 
+                type="text" 
+                formControlName="country" 
+                >
+            @if (form.get('country')?.touched && form.get('country')?.hasError('required')) {
+                <mat-error>Country is required</mat-error>
+            }
+        </mat-form-field>
+    
+        <mat-form-field appearance="fill" class="w-full">
+            <mat-label>Enter a date range</mat-label>
+            <mat-date-range-input [rangePicker]="picker">
+              <input matStartDate formControlName="start" placeholder="Start date">
+              <input matEndDate formControlName="end" placeholder="End date">
+            </mat-date-range-input>
+     
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+          
+            @if (form.get('start')?.hasError('matStartDateInvalid')) {
+              <mat-error>Invalid start date</mat-error>
+            }
+            @if (form.get('end')?.hasError('matEndDateInvalid')) {
+              <mat-error>Invalid end date</mat-error>
+            }
+        </mat-form-field>
+        <div>
+            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+                Start planning
+            </button>
+        </div>
+    </form>
+</div>
+
+<div>
+    <h3>FormGroup Stats</h3>
+    <table *ngIf="form as form" border="">
+        <div>form</div>
+        <tr>
+            <td>.invalid</td>
+            <td>.valid</td>
+            <td>.touched</td>
+            <td>.pristine</td>
+            <td>.status</td>
+
+            <td>.value</td>
+        </tr>
+        <tr>
+            <td>{{ form.invalid }}</td>
+            <td>{{ form.valid }}</td>
+            <td>{{ form.touched }}</td>
+            <td>{{ form.pristine }}</td>
+            <td>{{ form.status }}</td>
+
+            <td>{{form.value | json}}</td>
+        </tr>
+    </table>
+    <h3>FormControl Stats</h3>
+    <table *ngIf="form">
+        <div>form.get('country')</div>
+        <tr>
+            <td>.valid</td>
+            <td>.status</td>
+            <td>.touched</td>
+            <td>.pristine</td>
+            <td>.hasError('country')</td>
+            <td>.value</td>
+        </tr>
+        <tr>
+            <td>{{ form.get('country')?.valid }}</td>
+            <td>{{ form.get('country')?.status }}</td>
+            <td>{{ form.get('country')?.touched }}</td>
+            <td>{{ form.get('country')?.pristine }}</td>
+            <td>{{ form.get('country')?.hasError('required') }}</td>
+            <td>{{ form.get('country')?.value }}</td>
+        </tr>
+    </table>
+</div>

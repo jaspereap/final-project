@@ -20,6 +20,8 @@ import { PrimengModule } from './libraries/primeng.module';
 import { LoginMainComponent } from './auth/login/login-main.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { TripSummaryComponent } from './main/home/trip-summary.component';
+import { NewTripComponent } from './main/home/new-trip/new-trip.component';
+import {MatNativeDateModule} from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,8 @@ import { TripSummaryComponent } from './main/home/trip-summary.component';
     ChatroomComponent,
     LoginMainComponent,
     NavbarComponent,
-    TripSummaryComponent
+    TripSummaryComponent,
+    NewTripComponent
   ],
   imports: [
     BrowserModule,
@@ -41,9 +44,11 @@ import { TripSummaryComponent } from './main/home/trip-summary.component';
     BrowserAnimationsModule,
     MaterialModule,
     PrimengModule,
+    MatNativeDateModule,
   ],
   providers: [
     MessageService,
+    
     {
       provide: RxStompService,
       useFactory: rxStompServiceFactory
