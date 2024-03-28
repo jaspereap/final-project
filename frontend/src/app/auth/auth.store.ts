@@ -5,6 +5,7 @@ import { AuthService } from './auth.service';
 import { Observable, map, switchMap, tap } from 'rxjs';
 import { LocalStorageService } from '../shared/local-storage.service';
 import { Router } from '@angular/router';
+import { HttpHeaders } from '@angular/common/http';
 
 export interface AuthState {
   user: User | null
@@ -72,4 +73,11 @@ export class AuthStore extends ComponentStore<AuthState>{
         this.unsetUser();
       }),
     ))
+
+  getAuthHeader():HttpHeaders {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.localStore.getToken()}`
+    })
+    return headers;
+  }
 }

@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
-import { MainComponent } from './main/main.component';
-import { LoginComponent } from './auth/login/login.component';
+import { MainComponent } from './main/home/home.component';
+import { LoginComponent } from './auth/login-main/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { LogoutComponent } from './auth/logout/logout.component';
 import { ChatroomComponent } from './chat/chatroom/chatroom.component';
-import { LoginMainComponent } from './auth/login/login-main.component';
+import { LoginMainComponent } from './auth/login-main/login-main.component';
 import { NewTripComponent } from './main/home/new-trip/new-trip.component';
 
 const routes: Routes = [
@@ -20,7 +20,7 @@ const routes: Routes = [
   {path: 'home', canActivateChild:[],
     children: [
       {path: '', component: MainComponent},
-      {path: 'new/trip', component: NewTripComponent},
+      {path: 'trip/new', component: NewTripComponent},
       {path: 'chatroom', component: ChatroomComponent},
     ]},
   {path: '**', redirectTo: '/login', pathMatch: 'full'}

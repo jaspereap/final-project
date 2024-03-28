@@ -3,10 +3,10 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './auth/login/login.component';
-import { MainComponent } from './main/main.component';
+import { LoginComponent } from './auth/login-main/login/login.component';
+import { MainComponent } from './main/home/home.component';
 import { RegisterComponent } from './auth/register/register.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LogoutComponent } from './auth/logout/logout.component';
 import { MessageService } from './shared/message.service';
@@ -17,11 +17,12 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { MaterialModule } from './libraries/material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PrimengModule } from './libraries/primeng.module';
-import { LoginMainComponent } from './auth/login/login-main.component';
-import { NavbarComponent } from './navbar/navbar.component';
-import { TripSummaryComponent } from './main/home/trip-summary.component';
+import { LoginMainComponent } from './auth/login-main/login-main.component';
+import { NavbarComponent } from './main/navbar/navbar.component';
+import { TripSummaryComponent } from './main/home/trip-summary/trip-summary.component';
 import { NewTripComponent } from './main/home/new-trip/new-trip.component';
 import {MatNativeDateModule} from '@angular/material/core';
+import { TripMainComponent } from './main/trip-main/trip-main.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import {MatNativeDateModule} from '@angular/material/core';
     LoginMainComponent,
     NavbarComponent,
     TripSummaryComponent,
-    NewTripComponent
+    NewTripComponent,
+    TripMainComponent
   ],
   imports: [
     BrowserModule,
@@ -48,7 +50,6 @@ import {MatNativeDateModule} from '@angular/material/core';
   ],
   providers: [
     MessageService,
-    
     {
       provide: RxStompService,
       useFactory: rxStompServiceFactory

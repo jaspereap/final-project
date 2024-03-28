@@ -1,12 +1,9 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { environment as env } from "../../../environments/environment";
-import { Observable, of } from 'rxjs';
-import { LoginRequest, User } from '../../models/dtos';
-import { LocalStorageService } from '../../shared/local-storage.service';
-import { AuthService } from '../auth.service';
-import { AuthStore } from '../auth.store';
+import { LoginRequest } from '../../../models/dtos';
+
+import { AuthStore } from '../../auth.store';
 
 @Component({
   selector: 'app-login',

@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.nus.iss.travlr.models.DTO.Request.TripRequest;
 import com.nus.iss.travlr.models.DTO.Response.MessageResponse;
 
-import jakarta.json.Json;
-
 @RestController
 @RequestMapping(path = "/api/v1/trip")
 @CrossOrigin(origins = "*")
