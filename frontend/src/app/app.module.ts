@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -23,6 +23,8 @@ import { TripSummaryComponent } from './main/home/trip-summary/trip-summary.comp
 import { NewTripComponent } from './main/home/new-trip/new-trip.component';
 import {MatNativeDateModule} from '@angular/material/core';
 import { TripMainComponent } from './main/trip-main/trip-main.component';
+import { GoogleMapsModule } from '@angular/google-maps';
+import { MapComponent } from './main/trip-main/map/map.component';
 
 @NgModule({
   declarations: [
@@ -36,13 +38,15 @@ import { TripMainComponent } from './main/trip-main/trip-main.component';
     NavbarComponent,
     TripSummaryComponent,
     NewTripComponent,
-    TripMainComponent
+    TripMainComponent,
+    MapComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
+    GoogleMapsModule,
     BrowserAnimationsModule,
     MaterialModule,
     PrimengModule,
@@ -56,6 +60,7 @@ import { TripMainComponent } from './main/trip-main/trip-main.component';
     },
     provideAnimationsAsync()
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

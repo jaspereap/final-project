@@ -52,16 +52,17 @@ public class TravlrApplication implements CommandLineRunner {
 		Optional<Trip> optTrip = tripRepo.findById("1");
 		System.out.println("\tTrip: \n" + optTrip.get());
 	}
-	
+	public List<Lodging> createLodgings() {
+		// Creating lodging
+		Lodging lodging = new Lodging("Hotel Paris", 200.0f,"SGD", "Nice view of the Eiffel Tower", new Date(), new Date(), "lodging address 1",new String[]{"20.0", "2.1"});
+		return Arrays.asList(lodging);
+	}
 	public Itinerary createItinerary() {
 		// Creating a place
 		Place place = new Place(1, "Eiffel Tower", "image_url", "A must-see landmark in Paris", new Date(), new Date(), "Champ de Mars, 5 Avenue Anatole France, 75007 Paris, France", new String[]{"48.8584", "2.2945"});
 		
-		// Creating lodging
-		Lodging lodging = new Lodging("Hotel Paris", 200.0f, "Nice view of the Eiffel Tower", new Date(), new Date());
-		
 		// Creating a day
-		Day day = new Day(new Date(), Arrays.asList(lodging), Arrays.asList(place));
+		Day day = new Day(new Date(), Arrays.asList(place));
 		
 		// Creating an itinerary
 		Set<Long> tripMatesId = new HashSet<>();
@@ -84,7 +85,8 @@ public class TravlrApplication implements CommandLineRunner {
 			new Date(), // Assume this is the arrival date
 			"Notes about flight 1",
 			"image-url-1",
-			1200.50f
+			1200.50f,
+			"SGD"
 		);
 
 		Flight flight2 = new Flight(
@@ -96,7 +98,8 @@ public class TravlrApplication implements CommandLineRunner {
 			new Date(),
 			"Notes about flight 2",
 			"image-url-2",
-			800.75f
+			800.75f,
+			"SGD"
 		);
 		flights.add(flight1);
 		flights.add(flight2);
@@ -111,7 +114,9 @@ public class TravlrApplication implements CommandLineRunner {
 			4L,
 			new HashSet<>(Arrays.asList(1L, 2L)), // Example user IDs of trip mates
 			createFlightData(),
-			createItinerary()
+			createLodgings(),
+			createItinerary(),
+			"image url here"
 		);
 		return trip;
 	}

@@ -12,7 +12,11 @@ import lombok.NoArgsConstructor;
 public class Lodging {
     String name;
     Float cost;
+    String currency;
     String notes;
     Date checkIn;
     Date checkOut;
+    // Location
+    String address;
+    String[] latlng;
 }

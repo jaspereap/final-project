@@ -19,4 +19,5 @@ public class Flight {
     String notes;
     String image;
     Float cost;
+    String currency;
 }

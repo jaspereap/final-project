@@ -26,6 +26,14 @@ export interface TripRequest {
     start: Date
     end: Date
 }
+export interface TripCard {
+    id: string
+    ownerId: number
+    country: string
+    startDate: Date
+    endDate: Date
+    image: string
+}
 
 export interface Trip {
     id: string
@@ -35,7 +43,9 @@ export interface Trip {
     ownerId: number
     tripMatesId: number[]
     flightDetails: Flight[]
+    lodgings: Lodging[]
     itinerary: Itinerary
+    image: string
 }
 export interface Flight {
     airlineName: string
@@ -46,7 +56,21 @@ export interface Flight {
     arrivalDate: Date
     notes: string
     image: string
+    // Cost
     cost: number
+    currency: string
+}
+export interface Lodging {
+    name: string
+    // Cost
+    cost: number
+    currency: string
+    notes: string
+    checkIn: Date
+    checkOut: Date
+    // Location
+    address: string
+    latlng: string[]
 }
 export interface Itinerary {
     id: string
@@ -54,15 +78,7 @@ export interface Itinerary {
 }
 export interface Day {
     date: Date
-    lodgings: Lodging[]
-    activities: Place[]
-}
-export interface Lodging {
-    name: string
-    cost: number
-    notes: string
-    checkIn: Date
-    checkOut: Date
+    places: Place[]
 }
 export interface Place {
     rank: number

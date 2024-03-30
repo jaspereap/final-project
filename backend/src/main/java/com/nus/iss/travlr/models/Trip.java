@@ -25,5 +25,8 @@ public class Trip {
     Long ownerId;
     Set<Long> tripMatesId = new HashSet<>();
     List<Flight> flightDetails;
+    List<Lodging> lodgings;
     Itinerary itinerary;
+    // New addition
+    String image;
 }

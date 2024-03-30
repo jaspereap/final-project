@@ -12,8 +12,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Day {
     Date date;
-    List<Lodging> lodgings;
-    List<Place> activities;
+    // List<Lodging> lodgings;
+    List<Place> places;
 }
 
 // {

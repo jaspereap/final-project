@@ -26,7 +26,7 @@ public class ItineraryService {
                 .orElseThrow(() -> new RuntimeException("Day not found in itinerary"));
 
         // Add the new place to the day's activities
-        targetDay.getActivities().add(place);
+        targetDay.getPlaces().add(place);
 
         // Save the updated trip back to MongoDB
         return tripRepo.save(trip);

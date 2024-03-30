@@ -8,6 +8,7 @@ import { LogoutComponent } from './auth/logout/logout.component';
 import { ChatroomComponent } from './chat/chatroom/chatroom.component';
 import { LoginMainComponent } from './auth/login-main/login-main.component';
 import { NewTripComponent } from './main/home/new-trip/new-trip.component';
+import { TripMainComponent } from './main/trip-main/trip-main.component';
 
 const routes: Routes = [
   {path: 'auth', canActivateChild: [],
@@ -22,7 +23,13 @@ const routes: Routes = [
       {path: '', component: MainComponent},
       {path: 'trip/new', component: NewTripComponent},
       {path: 'chatroom', component: ChatroomComponent},
-    ]},
+    ]
+  },
+  {path: 'trip', 
+    children: [
+      {path: '', component: TripMainComponent}
+    ]
+  },
   {path: '**', redirectTo: '/login', pathMatch: 'full'}
 ];
 
