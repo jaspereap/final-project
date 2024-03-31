@@ -1,0 +1,16 @@
+<p>flight works!</p>
+<!-- flight.component.html -->
+<div *ngIf="flights && flights.length > 0; else noFlights">
+    <div *ngFor="let flight of flights">
+      <h3>{{ flight.airlineName }} ({{ flight.flightNumber }})</h3>
+      <p>Departure: {{ flight.departureCountry }} - {{ flight.departureDate | date:'medium' }}</p>
+      <p>Arrival: {{ flight.arrivalCountry }} - {{ flight.arrivalDate | date:'medium' }}</p>
+      <p>Notes: {{ flight.notes }}</p>
+      <!-- Display costings and other details as needed -->
+    </div>
+  </div>
+  
+  <ng-template #noFlights>
+    <p>No flight information available.</p>
+  </ng-template>
+  

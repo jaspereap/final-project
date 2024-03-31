@@ -1,11 +1,22 @@
 <h1>trip main works</h1>
-<table>
-    <tr>
-        <td>Current Trip ID</td>
-    </tr>
-    <tr>
-        <td>{{tripId}}</td>
-    </tr>
-</table>
-<br>
-<app-map></app-map>
+<div *ngIf="isLoading$ | async; else tripDetails">
+    Loading...
+</div>
+
+<ng-template #tripDetails>
+    <div *ngIf="currentTrip$ | async as trip; else noDetails">
+        <div>{{trip | json}}</div>
+        <br>
+        <app-flight [flights]="trip.flightDetails"></app-flight>
+        <br>
+        <app-lodging [lodgings]="trip.lodgings"></app-lodging>
+        <br>
+        <app-itinerary [itinerary]="trip.itinerary"></app-itinerary>
+        <br>
+        <app-map></app-map>
+    </div>
+</ng-template>
+
+<ng-template #noDetails>
+    No details
+</ng-template>

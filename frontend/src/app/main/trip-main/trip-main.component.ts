@@ -4,6 +4,7 @@ import { TripService } from './trip.service';
 import { provideComponentStore } from '@ngrx/component-store';
 import { TripStore } from './trip.store';
 import { Trip } from '../../models/dtos';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-trip-main',
@@ -13,22 +14,29 @@ import { Trip } from '../../models/dtos';
 })
 export class TripMainComponent implements OnInit, OnDestroy{
   tripId!: string;
+  currentTrip$ = this.tripStore.currentTrip$;
+  isLoading$ = this.tripStore.isLoading$;
 
-  constructor(private route: ActivatedRoute, private tripSvc: TripService, private tripStore: TripStore) {}
+  constructor(private route: ActivatedRoute, private tripStore: TripStore) {}
 
   ngOnInit(): void {
+    console.log("OnInit trigger")
     this.tripId = this.route.snapshot.params['tripId'];
     console.log('tripId:', this.tripId)
-    this.tripSvc.getTrip(this.tripId).subscribe(
-      (resp) => {
-        const trip = resp as Trip;
-        console.log(trip)
-        console.log(trip.lodgings[0].costings[0])
-        
+    this.tripStore.getTripById(this.tripId);
+    this.currentTrip$.subscribe(
+      (trip) => {
+        console.log("Current trip: ", trip)
       }
-    );
+    )
+
+    this.isLoading$.subscribe(
+      (loading) => {
+        console.log('isLoading: ', loading)
+      }
+    )
   }
   ngOnDestroy() {
-
+    console.log("OnDestroy trigger")
   }
 }

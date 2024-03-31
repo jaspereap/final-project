@@ -1,0 +1,20 @@
+<p>itinerary works!</p>
+<!-- itinerary.component.html -->
+<div *ngIf="itinerary && itinerary.days; else noItinerary">
+    <div *ngFor="let day of itinerary.days; let i = index">
+        <h3>Day {{ i + 1 }} - {{ day.date | date }}</h3>
+        <ul>
+            <li *ngFor="let place of day.places">
+                <h4>{{ place.name }}</h4>
+                <p>{{ place.start | date:'shortTime' }} - {{ place.end | date:'shortTime' }}</p>
+                <p>{{ place.address }}</p>
+                <!-- Add more details as needed -->
+            </li>
+        </ul>
+    </div>
+</div>
+
+<ng-template #noItinerary>
+    <p>No itinerary details available.</p>
+</ng-template>
+  

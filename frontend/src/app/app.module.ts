@@ -25,6 +25,9 @@ import {MatNativeDateModule} from '@angular/material/core';
 import { TripMainComponent } from './main/trip-main/trip-main.component';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { MapComponent } from './main/trip-main/map/map.component';
+import { ItineraryComponent } from './main/trip-main/itinerary/itinerary.component';
+import { LodgingComponent } from './main/trip-main/lodging/lodging.component';
+import { FlightComponent } from './main/trip-main/flight/flight.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +42,10 @@ import { MapComponent } from './main/trip-main/map/map.component';
     TripSummaryComponent,
     NewTripComponent,
     TripMainComponent,
-    MapComponent
+    MapComponent,
+    ItineraryComponent,
+    LodgingComponent,
+    FlightComponent
   ],
   imports: [
     BrowserModule,
