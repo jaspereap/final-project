@@ -1,5 +1,7 @@
 package com.nus.iss.travlr.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +12,11 @@ import com.nus.iss.travlr.repository.TripRepository;
 @Service
 public class TripService {
     @Autowired private TripRepository tripRepo;
+
+    // Get trip
+    public Optional<Trip> getTrip(String tripId) {
+        return tripRepo.findById(tripId);
+    }
 
     public Trip createTrip(Trip trip) {
         // Validate and process trip details

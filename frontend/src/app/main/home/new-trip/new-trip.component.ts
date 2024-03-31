@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { TripService } from '../../../trip.service';
+import { TripService } from '../../trip-main/trip.service';
 import { TripRequest } from '../../../models/dtos';
 
 @Component({

@@ -1,9 +1,13 @@
 package com.nus.iss.travlr.models;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import jakarta.json.Json;
+import jakarta.json.JsonArrayBuilder;
+import jakarta.json.JsonObject;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,7 +24,27 @@ public class Place {
     String notes;
     Date start;
     Date end;
+    List<Costing> costings;
     // Location
     String address;
     String[] latlng;
+
+    public JsonObject toJson() {
+        JsonArrayBuilder costingsArr = Json.createArrayBuilder();
+        for (Costing costing : costings) {
+            costingsArr.add(costing.toJson());
+        }
+
+        return Json.createObjectBuilder()
+            .add("rank", rank)
+            .add("name", name)
+            .add("image", image)
+            .add("notes", notes)
+            .add("start", start.getTime())
+            .add("end", end.getTime())
+            .add("costings", costingsArr)
+            .add("address", address)
+            .add("latlng", Json.createArrayBuilder().add(latlng[0]).add(latlng[1]))
+            .build();
+    }
 }

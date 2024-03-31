@@ -57,20 +57,18 @@ export interface Flight {
     notes: string
     image: string
     // Cost
-    cost: number
-    currency: string
+    costings: Costing[]
 }
 export interface Lodging {
     name: string
-    // Cost
-    cost: number
-    currency: string
     notes: string
     checkIn: Date
     checkOut: Date
     // Location
     address: string
     latlng: string[]
+    // Cost
+    costings: Costing[]
 }
 export interface Itinerary {
     id: string
@@ -90,4 +88,11 @@ export interface Place {
     // Location
     address: string
     latlng: string[]
+    // Cost
+    costings: Costing[]
+}
+export interface Costing {
+    payer: string
+    cost: number
+    currency: string
 }

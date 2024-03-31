@@ -13,6 +13,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.nus.iss.travlr.models.Costing;
 import com.nus.iss.travlr.models.Day;
 import com.nus.iss.travlr.models.Flight;
 import com.nus.iss.travlr.models.Itinerary;
@@ -54,12 +55,33 @@ public class TravlrApplication implements CommandLineRunner {
 	}
 	public List<Lodging> createLodgings() {
 		// Creating lodging
-		Lodging lodging = new Lodging("Hotel Paris", 200.0f,"SGD", "Nice view of the Eiffel Tower", new Date(), new Date(), "lodging address 1",new String[]{"20.0", "2.1"});
+		List<Costing> costings = new ArrayList<>();
+		costings.add(new Costing(200.0f, "SGD"));
+		Lodging lodging = new Lodging("Hotel Paris", 
+			"Nice view of the Eiffel Tower", 
+			new Date(), 
+			new Date(),
+			costings,
+			"lodging address 1",
+			new String[]{"20.0", "2.1"}
+			);
+
 		return Arrays.asList(lodging);
 	}
+
 	public Itinerary createItinerary() {
 		// Creating a place
-		Place place = new Place(1, "Eiffel Tower", "image_url", "A must-see landmark in Paris", new Date(), new Date(), "Champ de Mars, 5 Avenue Anatole France, 75007 Paris, France", new String[]{"48.8584", "2.2945"});
+		List<Costing> costings = new ArrayList<>();
+		costings.add(new Costing(100f, "SGD"));
+		Place place = new Place(1, 
+			"Eiffel Tower", 
+			"image_url", 
+			"A must-see landmark in Paris", 
+			new Date(), 
+			new Date(),
+			costings,
+			"Champ de Mars, 5 Avenue Anatole France, 75007 Paris, France",
+			new String[]{"48.8584", "2.2945"});
 		
 		// Creating a day
 		Day day = new Day(new Date(), Arrays.asList(place));
@@ -76,6 +98,8 @@ public class TravlrApplication implements CommandLineRunner {
 
 	public List<Flight> createFlightData() {
 		List<Flight> flights = new ArrayList<>();
+		List<Costing> costings1 = new ArrayList<>();
+		costings1.add(new Costing(1200.50f, "SGD"));
 		Flight flight1 = new Flight(
 			"Airline One",
 			"FL123",
@@ -85,10 +109,10 @@ public class TravlrApplication implements CommandLineRunner {
 			new Date(), // Assume this is the arrival date
 			"Notes about flight 1",
 			"image-url-1",
-			1200.50f,
-			"SGD"
+			costings1
 		);
-
+		List<Costing> costings2 = new ArrayList<>();
+		costings2.add(new Costing(800.75f, "SGD"));
 		Flight flight2 = new Flight(
 			"Airline Two",
 			"FL456",
@@ -98,8 +122,7 @@ public class TravlrApplication implements CommandLineRunner {
 			new Date(),
 			"Notes about flight 2",
 			"image-url-2",
-			800.75f,
-			"SGD"
+			costings2
 		);
 		flights.add(flight1);
 		flights.add(flight2);

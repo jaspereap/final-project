@@ -27,7 +27,7 @@ const routes: Routes = [
   },
   {path: 'trip', 
     children: [
-      {path: '', component: TripMainComponent}
+      {path: ':tripId', component: TripMainComponent}
     ]
   },
   {path: '**', redirectTo: '/login', pathMatch: 'full'}
