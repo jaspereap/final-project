@@ -97,8 +97,7 @@ export interface Costing {
     currency: string
 }
 
-export interface PlaceMarker {
-    rank: number
-    lat: number
-    lng: number
+export interface Marker {
+    label: string
+    latlng: {lat: number, lng: number}
 }
