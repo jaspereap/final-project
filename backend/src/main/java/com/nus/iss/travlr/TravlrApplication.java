@@ -2,6 +2,7 @@ package com.nus.iss.travlr;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -53,43 +54,71 @@ public class TravlrApplication implements CommandLineRunner {
 		// Optional<Trip> optTrip = tripRepo.findById("1");
 		// System.out.println("\tTrip: \n" + optTrip.get());
 	}
+	private Date getDate(int year, int month, int day) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(year, month - 1, day, 0, 0); // Note: Months are 0-based
+		return calendar.getTime();
+	}
 	public List<Lodging> createLodgings() {
-		// Creating lodging
 		List<Costing> costings = new ArrayList<>();
-		costings.add(new Costing(200.0f, "SGD"));
-		Lodging lodging = new Lodging("Hotel Paris", 
-			"Nice view of the Eiffel Tower", 
-			new Date(), 
-			new Date(),
+		costings.add(new Costing(300.0f, "SGD"));
+		Lodging lodging = new Lodging(
+			"Marina Bay Sands", 
+			"Luxury hotel with iconic infinity pool", 
+			getDate(2023, 3, 10), // Check-in date
+			getDate(2023, 3, 15), // Check-out date
 			costings,
-			"lodging address 1",
-			new Float[]{1.3f, 103.2f}
-			);
-
+			"10 Bayfront Ave, Singapore 018956",
+			new Float[]{1.2834f, 103.8607f} // Lat, Lng for Marina Bay Sands
+		);
+	
 		return Arrays.asList(lodging);
 	}
 
 	public Itinerary createItinerary() {
-		// Creating a place
-		List<Costing> costings = new ArrayList<>();
-		costings.add(new Costing(100f, "SGD"));
-		Place place = new Place(1, 
-			"Eiffel Tower", 
-			"image_url", 
-			"A must-see landmark in Paris", 
-			new Date(), 
-			new Date(),
-			costings,
-			"Champ de Mars, 5 Avenue Anatole France, 75007 Paris, France",
-			new Float[]{1.3f, 103.5f});
+		// Creating places
+		List<Costing> costings1 = new ArrayList<>();
+		costings1.add(new Costing(0f, "SGD")); // No cost for public landmarks
+		Place place1 = new Place(
+			1, 
+			"Gardens by the Bay", 
+			"image_url_gardens", 
+			"A futuristic park with giant tree-like structures", 
+			getDate(2023, 3, 11), 
+			getDate(2023, 3, 11),
+			costings1,
+			"18 Marina Gardens Dr, Singapore 018953",
+			new Float[]{1.2816f, 103.8636f});
+	
+		// Another place
+		Place place2 = new Place(
+			2, 
+			"Singapore Flyer", 
+			"image_url_flyer", 
+			"Giant Ferris wheel offering panoramic views of the city", 
+			getDate(2023, 3, 11), 
+			getDate(2023, 3, 11),
+			costings1,
+			"30 Raffles Ave, Singapore 039803",
+			new Float[]{1.2893f, 103.8632f});
+
+		Place place3 = new Place(
+			1, 
+			"random", 
+			"image_url_flyer", 
+			"Giant Ferris wheel offering panoramic views of the city", 
+			getDate(2023, 3, 12), 
+			getDate(2023, 3, 12),
+			costings1,
+			"30 Raffles Ave, Singapore 039803",
+			new Float[]{1.2893f, 103.8632f});
 		
 		// Creating a day
-		Day day = new Day(new Date(), Arrays.asList(place));
+		Day day1 = new Day(getDate(2023, 3, 11), Arrays.asList(place1,place2));
+		Day day2 = new Day(getDate(2023, 3, 12), Arrays.asList(place3));
 		
 		// Creating an itinerary
-		Set<Long> tripMatesId = new HashSet<>();
-		tripMatesId.add(5L);
-		Itinerary itinerary = new Itinerary("1", Arrays.asList(day));
+		Itinerary itinerary = new Itinerary("1", Arrays.asList(day1, day2));
 		
 		return itinerary;
 	}
@@ -97,47 +126,39 @@ public class TravlrApplication implements CommandLineRunner {
 	public List<Flight> createFlightData() {
 		List<Flight> flights = new ArrayList<>();
 		List<Costing> costings1 = new ArrayList<>();
-		costings1.add(new Costing(1200.50f, "SGD"));
+		costings1.add(new Costing(500.50f, "SGD"));
 		Flight flight1 = new Flight(
-			"Airline One",
-			"FL123",
-			"USA",
-			"France",
-			new Date(), // Assume this is the departure date
-			new Date(), // Assume this is the arrival date
-			"Notes about flight 1",
-			"image-url-1",
+			"Singapore Airlines",
+			"SQ888",
+			"Japan",
+			"Singapore",
+			getDate(2023, 3, 9), // Departure date
+			getDate(2023, 3, 10), // Arrival date
+			"Direct flight from Tokyo to Singapore",
+			"image-url-flight1",
 			costings1
 		);
-		List<Costing> costings2 = new ArrayList<>();
-		costings2.add(new Costing(800.75f, "SGD"));
-		Flight flight2 = new Flight(
-			"Airline Two",
-			"FL456",
-			"France",
-			"Italy",
-			new Date(), // Adjust these dates as necessary
-			new Date(),
-			"Notes about flight 2",
-			"image-url-2",
-			costings2
-		);
-		flights.add(flight1);
-		flights.add(flight2);
-		return flights;
+		
+		return Arrays.asList(flight1);
 	}
+
 	public Trip createTrip() {
+		// Assuming the trip starts with the flight arrival in Singapore
+		// and ends with the lodging check-out date
+		Date startDate = getDate(2023, 3, 10); // Flight arrival date
+		Date endDate = getDate(2023, 3, 15);   // Lodging check-out date
+	
 		Trip trip = new Trip(
 			"1",
-			"Italy",
-			new Date(), // Start date of the trip
-			new Date(), // End date of the trip
+			"Singapore",
+			startDate,
+			endDate,
 			4L,
 			new HashSet<>(Arrays.asList(1L, 2L)), // Example user IDs of trip mates
 			createFlightData(),
 			createLodgings(),
 			createItinerary(),
-			"image url here"
+			"image url here" // Ideally, use a relevant image URL
 		);
 		return trip;
 	}
