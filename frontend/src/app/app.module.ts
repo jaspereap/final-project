@@ -28,6 +28,8 @@ import { MapComponent } from './main/trip-main/map/map.component';
 import { ItineraryComponent } from './main/trip-main/itinerary/itinerary.component';
 import { LodgingComponent } from './main/trip-main/lodging/lodging.component';
 import { FlightComponent } from './main/trip-main/flight/flight.component';
+import { DayComponent } from './main/trip-main/itinerary/day/day.component';
+import { PlaceComponent } from './main/trip-main/itinerary/day/place/place.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +47,9 @@ import { FlightComponent } from './main/trip-main/flight/flight.component';
     MapComponent,
     ItineraryComponent,
     LodgingComponent,
-    FlightComponent
+    FlightComponent,
+    DayComponent,
+    PlaceComponent
   ],
   imports: [
     BrowserModule,
