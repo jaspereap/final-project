@@ -23,7 +23,7 @@ public class Lodging {
 
     // Location
     String address;
-    String[] latlng;
+    Float[] latlng;
 
     public JsonObject toJson() {
         JsonArrayBuilder costingsArr = Json.createArrayBuilder();

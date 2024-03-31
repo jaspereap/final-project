@@ -16,28 +16,47 @@ export class MapComponent implements OnInit {
   center: google.maps.LatLngLiteral = {lat: 1.35, lng: 103.8};
   zoom = 10;
   // Marker Options
-  displayMarkers: { label: string, lat: number, lng: number}[] = []
-
+  displayMarkers: { label: string, latlng: {lat: number, lng: number} }[] = []
   markerOptions: google.maps.MarkerOptions = {draggable: false};
 
   constructor() {
-    // Mock
-    this.displayMarkers.push(
-      {label: '1', lat: 1.35, lng: 103.8}
-    )
   }
 
   ngOnInit(): void {
     console.log('Map init')
-    // console.log('markerLocations: ', this.markerLocations)
     console.log('Lodgings: ', this.lodgings)
     console.log('itinerary days: ', this.itineraryDays)
+    // Init displayMarkers
+    this.displayMarkers = this.getLodgingMarkers(this.lodgings);
   }
+
   onSelectionChange(selectedValue: string): void {
-    console.log(selectedValue)
     if (selectedValue === 'lodging') {
-      console.log('lodging')
+      this.displayMarkers = [];
+      this.displayMarkers = this.getLodgingMarkers(this.lodgings);
+    } else {
+      this.displayMarkers = [];
+      this.displayMarkers = this.getDayMarkers(selectedValue, this.itineraryDays);
     }
   }
   
+  getLodgingMarkers(lodgings: Lodging[]) {
+    return lodgings.map((lodging, index) => {
+      const label = (index + 1).toString();
+      return {
+        label: label,
+        latlng: {lat: lodging.latlng[0], lng: lodging.latlng[1]}
+      };
+    })
+  }
+
+  getDayMarkers(selectedDate: string, days: Day[]) {
+    return days
+        .filter(day => day.date.toString() === selectedDate.toString())
+        .flatMap(day => 
+          day.places.map(place => ({
+            label: place.rank.toString(),
+            latlng: {lat: place.latlng[0], lng: place.latlng[1]}
+          })))
+  }
 }

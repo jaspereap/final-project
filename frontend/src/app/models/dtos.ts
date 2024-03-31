@@ -66,7 +66,7 @@ export interface Lodging {
     checkOut: Date
     // Location
     address: string
-    latlng: string[]
+    latlng: number[]
     // Cost
     costings: Costing[]
 }
@@ -87,7 +87,7 @@ export interface Place {
     end: Date
     // Location
     address: string
-    latlng: string[]
+    latlng: number[]
     // Cost
     costings: Costing[]
 }

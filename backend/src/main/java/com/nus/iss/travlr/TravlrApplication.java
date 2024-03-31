@@ -47,11 +47,11 @@ public class TravlrApplication implements CommandLineRunner {
 		// UserEntity retrievedUser = userRepo.findUserById(1).get();
 		// System.out.println(retrievedUser);
 
-		// Trip trip = createTrip();
-		// tripRepo.save(trip);
+		Trip trip = createTrip();
+		tripRepo.save(trip);
 		// tripSvc.addTripMate("1", 33L);
-		Optional<Trip> optTrip = tripRepo.findById("1");
-		System.out.println("\tTrip: \n" + optTrip.get());
+		// Optional<Trip> optTrip = tripRepo.findById("1");
+		// System.out.println("\tTrip: \n" + optTrip.get());
 	}
 	public List<Lodging> createLodgings() {
 		// Creating lodging
@@ -63,7 +63,7 @@ public class TravlrApplication implements CommandLineRunner {
 			new Date(),
 			costings,
 			"lodging address 1",
-			new String[]{"20.0", "2.1"}
+			new Float[]{1.3f, 103.2f}
 			);
 
 		return Arrays.asList(lodging);
@@ -81,7 +81,7 @@ public class TravlrApplication implements CommandLineRunner {
 			new Date(),
 			costings,
 			"Champ de Mars, 5 Avenue Anatole France, 75007 Paris, France",
-			new String[]{"48.8584", "2.2945"});
+			new Float[]{1.3f, 103.5f});
 		
 		// Creating a day
 		Day day = new Day(new Date(), Arrays.asList(place));
@@ -91,8 +91,6 @@ public class TravlrApplication implements CommandLineRunner {
 		tripMatesId.add(5L);
 		Itinerary itinerary = new Itinerary("1", Arrays.asList(day));
 		
-		// Saving the itinerary
-		// itiRepo.save(itinerary);
 		return itinerary;
 	}
 

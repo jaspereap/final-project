@@ -12,7 +12,7 @@
     [mapId]="mapId">
     <map-marker *ngFor="let marker of displayMarkers" 
         [label]="marker.label"
-        [position]="marker"
+        [position]="marker.latlng"
         [options]="markerOptions">
     </map-marker>
 </google-map>

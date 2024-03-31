@@ -27,7 +27,7 @@ public class Place {
     List<Costing> costings;
     // Location
     String address;
-    String[] latlng;
+    Float[] latlng;
 
     public JsonObject toJson() {
         JsonArrayBuilder costingsArr = Json.createArrayBuilder();
