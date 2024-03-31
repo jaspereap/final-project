@@ -13,7 +13,9 @@
         <br>
         <app-itinerary [itinerary]="trip.itinerary"></app-itinerary>
         <br>
-        <app-map></app-map>
+        <app-map
+            [lodgings]="trip.lodgings"
+            [itineraryDays]="trip.itinerary.days"></app-map>
     </div>
 </ng-template>
 

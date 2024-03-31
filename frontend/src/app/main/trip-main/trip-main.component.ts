@@ -20,22 +20,13 @@ export class TripMainComponent implements OnInit, OnDestroy{
   constructor(private route: ActivatedRoute, private tripStore: TripStore) {}
 
   ngOnInit(): void {
-    console.log("OnInit trigger")
+    console.log("Trip-main init")
     this.tripId = this.route.snapshot.params['tripId'];
     console.log('tripId:', this.tripId)
+    // Get Trip details
     this.tripStore.getTripById(this.tripId);
-    this.currentTrip$.subscribe(
-      (trip) => {
-        console.log("Current trip: ", trip)
-      }
-    )
-
-    this.isLoading$.subscribe(
-      (loading) => {
-        console.log('isLoading: ', loading)
-      }
-    )
   }
+  
   ngOnDestroy() {
     console.log("OnDestroy trigger")
   }

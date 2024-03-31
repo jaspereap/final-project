@@ -10,6 +10,6 @@ export class ItineraryComponent implements OnInit {
   @Input() itinerary!: Itinerary;
   constructor() {}
   ngOnInit(): void {
-    
+    console.log('Itinerary init')
   }
 }

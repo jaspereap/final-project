@@ -96,3 +96,9 @@ export interface Costing {
     cost: number
     currency: string
 }
+
+export interface PlaceMarker {
+    rank: number
+    lat: number
+    lng: number
+}
