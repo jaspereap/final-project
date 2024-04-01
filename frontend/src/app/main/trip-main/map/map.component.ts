@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Day, Itinerary, Lodging, Marker } from '../../../models/dtos';
+import { Day, Lodging, Marker } from '../../../models/dtos';
 import { environment as env } from "../../../../environments/environment";
-
+import LatLngLiteral = google.maps.LatLngLiteral;
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
@@ -14,7 +14,7 @@ export class MapComponent implements OnInit {
   // Google Map API
   mapId: string = env.mapId;
   // Map Options
-  center: google.maps.LatLngLiteral = {lat: 1.35, lng: 103.8};
+  center: LatLngLiteral = {lat: 1.35, lng: 103.8};
   zoom = 10;
   // Marker Options
   displayMarkers: Marker[] = []

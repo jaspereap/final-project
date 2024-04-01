@@ -7,7 +7,7 @@ import { LoginComponent } from './auth/login-main/login/login.component';
 import { MainComponent } from './main/home/home.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LogoutComponent } from './auth/logout/logout.component';
 import { MessageService } from './shared/message.service';
 import { RxStompService } from './rx-stomp/rx-stomp.service';
@@ -32,6 +32,7 @@ import { DayComponent } from './main/trip-main/itinerary/day/day.component';
 import { PlaceComponent } from './main/trip-main/itinerary/day/place/place.component';
 import { TripCardComponent } from './main/home/trip-summary/trip-card/trip-card.component';
 import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -58,13 +59,15 @@ import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/go
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    FormsModule,
     HttpClientModule,
     GoogleMapsModule,
     BrowserAnimationsModule,
     MaterialModule,
     PrimengModule,
     MatNativeDateModule,
-    MatGoogleMapsAutocompleteModule,
+    MatGoogleMapsAutocompleteModule.forRoot('AIzaSyA2prL195ajVFU_yddXDahSG76X4WA3AoI'),
+    FlexLayoutModule,
   ],
   providers: [
     MessageService,
