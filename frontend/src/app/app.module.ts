@@ -31,6 +31,7 @@ import { FlightComponent } from './main/trip-main/flight/flight.component';
 import { DayComponent } from './main/trip-main/itinerary/day/day.component';
 import { PlaceComponent } from './main/trip-main/itinerary/day/place/place.component';
 import { TripCardComponent } from './main/home/trip-summary/trip-card/trip-card.component';
+import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { TripCardComponent } from './main/home/trip-summary/trip-card/trip-card.
     MaterialModule,
     PrimengModule,
     MatNativeDateModule,
+    MatGoogleMapsAutocompleteModule,
   ],
   providers: [
     MessageService,

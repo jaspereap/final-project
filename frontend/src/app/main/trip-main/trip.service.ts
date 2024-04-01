@@ -26,4 +26,9 @@ export class TripService {
     const headers = this.authStore.getAuthHeader();
     return this.http.post<any>(`${env.backendUrl}/trip/all`, id, {headers})
   }
+
+  addPlaceToDay() {
+    const headers = this.authStore.getAuthHeader();
+    return
+  }
 }

@@ -1,5 +1,6 @@
 <br>
 <h4>{{ place.name }}</h4>
-<p>{{ place.start | date:'shortTime' }} - {{ place.end | date:'shortTime' }}</p>
+<p>{{ place.start | date:'h mm a' }} - {{ place.end | date:'h mm a' }}</p>
 <p>{{ place.address }}</p>
 <p>Latlng: {{ place.latlng }}</p>
+<button (click)="addNotes(date)" class="rounded bg-slate-200 text-xs py-1 px-1">Add notes</button>

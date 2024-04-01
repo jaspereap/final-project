@@ -1,5 +1,16 @@
 <br>
 <p>day works!</p>
 <h4>Date: {{ day.date | date:'fullDate'}}</h4>
-<app-place *ngFor="let place of day.places" [place]="place"></app-place>
+<div style="margin-left:40px;">
+    <app-place *ngFor="let place of day.places" 
+    [place]="place"
+    [date]="day.date">
+</app-place>
+</div>
+<!-- <button (click)="addPlace(day.date)" class="bg-blue-500 py-1 px-1 rounded text-white">+ Add Place</button> -->
+<form [formGroup]="form">
+    <mat-form-field>
+    
+    </mat-form-field>
+</form>
 <br>

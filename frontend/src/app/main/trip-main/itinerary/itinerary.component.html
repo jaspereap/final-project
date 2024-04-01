@@ -1,6 +1,6 @@
 <p>itinerary works!</p>
 <!-- itinerary.component.html -->
-<div *ngIf="itinerary && itinerary.days; else noItinerary">
+<div *ngIf="itinerary && itinerary.days; else noItinerary" style="margin-left:40px;">
     <app-day *ngFor="let day of itinerary.days; let i = index"
     [day]="day">
     </app-day>
