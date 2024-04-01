@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TripService } from '../../trip-main/trip.service';
 import { TripRequest } from '../../../models/dtos';
+import { countries } from '../../../shared/components/store/country-data-store';
+import { Country } from '../../../shared/model/models';
+import { Observable, map, startWith } from 'rxjs';
 
 @Component({
   selector: 'app-new-trip',
@@ -13,9 +16,17 @@ export class NewTripComponent implements OnInit{
   constructor(private fb: FormBuilder,
       private tripSvc: TripService) {}
   form!: FormGroup;
+  
+  countries: Country[] = countries;
+  filteredCountries!: Observable<Country[]>
 
   ngOnInit(): void {
     this.form = this.initForm();
+
+    this.filteredCountries = this.form.get('country')!.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value)),
+    );
   }
 
   initForm(): FormGroup {
@@ -37,6 +48,10 @@ export class NewTripComponent implements OnInit{
     } else {
       console.log("form invalid")
     }
+  }
+  private _filter(value: string): Country[] {
+    const filterValue = value.toLowerCase();
+    return this.countries.filter(country => country.name.toLowerCase().includes(filterValue));
   }
 
 }

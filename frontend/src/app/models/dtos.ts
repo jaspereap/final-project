@@ -3,7 +3,17 @@ export interface User {
     password: string
     email: string
 }
-
+export interface UserDTO {
+    username: string
+    email: string
+    firstName: string
+    lastName: string
+    userId: number
+}
+export interface IdentityRequest {
+    username: string
+    userId: number
+}
 export interface LoginRequest {
     username: string
     password: string
@@ -11,7 +21,7 @@ export interface LoginRequest {
 
 export interface AuthData {
     authToken: string
-    user: User
+    user: UserDTO
 }
 
 export enum MessageType {
@@ -29,6 +39,7 @@ export interface TripRequest {
 export interface TripCard {
     id: string
     ownerId: number
+    tripMatesId: number[]
     country: string
     startDate: Date
     endDate: Date

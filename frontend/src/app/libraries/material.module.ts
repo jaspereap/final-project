@@ -6,6 +6,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [],
@@ -16,6 +17,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     MatInputModule,
     MatProgressSpinnerModule,
     MatDatepickerModule,
+    MatAutocompleteModule,
   ],
   exports: [
     MatCardModule,
@@ -23,6 +25,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     MatInputModule,
     MatProgressSpinnerModule,
     MatDatepickerModule,
+    MatAutocompleteModule,
   ]
 })
 export class MaterialModule { }

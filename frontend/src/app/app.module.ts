@@ -30,6 +30,7 @@ import { LodgingComponent } from './main/trip-main/lodging/lodging.component';
 import { FlightComponent } from './main/trip-main/flight/flight.component';
 import { DayComponent } from './main/trip-main/itinerary/day/day.component';
 import { PlaceComponent } from './main/trip-main/itinerary/day/place/place.component';
+import { TripCardComponent } from './main/home/trip-summary/trip-card/trip-card.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { PlaceComponent } from './main/trip-main/itinerary/day/place/place.compo
     LodgingComponent,
     FlightComponent,
     DayComponent,
-    PlaceComponent
+    PlaceComponent,
+    TripCardComponent
   ],
   imports: [
     BrowserModule,

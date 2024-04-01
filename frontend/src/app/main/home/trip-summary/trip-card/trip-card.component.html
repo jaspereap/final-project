@@ -1,0 +1,25 @@
+<p>trip-card works!</p>
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>Trip to {{tripCard.country}}</mat-card-title>
+        <mat-card-subtitle>• {{tripCard.startDate | date:'d MMMM'}} - {{tripCard.endDate | date: 'd MMMM'}}</mat-card-subtitle>
+    </mat-card-header>
+    <!-- <img matCardImage src="Card wide image source"> -->
+
+    <mat-card-actions >
+        <button mat-button (click)="openTrip(tripCard.id)" class="bg-orange-200 rounded-full py-2 px-4">Open</button>
+    </mat-card-actions>
+
+</mat-card>
+
+
+
+
+
+<!-- id: string
+ownerId: number
+tripMatesId: number[]
+country: string
+startDate: Date
+endDate: Date
+image: string -->

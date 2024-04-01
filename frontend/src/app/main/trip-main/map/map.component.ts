@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Day, Itinerary, Lodging, Marker } from '../../../models/dtos';
 import { environment as env } from "../../../../environments/environment";
+
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',

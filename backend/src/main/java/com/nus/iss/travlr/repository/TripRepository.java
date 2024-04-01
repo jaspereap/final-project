@@ -11,5 +11,4 @@ import com.nus.iss.travlr.models.Trip;
 public interface TripRepository extends MongoRepository<Trip, String> {
     List<Trip> findByTripMatesIdContains(Long userId);
     List<Trip> findByOwnerId(Long ownerId);
-
 }

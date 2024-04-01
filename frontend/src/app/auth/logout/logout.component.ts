@@ -9,6 +9,6 @@ import { LocalStorageService } from '../../shared/local-storage.service';
 export class LogoutComponent {
   constructor(private localStore: LocalStorageService) {}
   logout() {
-    this.localStore.clearToken();
+    this.localStore.clear();
   }
 }

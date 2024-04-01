@@ -21,7 +21,7 @@ export class AuthService {
   }
 
   logout() {
-    this.localStore.clearToken();
+    this.localStore.clear();
   }
 
   isAuthenticated(): boolean {

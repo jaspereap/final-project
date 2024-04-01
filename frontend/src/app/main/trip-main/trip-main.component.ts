@@ -1,10 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { TripService } from './trip.service';
 import { provideComponentStore } from '@ngrx/component-store';
 import { TripStore } from './trip.store';
-import { Trip } from '../../models/dtos';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-trip-main',

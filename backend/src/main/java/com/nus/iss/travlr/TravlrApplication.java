@@ -48,11 +48,12 @@ public class TravlrApplication implements CommandLineRunner {
 		// UserEntity retrievedUser = userRepo.findUserById(1).get();
 		// System.out.println(retrievedUser);
 
-		Trip trip = createTrip();
-		tripRepo.save(trip);
+		// Trip trip = createTrip();
+		// tripRepo.save(trip);
 		// tripSvc.addTripMate("1", 33L);
 		// Optional<Trip> optTrip = tripRepo.findById("1");
 		// System.out.println("\tTrip: \n" + optTrip.get());
+		System.out.println(tripSvc.getAllTripsByUserId(4L));
 	}
 	private Date getDate(int year, int month, int day) {
 		Calendar calendar = Calendar.getInstance();

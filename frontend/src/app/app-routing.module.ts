@@ -21,7 +21,7 @@ const routes: Routes = [
   {path: 'home', canActivateChild:[],
     children: [
       {path: '', component: MainComponent},
-      {path: 'trip/new', component: NewTripComponent},
+      {path: 'new-trip', component: NewTripComponent},
       {path: 'chatroom', component: ChatroomComponent},
     ]
   },

@@ -1,7 +1,10 @@
 package com.nus.iss.travlr.service;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
-
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +19,15 @@ public class TripService {
     // Get trip
     public Optional<Trip> getTrip(String tripId) {
         return tripRepo.findById(tripId);
+    }
+    
+    // Get all trips
+    public ArrayList<Trip> getAllTripsByUserId(Long userId) {
+        List<Trip> ownerTrips = tripRepo.findByOwnerId(userId);
+        List<Trip> mateTrips = tripRepo.findByTripMatesIdContains(userId);
+        Set<Trip> combinedTrips = new HashSet<>(ownerTrips);
+        combinedTrips.addAll(mateTrips);
+        return new ArrayList<>(combinedTrips);
     }
 
     public Trip createTrip(Trip trip) {

@@ -1,5 +1,6 @@
 package com.nus.iss.travlr.controllers;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +15,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.nus.iss.travlr.TripUtils;
 import com.nus.iss.travlr.models.Trip;
+import com.nus.iss.travlr.models.DTO.Request.IdentityRequest;
 import com.nus.iss.travlr.models.DTO.Request.TripRequest;
 import com.nus.iss.travlr.models.DTO.Response.MessageResponse;
 import com.nus.iss.travlr.service.TripService;
+
+import jakarta.json.Json;
+import jakarta.json.JsonArray;
 
 @RestController
 @RequestMapping(path = "/api/v1/trip")
@@ -25,6 +31,17 @@ import com.nus.iss.travlr.service.TripService;
 public class TripController {
 
     @Autowired private TripService tripSvc;
+
+    @PostMapping(path = "/all")
+    public ResponseEntity<String> getTrips(@RequestBody IdentityRequest request) {
+        System.out.println("\tGet TripSSSS controller triggered");
+        System.out.println(request);
+        ArrayList<Trip> trips = tripSvc.getAllTripsByUserId(request.getUserId());
+        System.out.println(trips);
+        JsonArray tripCards = TripUtils.tripToTripCards(trips);
+        return ResponseEntity.ok(tripCards.toString());
+        // return ResponseEntity.ok(new MessageResponse("success").get());
+    }
 
     // TODO: complete add trip
     @PostMapping(path = "/new")
@@ -35,7 +52,7 @@ public class TripController {
         return ResponseEntity.ok(new MessageResponse("success").get());
     }
 
-    @GetMapping(path = "/{tripId}")
+    @GetMapping(path = "/show/{tripId}")
     public ResponseEntity<String> getTrip(@PathVariable String tripId) {
         System.out.println("\tGet trip controller triggered");
         System.out.println("\ttripId: " + tripId);

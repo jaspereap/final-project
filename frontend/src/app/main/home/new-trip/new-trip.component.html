@@ -1,9 +1,12 @@
 <p>new-trip works!</p>
+
+
 <div class="flex min-h-full justify-center px-6 py-12 lg:px-8">
     <form [formGroup]="form" (submit)="submit()">
         <mat-form-field appearance="fill" class="w-full">
             <mat-label>Country</mat-label>
             <input matInput 
+                [matAutocomplete]="auto"
                 placeholder="Destination Country" 
                 type="text" 
                 formControlName="country" 
@@ -12,7 +15,13 @@
                 <mat-error>Country is required</mat-error>
             }
         </mat-form-field>
-    
+
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+            @for (country of filteredCountries | async; track country) {
+              <mat-option [value]="country.name">{{country.name}}</mat-option>
+            }
+        </mat-autocomplete>
+
         <mat-form-field appearance="fill" class="w-full">
             <mat-label>Enter a date range</mat-label>
             <mat-date-range-input [rangePicker]="picker">

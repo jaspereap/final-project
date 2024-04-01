@@ -5,7 +5,7 @@
 
 <ng-template #tripDetails>
     <div *ngIf="currentTrip$ | async as trip; else noDetails">
-        <div>{{trip | json}}</div>
+        <!-- <div>{{trip | json}}</div> -->
         <br>
         <app-flight [flights]="trip.flightDetails"></app-flight>
         <br>
