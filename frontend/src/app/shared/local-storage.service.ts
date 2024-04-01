@@ -27,6 +27,12 @@ export class LocalStorageService {
     }
     return user;
   }
+  getUsername() {
+    return localStorage.getItem('username')
+  }
+  getUserId() {
+    return localStorage.getItem('userId')
+  }
   setUser(user: UserDTO) {
     localStorage.setItem('firstName', user.firstName)
     localStorage.setItem('lastName', user.lastName)

@@ -30,7 +30,7 @@ public class TripService {
         return new ArrayList<>(combinedTrips);
     }
 
-    public Trip createTrip(Trip trip) {
+    public Trip createTrip(Trip trip) throws IllegalArgumentException {
         // Validate and process trip details
         // For example, setting trip mates, flights, and itinerary
         return tripRepo.save(trip);

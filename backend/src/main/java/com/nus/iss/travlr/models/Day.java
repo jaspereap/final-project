@@ -19,11 +19,13 @@ public class Day {
 
     public JsonObject toJson() {
         JsonArrayBuilder placesArr = Json.createArrayBuilder();
-        for (Place place : places) {
-            placesArr.add(place.toJson());
+        if (places != null) {
+            for (Place place : places) {
+                placesArr.add(place.toJson());
+            }
         }
         return Json.createObjectBuilder()
-            .add("date", date.getTime())
+            .add("date", date != null ? date.getTime() : 0)
             .add("places", placesArr)
             .build();
     }

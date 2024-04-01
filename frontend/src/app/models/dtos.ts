@@ -32,9 +32,17 @@ export enum MessageType {
 }
 
 export interface TripRequest {
+    identity: IdentityRequest
     country: string
     start: Date
     end: Date
+}
+export interface TripResponse {
+    id: string
+    country: string
+    startDate: Date
+    endDate: Date
+    ownerId: number
 }
 export interface TripCard {
     id: string

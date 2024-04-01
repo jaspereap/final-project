@@ -5,6 +5,8 @@ import { TripRequest } from '../../../models/dtos';
 import { countries } from '../../../shared/components/store/country-data-store';
 import { Country } from '../../../shared/model/models';
 import { Observable, map, startWith } from 'rxjs';
+import { LocalStorageService } from '../../../shared/local-storage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-new-trip',
@@ -13,10 +15,12 @@ import { Observable, map, startWith } from 'rxjs';
   providers: []
 })
 export class NewTripComponent implements OnInit{
-  constructor(private fb: FormBuilder,
+  constructor(private localStore: LocalStorageService,
+      private router: Router,
+      private fb: FormBuilder,
       private tripSvc: TripService) {}
   form!: FormGroup;
-  
+
   countries: Country[] = countries;
   filteredCountries!: Observable<Country[]>
 
@@ -40,9 +44,14 @@ export class NewTripComponent implements OnInit{
   submit() {
     console.log("submit form pressed ")
     if (this.form.valid) {
-      this.tripSvc.addTrip(this.form.value as TripRequest).subscribe(
+      const tripRequest: TripRequest = {
+        identity: {username: this.localStore.getUsername(), userId: this.localStore.getUserId()},
+        ...this.form.value
+      }
+      this.tripSvc.addTrip(tripRequest).subscribe(
         (resp) => {
-          console.log(resp)
+          console.log('Server response: ', resp);
+          this.router.navigate([`trip/${resp.id}`])
         }
       );
     } else {

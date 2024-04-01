@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TripRequest {
+    IdentityRequest identity;
     String country;
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     Date start;

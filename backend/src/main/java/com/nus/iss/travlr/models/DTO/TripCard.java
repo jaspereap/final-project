@@ -43,7 +43,7 @@ public class TripCard {
         for (Long id : tripMatesId) {
             tripMatesIdArr.add(id);
         }
-
+        
         return Json.createObjectBuilder()
             .add("id", id)
             .add("ownerId", ownerId)

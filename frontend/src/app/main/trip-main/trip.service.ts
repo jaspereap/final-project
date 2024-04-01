@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IdentityRequest, Trip, TripCard, TripRequest } from '../../models/dtos';
+import { IdentityRequest, Trip, TripCard, TripRequest, TripResponse } from '../../models/dtos';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment as env } from "../../../environments/environment";
@@ -11,10 +11,10 @@ export class TripService {
 
   constructor(private http: HttpClient, private authStore: AuthStore) { }
 
-  addTrip(newTrip: TripRequest): Observable<TripRequest> {
+  addTrip(newTrip: TripRequest): Observable<TripResponse> {
     console.log('trip.service newTrip: ', newTrip)
     const headers = this.authStore.getAuthHeader();
-    return this.http.post<TripRequest>(`${env.backendUrl}/trip/new`, newTrip, {headers})
+    return this.http.post<TripResponse>(`${env.backendUrl}/trip/new`, newTrip, {headers})
   }
 
   getTrip(tripId: string) {

@@ -1,5 +1,6 @@
 package com.nus.iss.travlr.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.json.Json;
@@ -13,13 +14,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Itinerary {
-    String id;
-    List<Day> days;
+    String id = "";
+    List<Day> days = new ArrayList<>();
 
     public JsonObject toJson() {
         JsonArrayBuilder daysArr = Json.createArrayBuilder();
-        for (Day day : days) {
-            daysArr.add(day.toJson());
+        if (days != null) {
+            for (Day day : days) {
+                daysArr.add(day.toJson());
+            }
         }
         return Json.createObjectBuilder()
             .add("id", id)

@@ -15,29 +15,31 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Lodging {
-    String name;
-    String notes;
+    String name = "";
+    String notes = "";
     Date checkIn;
     Date checkOut;
     List<Costing> costings = new ArrayList<>();
 
     // Location
-    String address;
-    Float[] latlng;
+    String address = "";
+    Float[] latlng = new Float[]{0f, 0f};
 
     public JsonObject toJson() {
         JsonArrayBuilder costingsArr = Json.createArrayBuilder();
-        for (Costing costing : costings) {
-            costingsArr.add(costing.toJson());
+        if (costings != null && !costings.isEmpty()) {
+            for (Costing costing : costings) {
+                costingsArr.add(costing.toJson());
+            }
         }
         return Json.createObjectBuilder()
-            .add("name", name)
-            .add("notes", notes)
-            .add("checkIn", checkIn.getTime())
-            .add("checkOut", checkOut.getTime())
+            .add("name", name != null ? name : "")
+            .add("notes", notes != null ? notes : "")
+            .add("checkIn", checkIn != null ? checkIn.getTime() : 0)
+            .add("checkOut", checkOut != null ? checkOut.getTime() : 0)
             .add("costings", costingsArr)
-            .add("address", address)
-            .add("latlng", Json.createArrayBuilder().add(latlng[0]).add(latlng[1]))
+            .add("address", address != null ? address : "")
+            .add("latlng", latlng != null ? Json.createArrayBuilder().add(latlng[0]).add(latlng[1]) : Json.createArrayBuilder().add(0).add(0))
             .build();
     }
 }

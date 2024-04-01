@@ -1,9 +1,11 @@
 package com.nus.iss.travlr.models;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -22,16 +24,23 @@ import lombok.NoArgsConstructor;
 public class Trip {
     @Id
     String id;
-    String country;
+    String country = "";
     Date startDate;
     Date endDate;
     Long ownerId;
     Set<Long> tripMatesId = new HashSet<>();
-    List<Flight> flightDetails;
-    List<Lodging> lodgings;
-    Itinerary itinerary;
-    // New addition
-    String image;
+    List<Flight> flightDetails = new ArrayList<>();
+    List<Lodging> lodgings = new ArrayList<>();
+    Itinerary itinerary = new Itinerary();
+    String image = "";
+
+    public Trip(Long ownerId, String country, Date startDate, Date endDate ) {
+        this.id = UUID.randomUUID().toString().substring(0, 8);
+        this.ownerId = ownerId;
+        this.country = country;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
 
     // TODO: Complete toJson
     public JsonObject toJson() {
@@ -41,17 +50,24 @@ public class Trip {
         for (Long id : tripMatesId) {
             tripMatesIdArr.add(id);
         }
-        for (Flight detail: flightDetails) {
-            flightDetailsArr.add(detail.toJson());
+        if (flightDetails != null) {
+            for (Flight flight : flightDetails) {
+                if (flight != null) {
+                    flightDetailsArr.add(flight.toJson());
+                }
+            }
         }
-        for (Lodging lodging : lodgings) {
-            lodgingsArr.add(lodging.toJson());
+        if (lodgings != null) {
+            for (Lodging lodging : lodgings) {
+                lodgingsArr.add(lodging.toJson());
+            }
         }
+        
         return Json.createObjectBuilder()
             .add("id", id)
             .add("country", country)
-            .add("startDate", startDate.getTime())
-            .add("endDate", endDate.getTime())
+            .add("startDate", startDate != null ? startDate.getTime() : 0)
+            .add("endDate", endDate != null ? endDate.getTime() : 0)
             .add("ownerId", ownerId)
             .add("tripMatesId", tripMatesIdArr)
             .add("flightDetails", flightDetailsArr)

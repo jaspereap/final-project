@@ -1,5 +1,6 @@
 package com.nus.iss.travlr.models;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -14,30 +15,34 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Flight {
-    String airlineName;
-    String flightNumber;
-    String departureCountry;
-    String arrivalCountry;
+    String airlineName = "";
+    String flightNumber = "";
+    String departureCountry = "";
+    String arrivalCountry = "";
     Date departureDate;
     Date arrivalDate;
-    String notes;
-    String image;
-    List<Costing> costings;
+    String notes = "";
+    String image = "";
+    List<Costing> costings = new ArrayList<>();
     // Float cost;
     // String currency;
 
     public JsonObject toJson() {
         JsonArrayBuilder costingsArr = Json.createArrayBuilder();
-        for (Costing costing : costings) {
-            costingsArr.add(costing.toJson());
+        if (costings != null && !costings.isEmpty()) {
+            for (Costing costing : costings) {
+                if (costing != null) {
+                    costingsArr.add(costing.toJson());
+                }
+            }
         }
         return Json.createObjectBuilder()
             .add("airlineName", airlineName)
             .add("flightNumber", flightNumber)
             .add("departureCountry", departureCountry)
             .add("arrivalCountry", arrivalCountry)
-            .add("departureDate", departureDate.getTime())
-            .add("arrivalDate", arrivalDate.getTime())
+            .add("departureDate", departureDate != null ? departureDate.getTime() : 0)
+            .add("arrivalDate", arrivalDate != null ? arrivalDate.getTime() : 0)
             .add("notes", notes)
             .add("image", image)
             .add("costings", costingsArr)

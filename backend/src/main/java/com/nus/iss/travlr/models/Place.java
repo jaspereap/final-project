@@ -1,4 +1,5 @@
 package com.nus.iss.travlr.models;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -19,15 +20,15 @@ import lombok.NoArgsConstructor;
 public class Place {
     @Id
     Integer rank;
-    String name;
-    String image;
-    String notes;
+    String name = "";
+    String image = "";
+    String notes = "";
     Date start;
     Date end;
-    List<Costing> costings;
+    List<Costing> costings = new ArrayList<>();
     // Location
-    String address;
-    Float[] latlng;
+    String address = "";
+    Float[] latlng = new Float[]{0f, 0f};
 
     public JsonObject toJson() {
         JsonArrayBuilder costingsArr = Json.createArrayBuilder();
@@ -40,8 +41,8 @@ public class Place {
             .add("name", name)
             .add("image", image)
             .add("notes", notes)
-            .add("start", start.getTime())
-            .add("end", end.getTime())
+            .add("start", start != null ? start.getTime() : 0)
+            .add("end", end != null ? end.getTime() : 0)
             .add("costings", costingsArr)
             .add("address", address)
             .add("latlng", Json.createArrayBuilder().add(latlng[0]).add(latlng[1]))

@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.nus.iss.travlr.TripUtils;
 import com.nus.iss.travlr.models.Trip;
+import com.nus.iss.travlr.models.DTO.TripCard;
 import com.nus.iss.travlr.models.DTO.Request.IdentityRequest;
 import com.nus.iss.travlr.models.DTO.Request.TripRequest;
 import com.nus.iss.travlr.models.DTO.Response.MessageResponse;
+import com.nus.iss.travlr.models.DTO.Response.TripResponse;
 import com.nus.iss.travlr.service.TripService;
 
 import jakarta.json.Json;
@@ -49,7 +51,19 @@ public class TripController {
         System.out.println("\tPost add trip controller triggered");
         System.out.println("\tRequest: " + request);
         System.out.println(request.getStart());
-        return ResponseEntity.ok(new MessageResponse("success").get());
+        Trip newTrip = new Trip(
+            request.getIdentity().getUserId(), 
+            request.getCountry(), 
+            request.getStart(), 
+            request.getEnd());
+        Trip createdTrip;
+        try {
+            createdTrip = tripSvc.createTrip(newTrip);
+        } catch (Exception e) {
+            System.out.println("Trip creation failed: " + e);
+            return ResponseEntity.badRequest().body(new MessageResponse("Failed to create the trip").get());
+        }
+        return ResponseEntity.ok(new TripResponse(createdTrip).toJson().toString());
     }
 
     @GetMapping(path = "/show/{tripId}")
