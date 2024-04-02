@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import PlaceResult = google.maps.places.PlaceResult;
 import { TripService } from '../../trip.service';
 import { ActivatedRoute } from '@angular/router';
+import { TripStore } from '../../trip.store';
 
 @Component({
   selector: 'app-day',
@@ -12,12 +13,16 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class DayComponent implements OnInit {
   @Input() day!: Day;
+
   form!: FormGroup;
   tripId!: string;
+
   // Places Autocomplete API
   @ViewChild('searchInput', { static: true }) searchInput!: ElementRef;
 
-  constructor(private tripSvc: TripService,private route: ActivatedRoute) {}
+  constructor(private tripSvc: TripService,
+      private tripStore: TripStore,
+      private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     console.log('Day component init')
@@ -49,7 +54,10 @@ export class DayComponent implements OnInit {
     this.tripSvc.addPlaceToDay(this.tripId, date, placeResult).subscribe(
       (resp) => {
         console.log('server resp: ', resp)
-      }
+        this.searchInput.nativeElement.value = '';
+        this.tripStore.getTripById(this.tripId);
+      },
+      (error) => console.error('Error adding place: ', error)
     );
   }
 }

@@ -2,6 +2,7 @@ package com.nus.iss.travlr.models;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import jakarta.json.Json;
 import jakarta.json.JsonArrayBuilder;
@@ -14,7 +15,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Itinerary {
-    String id = "";
+    String id = UUID.randomUUID().toString().substring(0,4);
     List<Day> days = new ArrayList<>();
 
     public JsonObject toJson() {

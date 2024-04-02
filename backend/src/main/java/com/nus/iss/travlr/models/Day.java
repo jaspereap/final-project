@@ -36,7 +36,10 @@ public class Day {
     }
 
     public void addPlace(Place place) {
-        Integer nextRank = places.getLast().getRank() + 1;
+        Integer nextRank = 1;
+        if (!places.isEmpty()) {
+            nextRank = places.getLast().getRank() + 1;
+        }
         place.setRank(nextRank);
         places.add(place);
     }

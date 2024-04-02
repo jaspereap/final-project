@@ -89,7 +89,7 @@ public class TripController {
     public ResponseEntity<String> postAddPlaceToDate(@PathVariable String tripId, @PathVariable String date, @RequestBody String placeData) {
         System.out.println("\tPost add palce to date controller");
         System.out.println("\ttripId: " + tripId);
-        System.out.println("\tdate: " + new Date(Long.parseLong(date)));
+        System.out.println("\tTo date: " + new Date(Long.parseLong(date)));
         System.out.println("\tplaceData: " + placeData);
         JsonObject placeRequest = Json.createReader(new StringReader(placeData)).readObject().getJsonObject("place");
         JsonObject placeLocation = placeRequest.getJsonObject("latlng");
