@@ -3,7 +3,7 @@ import { CustomPlaceResult, Day, Place } from '../../../../models/dtos';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import PlaceResult = google.maps.places.PlaceResult;
 import { TripService } from '../../trip.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TripStore } from '../../trip.store';
 
 @Component({
@@ -23,14 +23,15 @@ export class DayComponent implements OnInit, OnChanges {
   constructor(private tripSvc: TripService,
       private tripStore: TripStore,
       private route: ActivatedRoute,
+      private router: Router
       ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('change detected: ', changes)
+    // console.log('change detected: ', changes)
   }
 
   ngOnInit(): void {
-    console.log('Day component init')
+    // console.log('Day component init')
     this.tripId = this.route.snapshot.params['tripId'];
     this.initPlaceAutocomplete();
   }
@@ -57,7 +58,7 @@ export class DayComponent implements OnInit, OnChanges {
         }
       )
       this.searchInput.nativeElement.value = '';
-      
+
     });
   }
 

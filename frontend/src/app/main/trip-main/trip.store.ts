@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { ComponentStore, tapResponse } from '@ngrx/component-store';
 import { AddPlaceToDayPayload, Itinerary, Trip } from '../../models/dtos';
 import { TripService } from './trip.service';
 import { Observable, concatMap, switchMap, tap } from 'rxjs';
+import { Router } from '@angular/router';
 
 export interface TripState {
   currentTrip: Trip | null;
@@ -14,7 +15,7 @@ export interface TripState {
 @Injectable()
 export class TripStore extends ComponentStore<TripState> {
 
-  constructor(private tripService: TripService) { 
+  constructor(private tripService: TripService, private router: Router, private ngZone: NgZone) { 
     super({
       currentTrip: null,
       currentItinerary: null,
@@ -50,10 +51,11 @@ export class TripStore extends ComponentStore<TripState> {
           tapResponse(
             (resp: Itinerary) => {
               console.log('Server response: ', resp)
-              // this.patchState({ currentTrip: updatedTrip, isLoading: false });
-              // this.setTrip(updatedTrip);
               this.setItinerary(resp);
               console.log('setItinerary ran')
+              this.ngZone.run(() => {
+                this.router.navigate([`trip/${tripId}`]);
+              });
             },
             (error) => {
               console.error('Error adding place to day', error);

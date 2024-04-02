@@ -1,11 +1,11 @@
 <div class="text-lg">Itinerary</div>
 <!-- itinerary.component.html -->
 <div *ngIf="itinerary$ | async as itinerary; else noItinerary" class="ml-10">
-    <ng-container *ngIf="itinerary.days; else noItinerary">
+    <!-- <ng-container *ngIf="itinerary.days; else noItinerary"> -->
         <app-day *ngFor="let day of itinerary.days; let i = index"
             [day]="day">
         </app-day>
-    </ng-container>
+    <!-- </ng-container> -->
 </div>
 
 <ng-template #noItinerary>

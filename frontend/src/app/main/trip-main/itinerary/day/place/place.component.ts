@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Place } from '../../../../../models/dtos';
 
 @Component({
@@ -6,14 +6,18 @@ import { Place } from '../../../../../models/dtos';
   templateUrl: './place.component.html',
   styleUrl: './place.component.scss'
 })
-export class PlaceComponent implements OnInit {
+export class PlaceComponent implements OnInit, OnChanges{
+
   @Input() place!: Place;
   @Input() date!: Date;
-  ngOnInit(): void {
-    // console.log('Place component init')
-    // console.log('Place is: ', this.place)
-  }
 
+  ngOnInit(): void {}
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log('\tplace: ', this.place)
+    console.log('\tdate: ', this.date)
+  }
+  
   addNotes(date: Date) {
     console.log('add note pressed. date: ', date)
   }
