@@ -1,11 +1,13 @@
 package com.nus.iss.travlr.service;
 
 import java.util.Date;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.nus.iss.travlr.models.Day;
+import com.nus.iss.travlr.models.Itinerary;
 import com.nus.iss.travlr.models.Place;
 import com.nus.iss.travlr.models.Trip;
 import com.nus.iss.travlr.models.DTO.Request.PlaceRequest;
@@ -14,8 +16,14 @@ import com.nus.iss.travlr.repository.TripRepository;
 @Service
 public class ItineraryService {
     @Autowired private TripRepository tripRepo;
+
+    public Itinerary getItineraryByTripId(String tripId) {
+        Optional<Trip> optTrip = tripRepo.findById(tripId);
+        Trip trip = optTrip.get();
+        return trip.getItinerary();
+    }
     
-    public Trip addPlaceToItineraryDay(String tripId, String targetDate, PlaceRequest place) {
+    public Itinerary addPlaceToItineraryDay(String tripId, String targetDate, PlaceRequest place) {
         Place newPlace = new Place(place.getName(), place.getAddress(), place.getLatlng());
 
         // Find the trip by ID
@@ -32,6 +40,7 @@ public class ItineraryService {
         targetDay.addPlace(newPlace);
 
         // Save the updated trip back to MongoDB
-        return tripRepo.save(trip);
+        
+        return tripRepo.save(trip).getItinerary();
     }
 }

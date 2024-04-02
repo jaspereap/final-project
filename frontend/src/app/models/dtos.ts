@@ -119,7 +119,12 @@ export interface AddPlaceToDayPayload {
     tripId: string;
     date: Date;
     place: CustomPlaceResult;
+}
+export interface AddPlacePayload {
+    date: Date;
+    place: Place;
   }
+  
 export interface Costing {
     payer: string
     cost: number

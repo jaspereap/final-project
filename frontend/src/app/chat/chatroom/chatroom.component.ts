@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { LocalStorageService } from '../../shared/local-storage.service';
-import { MessageService } from '../../shared/message.service';
+import { LocalStorageService } from '../../shared/services/local-storage.service';
+import { MessageService } from '../../shared/services/message.service';
 import { MessageType } from '../../models/dtos';
 import { ChatService } from '../chat.service';
 

@@ -5,7 +5,7 @@ import { TripRequest } from '../../../models/dtos';
 import { countries } from '../../../shared/components/store/country-data-store';
 import { Country } from '../../../shared/model/models';
 import { Observable, map, startWith } from 'rxjs';
-import { LocalStorageService } from '../../../shared/local-storage.service';
+import { LocalStorageService } from '../../../shared/services/local-storage.service';
 import { Router } from '@angular/router';
 
 @Component({

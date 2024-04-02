@@ -1,14 +1,25 @@
 <br>
 <h4>Date: {{ day.date | date:'fullDate'}}</h4>
+
+<!-- <div style="margin-left:40px;">
+    <div *ngFor="let place of day.places">
+        <h4>{{ place.name }}</h4>
+        <p>{{ place.start | date:'h mm a' }} - {{ place.end | date:'h mm a' }}</p>
+        <p>{{ place.address }}</p>
+        <p>Latlng: {{ place.latlng }}</p>
+    </div>
+</div> -->
+
 <div style="margin-left:40px;">
     <app-place *ngFor="let place of day.places" 
-    [place]="place"
-    [date]="day.date">
-</app-place>
+        [place]="place"
+        [date]="day.date">
+    </app-place>
 </div>
-<!-- <button (click)="addPlace(day.date)" class="bg-blue-500 py-1 px-1 rounded text-white">+ Add Place</button> -->
+
 <input #searchInput
     placeholder="Add a new place"
     type="text"
     class="rounded focus:shadow-outline w-96 border-2 shadow-md">
+<button (click)="addPlace()" class="rounded bg-gray-500 hover:bg-gray-600 p-1 ms-3 text-white">Add</button>
 <br>

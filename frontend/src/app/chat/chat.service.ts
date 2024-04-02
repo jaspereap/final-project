@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MessageService } from '../shared/message.service';
+import { MessageService } from '../shared/services/message.service';
 import { MessageType } from '../models/dtos';
 
 @Injectable({

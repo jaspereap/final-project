@@ -10,6 +10,6 @@ export class LodgingComponent implements OnInit {
   @Input() lodgings!: Lodging[];
   constructor() {}
   ngOnInit(): void {
-    console.log('Lodging init')
+    // console.log('Lodging init')
   }
 }

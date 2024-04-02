@@ -24,9 +24,9 @@ export class MapComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('Map init')
-    console.log('Lodgings: ', this.lodgings)
-    console.log('itinerary days: ', this.itineraryDays)
+    // console.log('Map init')
+    // console.log('Lodgings: ', this.lodgings)
+    // console.log('itinerary days: ', this.itineraryDays)
     // Init displayMarkers
     this.displayMarkers = this.getAllLodgingMarkers(this.lodgings);
   }

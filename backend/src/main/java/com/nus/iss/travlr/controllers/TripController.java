@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.maps.model.PlaceDetails;
 import com.google.maps.model.PlacesSearchResult;
 import com.nus.iss.travlr.TripUtils;
+import com.nus.iss.travlr.models.Itinerary;
 import com.nus.iss.travlr.models.Trip;
 import com.nus.iss.travlr.models.DTO.TripCard;
 import com.nus.iss.travlr.models.DTO.Request.IdentityRequest;
@@ -104,8 +105,8 @@ public class TripController {
 
         System.out.println(place);
 
-        Trip trip = itiSvc.addPlaceToItineraryDay(tripId, date, place);
+        Itinerary itinerary = itiSvc.addPlaceToItineraryDay(tripId, date, place);
 
-        return ResponseEntity.ok(trip.getItinerary().toJson().toString());
+        return ResponseEntity.ok(itinerary.toJson().toString());
     }
 }

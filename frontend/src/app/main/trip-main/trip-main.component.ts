@@ -17,7 +17,7 @@ export class TripMainComponent implements OnInit, OnDestroy{
   constructor(private route: ActivatedRoute, private tripStore: TripStore) {}
 
   ngOnInit(): void {
-    console.log("Trip-main init")
+    // console.log("Trip-main init")
     this.tripId = this.route.snapshot.params['tripId'];
     console.log('tripId:', this.tripId)
     // Get Trip details

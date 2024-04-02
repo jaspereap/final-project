@@ -10,6 +10,6 @@ export class FlightComponent implements OnInit {
   @Input() flights!: Flight[];
   constructor() {}
   ngOnInit(): void {
-    console.log('Flight init')
+    // console.log('Flight init')
   }
 }

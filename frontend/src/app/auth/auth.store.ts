@@ -3,7 +3,7 @@ import { LoginRequest, User, UserDTO } from '../models/dtos';
 import { ComponentStore, tapResponse } from '@ngrx/component-store';
 import { AuthService } from './auth.service';
 import { Observable, map, switchMap, tap } from 'rxjs';
-import { LocalStorageService } from '../shared/local-storage.service';
+import { LocalStorageService } from '../shared/services/local-storage.service';
 import { Router } from '@angular/router';
 import { HttpHeaders } from '@angular/common/http';
 

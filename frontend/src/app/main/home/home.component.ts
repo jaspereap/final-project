@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { environment as env } from "../../../environments/environment";
-import { LocalStorageService } from '../../shared/local-storage.service';
-import { MessageService } from '../../shared/message.service';
+import { LocalStorageService } from '../../shared/services/local-storage.service';
+import { MessageService } from '../../shared/services/message.service';
 import { AuthStore } from '../../auth/auth.store';
 import { withLatestFrom } from 'rxjs';
 @Component({

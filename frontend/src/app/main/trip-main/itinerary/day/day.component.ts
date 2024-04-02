@@ -5,6 +5,7 @@ import PlaceResult = google.maps.places.PlaceResult;
 import { TripService } from '../../trip.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TripStore } from '../../trip.store';
+import { ItineraryStore } from '../itinerary.store';
 
 @Component({
   selector: 'app-day',
@@ -23,11 +24,12 @@ export class DayComponent implements OnInit, OnChanges {
   constructor(private tripSvc: TripService,
       private tripStore: TripStore,
       private route: ActivatedRoute,
-      private router: Router
+      private router: Router,
+      private itiStore: ItineraryStore
       ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    // console.log('change detected: ', changes)
+    // console.log('\tDAY CHANGED: ')
   }
 
   ngOnInit(): void {
@@ -36,6 +38,8 @@ export class DayComponent implements OnInit, OnChanges {
     this.initPlaceAutocomplete();
   }
 
+  customPlace!: CustomPlaceResult;
+
   private initPlaceAutocomplete(): void {
     const options = {
       types: ['establishment']
@@ -43,34 +47,23 @@ export class DayComponent implements OnInit, OnChanges {
     const autocomplete = new google.maps.places.Autocomplete(this.searchInput.nativeElement, options);
     autocomplete.addListener('place_changed', () => {
       const place: PlaceResult = autocomplete.getPlace();
-      const customPlace: CustomPlaceResult = {
+      this.customPlace = {
         name: place.name,
         address: place.formatted_address,
         latlng: place.geometry?.location
       }
-      console.log(customPlace);
-
-      this.tripStore.addPlaceToItineraryDay(
-        {
-          tripId: this.tripId,
-          date: this.day.date,
-          place: customPlace
-        }
-      )
-      this.searchInput.nativeElement.value = '';
-
+      console.log('Autcomplete: ', this.customPlace);
     });
   }
 
-  addPlace(date: Date, customPlaceResult: CustomPlaceResult) {
-    console.log('add place pressed. date: ', date, 'customPlaceResult: ', customPlaceResult)
-    this.tripSvc.addPlaceToDay(this.tripId, date, customPlaceResult).subscribe(
-      (resp) => {
-        console.log('server resp: ', resp)
-        this.searchInput.nativeElement.value = '';
-        this.tripStore.getTripById(this.tripId);
-      },
-      (error) => console.error('Error adding place: ', error)
-    );
+  addPlace() {
+    this.itiStore.addPlaceToItineraryDay(
+      {
+        tripId: this.tripId,
+        date: this.day.date,
+        place: this.customPlace
+      }
+    )
+    this.searchInput.nativeElement.value = '';
   }
 }

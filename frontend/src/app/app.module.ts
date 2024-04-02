@@ -9,7 +9,7 @@ import { RegisterComponent } from './auth/register/register.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LogoutComponent } from './auth/logout/logout.component';
-import { MessageService } from './shared/message.service';
+import { MessageService } from './shared/services/message.service';
 import { RxStompService } from './rx-stomp/rx-stomp.service';
 import { rxStompServiceFactory } from './rx-stomp/rx-stomp-service-factory';
 import { ChatroomComponent } from './chat/chatroom/chatroom.component';
