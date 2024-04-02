@@ -1,6 +1,8 @@
 package com.nus.iss.travlr.controllers;
 
+import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,17 +17,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.maps.model.PlaceDetails;
+import com.google.maps.model.PlacesSearchResult;
 import com.nus.iss.travlr.TripUtils;
 import com.nus.iss.travlr.models.Trip;
 import com.nus.iss.travlr.models.DTO.TripCard;
 import com.nus.iss.travlr.models.DTO.Request.IdentityRequest;
+import com.nus.iss.travlr.models.DTO.Request.PlaceRequest;
 import com.nus.iss.travlr.models.DTO.Request.TripRequest;
 import com.nus.iss.travlr.models.DTO.Response.MessageResponse;
 import com.nus.iss.travlr.models.DTO.Response.TripResponse;
+import com.nus.iss.travlr.service.PlaceService;
 import com.nus.iss.travlr.service.TripService;
 
 import jakarta.json.Json;
 import jakarta.json.JsonArray;
+import jakarta.json.JsonObject;
 
 @RestController
 @RequestMapping(path = "/api/v1/trip")
@@ -33,6 +40,7 @@ import jakarta.json.JsonArray;
 public class TripController {
 
     @Autowired private TripService tripSvc;
+    @Autowired private PlaceService placeSvc;
 
     @PostMapping(path = "/all")
     public ResponseEntity<String> getTrips(@RequestBody IdentityRequest request) {
@@ -74,6 +82,29 @@ public class TripController {
         if (!optTrip.isEmpty()) {
             return ResponseEntity.ok(optTrip.get().toJson().toString());
         }
+        return ResponseEntity.ok(new MessageResponse("success").get());
+    }
+
+    @PostMapping(path = "/{tripId}/{date}/new-place")
+    public ResponseEntity<String> postAddPlaceToDate(@PathVariable String tripId, @PathVariable String date, @RequestBody String placeData) {
+        System.out.println("\tPost add palce to date controller");
+        System.out.println("\ttripId: " + tripId);
+        System.out.println("\tdate: " + new Date(Long.parseLong(date)));
+        System.out.println("\tplaceData: " + placeData);
+        JsonObject placeRequest = Json.createReader(new StringReader(placeData)).readObject().getJsonObject("place");
+        JsonObject placeLocation = placeRequest.getJsonObject("latlng");
+
+        PlaceRequest place = new PlaceRequest(placeRequest.getString("name", ""), 
+            placeRequest.getString("address", ""), 
+            new Float[]{
+                (float) placeLocation.getJsonNumber("lat").doubleValue(), 
+                (float) placeLocation.getJsonNumber("lng").doubleValue()
+            });
+
+        System.out.println(place);
+
+        placeSvc.addPlaceToDate(tripId, date, place);
+
         return ResponseEntity.ok(new MessageResponse("success").get());
     }
 }

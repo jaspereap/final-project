@@ -4,7 +4,7 @@
 </div>
 
 <ng-template #tripDetails>
-    <div *ngIf="currentTrip$ | async as trip; else noDetails">
+    <div *ngIf="currentTrip$ | async as trip; else noDetails" class="ps-10">
         <!-- <div>{{trip | json}}</div> -->
         <br>
         <app-flight [flights]="trip.flightDetails"></app-flight>

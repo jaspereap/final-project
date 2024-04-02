@@ -59,5 +59,4 @@ public class TripService {
         // Save the updated trip back to MongoDB
         return tripRepo.save(trip);
     }
-
 }

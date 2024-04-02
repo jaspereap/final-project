@@ -30,6 +30,12 @@ public class Place {
     String address = "";
     Float[] latlng = new Float[]{0f, 0f};
 
+    public Place(String name, String address, Float[] latlng) {
+        this.name = name;
+        this.address = address;
+        this.latlng = latlng;
+    }
+    
     public JsonObject toJson() {
         JsonArrayBuilder costingsArr = Json.createArrayBuilder();
         for (Costing costing : costings) {

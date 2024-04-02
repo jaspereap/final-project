@@ -29,6 +29,12 @@ public class Day {
             .add("places", placesArr)
             .build();
     }
+
+    public void addPlace(Place place) {
+        Integer nextRank = places.getLast().getRank() + 1;
+        place.setRank(nextRank);
+        places.add(place);
+    }
 }
 
 // {

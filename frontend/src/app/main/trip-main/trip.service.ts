@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment as env } from "../../../environments/environment";
 import { AuthStore } from '../../auth/auth.store';
+import PlaceResult = google.maps.places.PlaceResult;
+
 @Injectable({
   providedIn: 'root'
 })
@@ -27,8 +29,8 @@ export class TripService {
     return this.http.post<any>(`${env.backendUrl}/trip/all`, id, {headers})
   }
 
-  addPlaceToDay() {
+  addPlaceToDay(tripId:string, date: Date, place: PlaceResult) {
     const headers = this.authStore.getAuthHeader();
-    return
+    return this.http.post(`${env.backendUrl}/trip/${tripId}/${date}/new-place`, {place: place}, {headers})
   }
 }

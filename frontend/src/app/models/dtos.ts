@@ -110,6 +110,11 @@ export interface Place {
     // Cost
     costings: Costing[]
 }
+export interface CustomPlaceResult {
+    name: string | undefined
+    address: string | undefined
+    latlng: google.maps.LatLng | undefined
+}
 export interface Costing {
     payer: string
     cost: number

@@ -53,7 +53,7 @@ public class TravlrApplication implements CommandLineRunner {
 		// tripSvc.addTripMate("1", 33L);
 		// Optional<Trip> optTrip = tripRepo.findById("1");
 		// System.out.println("\tTrip: \n" + optTrip.get());
-		System.out.println(tripSvc.getAllTripsByUserId(4L));
+		// System.out.println(tripSvc.getAllTripsByUserId(4L));
 	}
 	private Date getDate(int year, int month, int day) {
 		Calendar calendar = Calendar.getInstance();
