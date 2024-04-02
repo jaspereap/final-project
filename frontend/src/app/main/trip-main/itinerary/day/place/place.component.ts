@@ -10,8 +10,8 @@ export class PlaceComponent implements OnInit {
   @Input() place!: Place;
   @Input() date!: Date;
   ngOnInit(): void {
-    console.log('Place component init')
-    console.log('Place is: ', this.place)
+    // console.log('Place component init')
+    // console.log('Place is: ', this.place)
   }
 
   addNotes(date: Date) {

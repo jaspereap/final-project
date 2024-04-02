@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IdentityRequest, Trip, TripCard, TripRequest, TripResponse } from '../../models/dtos';
+import { CustomPlaceResult, IdentityRequest, Itinerary, Trip, TripCard, TripRequest, TripResponse } from '../../models/dtos';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment as env } from "../../../environments/environment";
@@ -29,8 +29,8 @@ export class TripService {
     return this.http.post<any>(`${env.backendUrl}/trip/all`, id, {headers})
   }
 
-  addPlaceToDay(tripId:string, date: Date, place: PlaceResult) {
+  addPlaceToDay(tripId:string, date: Date, place: CustomPlaceResult) {
     const headers = this.authStore.getAuthHeader();
-    return this.http.post(`${env.backendUrl}/trip/${tripId}/${date}/new-place`, {place: place}, {headers})
+    return this.http.post<Itinerary>(`${env.backendUrl}/trip/${tripId}/${date}/new-place`, {place: place}, {headers})
   }
 }

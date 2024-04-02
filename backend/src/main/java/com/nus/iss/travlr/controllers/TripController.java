@@ -27,6 +27,7 @@ import com.nus.iss.travlr.models.DTO.Request.PlaceRequest;
 import com.nus.iss.travlr.models.DTO.Request.TripRequest;
 import com.nus.iss.travlr.models.DTO.Response.MessageResponse;
 import com.nus.iss.travlr.models.DTO.Response.TripResponse;
+import com.nus.iss.travlr.service.ItineraryService;
 import com.nus.iss.travlr.service.PlaceService;
 import com.nus.iss.travlr.service.TripService;
 
@@ -40,7 +41,7 @@ import jakarta.json.JsonObject;
 public class TripController {
 
     @Autowired private TripService tripSvc;
-    @Autowired private PlaceService placeSvc;
+    @Autowired private ItineraryService itiSvc;
 
     @PostMapping(path = "/all")
     public ResponseEntity<String> getTrips(@RequestBody IdentityRequest request) {
@@ -103,8 +104,8 @@ public class TripController {
 
         System.out.println(place);
 
-        placeSvc.addPlaceToDate(tripId, date, place);
+        Trip trip = itiSvc.addPlaceToItineraryDay(tripId, date, place);
 
-        return ResponseEntity.ok(new MessageResponse("success").get());
+        return ResponseEntity.ok(trip.getItinerary().toJson().toString());
     }
 }

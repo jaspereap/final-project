@@ -1,24 +1,27 @@
 <h1>trip main works</h1>
-<div *ngIf="isLoading$ | async; else tripDetails">
-    Loading...
+<div class="flex h-screen">
+    <div *ngIf="isLoading$ | async; else tripDetails">
+        Loading...
+    </div>
+    
+    <ng-template #tripDetails>
+        <div *ngIf="currentTrip$ | async as trip; else noDetails" class="ps-10">
+            <!-- <div>{{trip | json}}</div> -->
+            <br>
+            <app-flight [flights]="trip.flightDetails"></app-flight>
+            <br>
+            <app-lodging [lodgings]="trip.lodgings"></app-lodging>
+            <br>
+            <app-itinerary></app-itinerary>
+            <br>
+            <app-map
+                [lodgings]="trip.lodgings"
+                [itineraryDays]="trip.itinerary.days"></app-map>
+        </div>
+    </ng-template>
+    
+    <ng-template #noDetails>
+        No details
+    </ng-template>
 </div>
 
-<ng-template #tripDetails>
-    <div *ngIf="currentTrip$ | async as trip; else noDetails" class="ps-10">
-        <!-- <div>{{trip | json}}</div> -->
-        <br>
-        <app-flight [flights]="trip.flightDetails"></app-flight>
-        <br>
-        <app-lodging [lodgings]="trip.lodgings"></app-lodging>
-        <br>
-        <app-itinerary [itinerary]="trip.itinerary"></app-itinerary>
-        <br>
-        <app-map
-            [lodgings]="trip.lodgings"
-            [itineraryDays]="trip.itinerary.days"></app-map>
-    </div>
-</ng-template>
-
-<ng-template #noDetails>
-    No details
-</ng-template>

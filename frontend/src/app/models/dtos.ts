@@ -115,6 +115,11 @@ export interface CustomPlaceResult {
     address: string | undefined
     latlng: google.maps.LatLng | undefined
 }
+export interface AddPlaceToDayPayload {
+    tripId: string;
+    date: Date;
+    place: CustomPlaceResult;
+  }
 export interface Costing {
     payer: string
     cost: number

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.nus.iss.travlr.models.Day;
+import com.nus.iss.travlr.models.Itinerary;
 import com.nus.iss.travlr.models.Place;
 import com.nus.iss.travlr.models.Trip;
 import com.nus.iss.travlr.models.DTO.Request.PlaceRequest;
@@ -15,7 +16,7 @@ import com.nus.iss.travlr.repository.TripRepository;
 public class PlaceService {
     @Autowired private TripRepository tripRepo;
 
-    public void addPlaceToDate(String tripId, String date, PlaceRequest place) {
+    public Itinerary addPlaceToDate(String tripId, String date, PlaceRequest place) {
         Optional<Trip> optTrip = tripRepo.findById(tripId);
         Trip trip = optTrip.get();
         Place newPlace = new Place(place.getName(), place.getAddress(), place.getLatlng());
@@ -27,7 +28,7 @@ public class PlaceService {
                 break;
             }
         }
-
         tripRepo.save(trip);
+        return trip.getItinerary();
     }
 }

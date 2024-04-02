@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, NgZone, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, Input, NgZone, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { CustomPlaceResult, Day, Place } from '../../../../models/dtos';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import PlaceResult = google.maps.places.PlaceResult;
@@ -11,7 +11,7 @@ import { TripStore } from '../../trip.store';
   templateUrl: './day.component.html',
   styleUrl: './day.component.scss'
 })
-export class DayComponent implements OnInit {
+export class DayComponent implements OnInit, OnChanges {
   @Input() day!: Day;
 
   form!: FormGroup;
@@ -22,7 +22,12 @@ export class DayComponent implements OnInit {
 
   constructor(private tripSvc: TripService,
       private tripStore: TripStore,
-      private route: ActivatedRoute) {}
+      private route: ActivatedRoute,
+      ) {}
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log('change detected: ', changes)
+  }
 
   ngOnInit(): void {
     console.log('Day component init')
@@ -43,15 +48,22 @@ export class DayComponent implements OnInit {
         latlng: place.geometry?.location
       }
       console.log(customPlace);
-      // Handle the selected place information.
-      // Update searchControl value if necessary
-      this.addPlace(this.day.date, customPlace)
+
+      this.tripStore.addPlaceToItineraryDay(
+        {
+          tripId: this.tripId,
+          date: this.day.date,
+          place: customPlace
+        }
+      )
+      this.searchInput.nativeElement.value = '';
+      
     });
   }
 
-  addPlace(date: Date, placeResult: PlaceResult) {
-    console.log('add place pressed. date: ', date, 'placeResult: ', placeResult)
-    this.tripSvc.addPlaceToDay(this.tripId, date, placeResult).subscribe(
+  addPlace(date: Date, customPlaceResult: CustomPlaceResult) {
+    console.log('add place pressed. date: ', date, 'customPlaceResult: ', customPlaceResult)
+    this.tripSvc.addPlaceToDay(this.tripId, date, customPlaceResult).subscribe(
       (resp) => {
         console.log('server resp: ', resp)
         this.searchInput.nativeElement.value = '';
