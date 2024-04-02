@@ -1,6 +1,10 @@
 package com.nus.iss.travlr.service;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -8,7 +12,9 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.nus.iss.travlr.models.Day;
 import com.nus.iss.travlr.models.Flight;
+import com.nus.iss.travlr.models.Itinerary;
 import com.nus.iss.travlr.models.Trip;
 import com.nus.iss.travlr.repository.TripRepository;
 
@@ -31,8 +37,25 @@ public class TripService {
     }
 
     public Trip createTrip(Trip trip) throws IllegalArgumentException {
-        // Validate and process trip details
-        // For example, setting trip mates, flights, and itinerary
+        LocalDate startDate = convertToLocalDateViaInstant(trip.getStartDate());
+        LocalDate endDate = convertToLocalDateViaInstant(trip.getEndDate());
+        long daysBetween = ChronoUnit.DAYS.between(startDate, endDate) + 1; // +1 to include end date
+
+        List<Day> days = new ArrayList<>();
+        for (int i = 0; i < daysBetween; i++) {
+            LocalDate currentDay = startDate.plusDays(i);
+            Day day = new Day(convertToDateViaInstant(currentDay));
+            days.add(day);
+        }
+        Itinerary itinerary = trip.getItinerary();
+
+        if (itinerary == null) {
+            itinerary = new Itinerary();
+            trip.setItinerary(itinerary);
+        }
+
+        itinerary.setDays(days);
+        
         return tripRepo.save(trip);
     }
 
@@ -58,5 +81,17 @@ public class TripService {
 
         // Save the updated trip back to MongoDB
         return tripRepo.save(trip);
+    }
+    // Helper method to convert Date to LocalDate
+    private LocalDate convertToLocalDateViaInstant(Date dateToConvert) {
+        return dateToConvert.toInstant()
+        .atZone(ZoneId.systemDefault())
+        .toLocalDate();
+    }
+    // Helper method to convert LocalDate to Date
+    private Date convertToDateViaInstant(LocalDate dateToConvert) {
+        return java.util.Date.from(dateToConvert.atStartOfDay()
+        .atZone(ZoneId.systemDefault())
+        .toInstant());
     }
 }

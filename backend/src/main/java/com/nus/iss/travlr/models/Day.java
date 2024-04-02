@@ -1,5 +1,6 @@
 package com.nus.iss.travlr.models;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -15,7 +16,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Day {
     Date date;
-    List<Place> places;
+    List<Place> places = new ArrayList<>();
+
+    public Day(Date date) {
+        this.date = date;
+    }
 
     public JsonObject toJson() {
         JsonArrayBuilder placesArr = Json.createArrayBuilder();
