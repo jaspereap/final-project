@@ -1,6 +1,15 @@
 <br>
 <h4>{{ place.name }}</h4>
-<p>{{ place.start | date:'h mm a' }} - {{ place.end | date:'h mm a' }}</p>
+
+<p *ngIf='place.start.toString() !== "0"'>
+    {{ place.start | date:'h mm a' }} - {{ place.end | date:'h mm a' }}
+</p>
+
 <p>{{ place.address }}</p>
 <p>Latlng: {{ place.latlng }}</p>
+<p *ngIf="place.image.length != 0">
+    <img [src]="place.image" alt="" width="200">
+</p>
 <button (click)="addNotes(date)" class="rounded bg-slate-200 text-xs py-1 px-1">Add notes</button>
+<button class="rounded bg-blue-200 text-xs py-1 px-1">Change Time</button>
+<button class="rounded bg-orange-200 text-xs py-1 px-1">Add Cost</button>

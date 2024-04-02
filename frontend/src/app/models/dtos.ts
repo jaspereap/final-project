@@ -114,6 +114,7 @@ export interface CustomPlaceResult {
     name: string | undefined
     address: string | undefined
     latlng: google.maps.LatLng | undefined
+    image: string
 }
 export interface AddPlaceToDayPayload {
     tripId: string;

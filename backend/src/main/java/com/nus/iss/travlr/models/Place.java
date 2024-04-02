@@ -30,10 +30,11 @@ public class Place {
     String address = "";
     Float[] latlng = new Float[]{0f, 0f};
 
-    public Place(String name, String address, Float[] latlng) {
+    public Place(String name, String address, Float[] latlng, String image) {
         this.name = name;
         this.address = address;
         this.latlng = latlng;
+        this.image = image;
     }
     
     public JsonObject toJson() {

@@ -50,7 +50,8 @@ export class DayComponent implements OnInit, OnChanges {
       this.customPlace = {
         name: place.name,
         address: place.formatted_address,
-        latlng: place.geometry?.location
+        latlng: place.geometry?.location,
+        image: place.photos ? place.photos[0].getUrl({maxHeight: 1000, maxWidth: 1000}) : ''
       }
       console.log('Autcomplete: ', this.customPlace);
     });

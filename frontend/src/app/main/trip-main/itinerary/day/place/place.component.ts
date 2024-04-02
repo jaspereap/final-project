@@ -16,6 +16,7 @@ export class PlaceComponent implements OnInit, OnChanges{
   ngOnChanges(changes: SimpleChanges): void {
     // console.log('\tplace: ', this.place)
     // console.log('\tdate: ', this.date)
+    // this.place.start.
   }
   
   addNotes(date: Date) {

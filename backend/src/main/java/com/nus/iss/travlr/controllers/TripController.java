@@ -3,6 +3,7 @@ package com.nus.iss.travlr.controllers;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,8 @@ import com.nus.iss.travlr.service.TripService;
 import jakarta.json.Json;
 import jakarta.json.JsonArray;
 import jakarta.json.JsonObject;
+import jakarta.json.JsonString;
+import jakarta.json.JsonValue;
 
 @RestController
 @RequestMapping(path = "/api/v1/trip")
@@ -96,12 +99,15 @@ public class TripController {
         JsonObject placeRequest = Json.createReader(new StringReader(placeData)).readObject().getJsonObject("place");
         JsonObject placeLocation = placeRequest.getJsonObject("latlng");
 
-        PlaceRequest place = new PlaceRequest(placeRequest.getString("name", ""), 
+        PlaceRequest place = new PlaceRequest(
+            placeRequest.getString("name", ""), 
             placeRequest.getString("address", ""), 
             new Float[]{
                 (float) placeLocation.getJsonNumber("lat").doubleValue(), 
                 (float) placeLocation.getJsonNumber("lng").doubleValue()
-            });
+            },
+            placeRequest.getString("image")
+        );
 
         System.out.println(place);
 

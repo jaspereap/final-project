@@ -24,7 +24,7 @@ public class ItineraryService {
     }
     
     public Itinerary addPlaceToItineraryDay(String tripId, String targetDate, PlaceRequest place) {
-        Place newPlace = new Place(place.getName(), place.getAddress(), place.getLatlng());
+        Place newPlace = new Place(place.getName(), place.getAddress(), place.getLatlng(), place.getImage());
 
         // Find the trip by ID
         Trip trip = tripRepo.findById(tripId)
