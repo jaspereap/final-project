@@ -1,12 +1,9 @@
-<h1>trip main works</h1>
 <div class="flex h-screen">
-    <div *ngIf="isLoading$ | async; else tripDetails">
-        Loading...
-    </div>
-    
     <ng-template #tripDetails>
         <div *ngIf="currentTrip$ | async as trip; else noDetails" class="ps-10">
             <!-- <div>{{trip | json}}</div> -->
+            <img *ngIf="trip.image !== ''" mat-card-image [src]="trip.image" alt="Trip Image" class="w-full h-40 object-cover rounded-sm">
+            <div class="text-5xl">Trip to {{ trip.country }}</div>
             <br>
             <app-flight [flights]="trip.flightDetails"></app-flight>
             <br>
@@ -23,5 +20,8 @@
     <ng-template #noDetails>
         No details
     </ng-template>
+    <div *ngIf="isLoading$ | async; else tripDetails">
+        Loading...
+    </div>
 </div>
 

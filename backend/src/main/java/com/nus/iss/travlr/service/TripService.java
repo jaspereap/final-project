@@ -21,7 +21,7 @@ import com.nus.iss.travlr.repository.TripRepository;
 @Service
 public class TripService {
     @Autowired private TripRepository tripRepo;
-
+    @Autowired private GoogleSearchAPIService googleSvc;
     // Get trip
     public Optional<Trip> getTrip(String tripId) {
         return tripRepo.findById(tripId);
@@ -36,7 +36,11 @@ public class TripService {
         return new ArrayList<>(combinedTrips);
     }
 
+    // Create new trip
     public Trip createTrip(Trip trip) throws IllegalArgumentException {
+        String image = googleSvc.searchImage(trip.getCountry() + " scenic");
+        trip.setImage(image);
+
         LocalDate startDate = convertToLocalDateViaInstant(trip.getStartDate());
         LocalDate endDate = convertToLocalDateViaInstant(trip.getEndDate());
         long daysBetween = ChronoUnit.DAYS.between(startDate, endDate) + 1; // +1 to include end date

@@ -3,7 +3,7 @@
         Your userid: {{ user.userId }}
     </div>
     <span>
-        <div class="text-3xl">Your trips at a glance</div>
+        <div class="text-3xl pb-5">Your trips at a glance</div>
         @for (card of tripCards; track card; let i = $index) {
             <app-trip-card 
                 [tripCard]="card"

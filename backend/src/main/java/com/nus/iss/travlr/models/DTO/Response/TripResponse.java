@@ -15,6 +15,7 @@ public class TripResponse {
     Date startDate;
     Date endDate;
     Long ownerId;
+    String image;
 
     public TripResponse(Trip trip) {
         this.id = trip.getId();
@@ -22,6 +23,7 @@ public class TripResponse {
         this.startDate = trip.getStartDate();
         this.endDate = trip.getEndDate();
         this.ownerId = trip.getOwnerId();
+        this.image = trip.getImage();
     }
     public JsonObject toJson() {
         return Json.createObjectBuilder()
@@ -30,6 +32,7 @@ public class TripResponse {
             .add("startDate", startDate.getTime())
             .add("endDate", endDate.getTime())
             .add("ownerId", ownerId)
+            .add("image", image)
             .build();
     }
 }
