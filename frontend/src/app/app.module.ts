@@ -1,4 +1,4 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -35,6 +35,7 @@ import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/go
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MtxCalendar } from '@ng-matero/extensions/datetimepicker';
 import { provideNativeDatetimeAdapter } from '@ng-matero/extensions/core';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [
@@ -70,6 +71,12 @@ import { provideNativeDatetimeAdapter } from '@ng-matero/extensions/core';
     MatNativeDateModule,
     MatGoogleMapsAutocompleteModule.forRoot('AIzaSyA2prL195ajVFU_yddXDahSG76X4WA3AoI'),
     FlexLayoutModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    }),
   ],
   providers: [
     MessageService,
