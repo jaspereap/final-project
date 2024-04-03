@@ -73,7 +73,7 @@ export class ItineraryStore extends ComponentStore<ItineraryState>{
         this.tripSvc.getItineraryByTripId(tripId).pipe(
           tapResponse(
             (resp) => {
-              console.log('Server resp: ', resp)
+              console.log('Get iti Server resp: ', resp)
               this.setItinerary(resp)
             },
             (error) => console.error(error)

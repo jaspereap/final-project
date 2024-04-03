@@ -25,6 +25,10 @@ public class ItineraryController {
     @GetMapping(path = "/get/{tripId}")
     public ResponseEntity<String> getItinerary(@PathVariable String tripId) {
         Itinerary retrievedItinerary = itiSvc.getItineraryByTripId(tripId);
+        System.out.println("getItinerary: ");
+        // System.out.println(retrievedItinerary.getDays().getFirst().getDate().getTime());
+        // System.out.println(retrievedItinerary.getDays().getFirst().getPlaces().getFirst().getStart().getTime());
+        // System.out.println(retrievedItinerary.getDays().getFirst().getPlaces().getFirst().getEnd().getTime());
         return ResponseEntity.ok(retrievedItinerary.toJson().toString());
     }
 
@@ -35,7 +39,7 @@ public class ItineraryController {
             @PathVariable String rank, 
             @RequestBody Place place) {
         System.out.println("\tupdate Itinerary day place controller");
-        // System.out.println("Request: " + place);
+        System.out.println("Request: " + place);
         Itinerary updatedIti = itiSvc.updatePlaceInItineraryDay(tripId, date, rank, place);
         return ResponseEntity.ok(updatedIti.toJson().toString());
     }

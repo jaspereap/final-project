@@ -8,6 +8,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatIconModule} from '@angular/material/icon';
+import { MtxDatetimepickerModule } from '@ng-matero/extensions/datetimepicker';
 
 @NgModule({
   declarations: [],
@@ -20,6 +21,7 @@ import {MatIconModule} from '@angular/material/icon';
     MatDatepickerModule,
     MatAutocompleteModule,
     MatIconModule,
+    MtxDatetimepickerModule
   ],
   exports: [
     MatCardModule,
@@ -29,6 +31,7 @@ import {MatIconModule} from '@angular/material/icon';
     MatDatepickerModule,
     MatAutocompleteModule,
     MatIconModule,
+    MtxDatetimepickerModule
   ]
 })
 export class MaterialModule { }

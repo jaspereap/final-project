@@ -33,6 +33,8 @@ import { PlaceComponent } from './main/trip-main/itinerary/day/place/place.compo
 import { TripCardComponent } from './main/home/trip-summary/trip-card/trip-card.component';
 import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MtxCalendar } from '@ng-matero/extensions/datetimepicker';
+import { provideNativeDatetimeAdapter } from '@ng-matero/extensions/core';
 
 @NgModule({
   declarations: [
@@ -71,11 +73,13 @@ import { FlexLayoutModule } from '@angular/flex-layout';
   ],
   providers: [
     MessageService,
+    provideNativeDatetimeAdapter(),
     {
       provide: RxStompService,
       useFactory: rxStompServiceFactory
     },
-    provideAnimationsAsync()
+    provideAnimationsAsync(),
+    MtxCalendar
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]

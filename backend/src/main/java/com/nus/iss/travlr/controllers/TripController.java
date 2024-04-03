@@ -90,7 +90,8 @@ public class TripController {
         if (!optTrip.isEmpty()) {
             return ResponseEntity.ok(optTrip.get().toJson().toString());
         }
-        return ResponseEntity.ok(new MessageResponse("success").get());
+        return ResponseEntity.ok(optTrip.get().toJson().toString());
+        // return ResponseEntity.ok(new MessageResponse("success").get());
     }
 
     @PostMapping(path = "/{tripId}/{date}/new-place")

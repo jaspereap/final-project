@@ -2,19 +2,18 @@
 <h4>{{ place.name }}</h4>
 <p>{{ place.address }}</p>
 
-
 <!-- Start End -->
+
 <div *ngIf="editingTime; else showTime">
-    <mat-form-field>
-        <mat-label>Start Time</mat-label>
-        <input matInput type="datetime-local" [matDatepicker]="picker" [(ngModel)]="place.start">
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
+    <input type="time" [(ngModel)]="editableStart">
+    <input type="time" [(ngModel)]="editableEnd">
+    <button mat-icon-button (click)="editingTime = false" class="mr-2"><mat-icon>cancel</mat-icon></button>
+    <button color="primary" (click)="saveUpdatedTimes()" class="bg-blue-600" [disabled]="!editableStart || !editableEnd">Save</button>
 </div>
 
 <ng-template #showTime>
-    <p *ngIf='place.start.toString() !== "0" else addTime'>
+    <p *ngIf='place.start.getTime() !== 0 else addTime' (click)="editTime()" class="cursor-pointer">
+        <!-- {{ place.start | date:'mediumTime' }} - {{ place.end | date:'mediumTime' }} -->
         {{ place.start | date:'h mm a' }} - {{ place.end | date:'h mm a' }}
     </p>
     <ng-template #addTime>
@@ -30,7 +29,7 @@
 <!-- Notes -->
 <div *ngIf="editingNotes; else showNotes" class="flex items-center w-full">
     <mat-form-field class="flex-grow">
-        <input matInput [(ngModel)]="editableNotes" (keyup.enter)="saveNotes(date, editableNotes)">
+        <input matInput [(ngModel)]="editableNotes" (keyup.enter)="saveNotes(editableNotes)">
     </mat-form-field>
     <button mat-icon-button (click)="editingNotes = false" class="ml-2 pb-4">
         <mat-icon>cancel</mat-icon>

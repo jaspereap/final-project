@@ -15,7 +15,7 @@ export class ItineraryComponent implements OnInit {
   days$ = this.itiStore.days$;
   tripId!: string;
 
-  days: Day[] = [];
+  days!: Day[];
 
   constructor(private tripStore: TripStore, 
     private itiStore: ItineraryStore, 

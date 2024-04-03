@@ -27,6 +27,7 @@ public class ItineraryService {
     public Itinerary getItineraryByTripId(String tripId) {
         Optional<Trip> optTrip = tripRepo.findById(tripId);
         Trip trip = optTrip.get();
+        System.out.println(trip);
         return trip.getItinerary();
     }
     // Updates Place
