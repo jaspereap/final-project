@@ -24,6 +24,7 @@ import com.nus.iss.travlr.TripUtils;
 import com.nus.iss.travlr.models.Itinerary;
 import com.nus.iss.travlr.models.Trip;
 import com.nus.iss.travlr.models.DTO.TripCard;
+import com.nus.iss.travlr.models.DTO.UserDTO;
 import com.nus.iss.travlr.models.DTO.Request.IdentityRequest;
 import com.nus.iss.travlr.models.DTO.Request.PlaceRequest;
 import com.nus.iss.travlr.models.DTO.Request.TripRequest;
@@ -63,12 +64,14 @@ public class TripController {
     public ResponseEntity<String> postAddTrip(@RequestBody TripRequest request) {
         System.out.println("\tPost add trip controller triggered");
         System.out.println("\tRequest: " + request);
-        System.out.println(request.getStart());
         Trip newTrip = new Trip(
             request.getIdentity().getUserId(), 
             request.getCountry(), 
             request.getStart(), 
             request.getEnd());
+        for (UserDTO user : request.getTripMates()) {
+            newTrip.getTripMatesId().add(user.getUserId());
+        }
         Trip createdTrip;
         try {
             createdTrip = tripSvc.createTrip(newTrip);

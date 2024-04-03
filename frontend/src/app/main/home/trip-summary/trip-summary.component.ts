@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TripService } from '../../trip-main/trip.service';
-import { IdentityRequest, TripCard } from '../../../models/dtos';
+import { IdentityRequest, TripCard, UserDTO } from '../../../models/dtos';
 import { AuthStore } from '../../../auth/auth.store';
 
 @Component({
@@ -18,7 +18,7 @@ export class TripSummaryComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('Trip summary init')
-
+    
     const id: IdentityRequest = {
       username: localStorage.getItem('username') ?? '',
       userId: Number(localStorage.getItem('userId'))

@@ -2,9 +2,13 @@ package com.nus.iss.travlr.models.DTO;
 
 import com.nus.iss.travlr.models.User.UserEntity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserDTO {
     Long userId;
     String username;

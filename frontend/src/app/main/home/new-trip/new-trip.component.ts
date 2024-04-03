@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { TripService } from '../../trip-main/trip.service';
-import { TripRequest } from '../../../models/dtos';
+import { TripRequest, UserDTO } from '../../../models/dtos';
 import { countries } from '../../../shared/components/store/country-data-store';
 import { Country } from '../../../shared/model/models';
 import { Observable, map, startWith } from 'rxjs';
@@ -24,12 +24,21 @@ export class NewTripComponent implements OnInit{
   countries: Country[] = countries;
   filteredCountries!: Observable<Country[]>
 
+  tripMateSearch: FormControl = this.fb.control('');
+  tripMates: UserDTO[] = [{ userId: 1, username: 'janeydoe', email: 'test@gmail.com', firstName: 'Jane', lastName: 'Doe'}]; // Sample data
+  filteredTripMates!: Observable<UserDTO[]>;
+
   ngOnInit(): void {
     this.form = this.initForm();
 
     this.filteredCountries = this.form.get('country')!.valueChanges.pipe(
       startWith(''),
-      map(value => this._filter(value)),
+      map(value => this._filterCountries(value)),
+    );
+
+    this.filteredTripMates = this.tripMateSearch.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filterTripMates(value))
     );
   }
 
@@ -37,7 +46,9 @@ export class NewTripComponent implements OnInit{
     return this.fb.group({
       country: this.fb.control<string>('', [Validators.required]),
       start: this.fb.control<Date>(new Date(), [Validators.required]),
-      end: this.fb.control<Date>(new Date(), [Validators.required])
+      end: this.fb.control<Date>(new Date(), [Validators.required]),
+      // tripMateSearch: this.fb.control<string>(''),
+      tripMates: this.fb.array([])
     })
   }
 
@@ -58,9 +69,31 @@ export class NewTripComponent implements OnInit{
       console.log("form invalid")
     }
   }
-  private _filter(value: string): Country[] {
+  // Getter is required for template to reference the FormArray
+  get tripMatesFormArray() {
+    return this.form.get('tripMates') as FormArray;
+  }
+
+  addTripMate(mate: UserDTO) {
+    const tripMates = this.form.get('tripMates') as FormArray;
+    if (tripMates != null) {
+      tripMates.push(this.fb.group(mate));
+      this.tripMateSearch.reset();
+    }
+  }
+
+  removeTripMate(index: number) {
+    const tripMates = this.form.get('tripMates') as FormArray;
+    tripMates.removeAt(index);
+  }
+
+  private _filterCountries(value: string): Country[] {
     const filterValue = value.toLowerCase();
     return this.countries.filter(country => country.name.toLowerCase().includes(filterValue));
+  }
+  private _filterTripMates(value: string): UserDTO[] {
+    const filterValue = value.toLowerCase();
+    return this.tripMates.filter(option => option.username.toLowerCase().includes(filterValue));
   }
 
 }

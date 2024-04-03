@@ -3,8 +3,13 @@
     <mat-card-header class="flex flex-col items-center p-4">
         <mat-card-title class="text-xl font-semibold">Trip to {{tripCard.country}}</mat-card-title>
         <mat-card-subtitle class="text-gray-600">{{tripCard.startDate | date:'d MMMM'}} - {{tripCard.endDate | date: 'd MMMM'}}</mat-card-subtitle>
+        @if (user.userId === tripCard.ownerId) {
+            <div class="flex items-center">
+                <mat-card-subtitle>
+                    <img src="assets/default_user.jpeg" class="w-8 h-8 rounded-full mr-2" alt="User Image">
+                </mat-card-subtitle>
+                <mat-card-subtitle>You own this trip</mat-card-subtitle>
+            </div>
+        }
     </mat-card-header>
-    <!-- <mat-card-actions class="justify-center p-4">
-        <button (click)="openTrip(tripCard.id)" class="bg-orange-200 hover:bg-orange-400 focus:outline-none focus:ring focus:ring-orange-500 focus:ring-opacity-50 rounded-full py-2 px-4 transition-colors">Open</button>
-    </mat-card-actions> -->
 </mat-card>

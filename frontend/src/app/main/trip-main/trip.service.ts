@@ -38,4 +38,9 @@ export class TripService {
     const headers = this.authStore.getAuthHeader();
     return this.http.get<Itinerary>(`${env.backendUrl}/itinerary/get/${tripId}`,{headers})
   }
+
+  savePlaceForItineraryDay(tripId: string, date: Date, rank: number, place: Place) {
+    const headers = this.authStore.getAuthHeader();
+    return this.http.put(`${env.backendUrl}/itinerary/update/${tripId}/${date}/${rank}`, place, {headers})
+  }
 }

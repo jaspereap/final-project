@@ -45,6 +45,7 @@ public class TripService {
         LocalDate endDate = convertToLocalDateViaInstant(trip.getEndDate());
         long daysBetween = ChronoUnit.DAYS.between(startDate, endDate) + 1; // +1 to include end date
 
+        // Initialise Days for itinerary
         List<Day> days = new ArrayList<>();
         for (int i = 0; i < daysBetween; i++) {
             LocalDate currentDay = startDate.plusDays(i);

@@ -36,6 +36,7 @@ export interface TripRequest {
     country: string
     start: Date
     end: Date
+    tripMates: UserDTO[]
 }
 export interface TripResponse {
     id: string
@@ -43,6 +44,7 @@ export interface TripResponse {
     startDate: Date
     endDate: Date
     ownerId: number
+    tripMatesId: number[]
 }
 export interface TripCard {
     id: string

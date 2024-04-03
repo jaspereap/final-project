@@ -1,8 +1,6 @@
-<p>new-trip works!</p>
-
-
 <div class="flex min-h-full justify-center px-6 py-12 lg:px-8">
     <form [formGroup]="form" (submit)="submit()">
+<!-- Country Form Field -->
         <mat-form-field appearance="fill" class="w-full">
             <mat-label>Country</mat-label>
             <input matInput 
@@ -22,6 +20,7 @@
             }
         </mat-autocomplete>
 
+<!-- Start and End date Form Field -->
         <mat-form-field appearance="fill" class="w-full">
             <mat-label>Enter a date range</mat-label>
             <mat-date-range-input [rangePicker]="picker">
@@ -39,6 +38,29 @@
               <mat-error>Invalid end date</mat-error>
             }
         </mat-form-field>
+<!-- Trip Mate Search Field -->
+        <mat-form-field appearance="fill" class="w-full">
+            <mat-label>Search Trip Mate</mat-label>
+            <input matInput
+                [matAutocomplete]="autoMate"
+                placeholder="Search Trip Mate"
+                [formControl]="tripMateSearch">
+            <mat-autocomplete autoActiveFirstOption #autoMate="matAutocomplete" (optionSelected)="addTripMate($event.option.value)">
+                <mat-option *ngFor="let mate of filteredTripMates | async" [value]="mate">
+                    {{mate.username}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+<!-- Selected Trip Mates List -->
+    <div formArrayName="tripMates" class="w-full">
+        <div *ngFor="let mate of tripMatesFormArray.controls; let i = index" [formGroupName]="i" class="flex justify-between items-center">
+          <p class="py-2">{{ mate.value.username }}</p>
+          <button type="button" (click)="removeTripMate(i)" class="ml-2 bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded">
+            Remove
+          </button>
+        </div>
+    </div>
+<!-- Submit -->
         <div>
             <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
                 Start planning
@@ -47,6 +69,7 @@
     </form>
 </div>
 
+<!-- Debug -->
 <div>
     <h3>FormGroup Stats</h3>
     <table *ngIf="form as form" border="">

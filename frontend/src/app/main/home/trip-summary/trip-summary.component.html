@@ -1,17 +1,20 @@
-<div class="">
-    <div *ngIf="user | async as user">
-        Your userid: {{ user.userId }}
+<div class="grid justify-items-center">
+    <div>
+
+        <!-- Flex container for title and button -->
+        <div class="flex justify-between items-center pb-5 w-full max-w-4xl">
+            <div class="text-3xl mr-40">Your trips at a glance</div>
+            <button (click)="newTrip()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+                + Add a new trip
+            </button>
+        </div>
     </div>
-    <span>
-        <div class="text-3xl pb-5">Your trips at a glance</div>
-        @for (card of tripCards; track card; let i = $index) {
-            <app-trip-card 
-                [tripCard]="card"
-                [index]="i">
-            </app-trip-card>
-        }
-        <button (click)="newTrip()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
-            + Add a new trip
-        </button>
-    </span>
+    <!-- Grid container for trip cards, centered with mx-auto and limited by max-w-4xl -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full max-w-4xl">
+        <ng-container *ngIf="user | async as user">
+            <ng-container *ngFor="let card of tripCards; let i = index">
+                <app-trip-card [tripCard]="card" [index]="i" [user]="user"></app-trip-card>
+            </ng-container>
+        </ng-container>
+    </div>
 </div>

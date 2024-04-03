@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ComponentStore, tapResponse } from '@ngrx/component-store';
 import { AddPlacePayload, AddPlaceToDayPayload, Day, Itinerary, Place } from '../../../models/dtos';
 import { TripService } from '../trip.service';
-import { Observable, Subject, concatMap, switchMap, tap } from 'rxjs';
+import { Observable, Subject, concatMap, map, switchMap, tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { TripStore } from '../trip.store';
 
@@ -83,4 +83,16 @@ export class ItineraryStore extends ComponentStore<ItineraryState>{
     )  
   )
 
+  readonly savePlace = this.effect((params$: Observable<{tripId: string, date: Date, rank: number, place: Place}>) => 
+    params$.pipe(
+      switchMap(param =>
+        this.tripSvc.savePlaceForItineraryDay(param.tripId, param.date, param.rank, param.place).pipe(
+          tapResponse(
+            (resp) => {
+              console.log('Server resp: ', resp)
+            },
+            (error) => console.error(error)
+          )
+        ))
+    ))
 }

@@ -1,15 +1,54 @@
 <br>
 <h4>{{ place.name }}</h4>
-
-<p *ngIf='place.start.toString() !== "0"'>
-    {{ place.start | date:'h mm a' }} - {{ place.end | date:'h mm a' }}
-</p>
-
 <p>{{ place.address }}</p>
-<p>Latlng: {{ place.latlng }}</p>
+
+
+<!-- Start End -->
+<div *ngIf="editingTime; else showTime">
+    <mat-form-field>
+        <mat-label>Start Time</mat-label>
+        <input matInput type="datetime-local" [matDatepicker]="picker" [(ngModel)]="place.start">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+</div>
+
+<ng-template #showTime>
+    <p *ngIf='place.start.toString() !== "0" else addTime'>
+        {{ place.start | date:'h mm a' }} - {{ place.end | date:'h mm a' }}
+    </p>
+    <ng-template #addTime>
+        <div class="flex items-center cursor-pointer p-2" (click)="editTime()">
+            Add a time
+        </div>
+    </ng-template>
+</ng-template>
+
+
+
+
+<!-- Notes -->
+<div *ngIf="editingNotes; else showNotes" class="flex items-center w-full">
+    <mat-form-field class="flex-grow">
+        <input matInput [(ngModel)]="editableNotes" (keyup.enter)="saveNotes(date, editableNotes)">
+    </mat-form-field>
+    <button mat-icon-button (click)="editingNotes = false" class="ml-2 pb-4">
+        <mat-icon>cancel</mat-icon>
+    </button>
+</div>
+
+<ng-template #showNotes>
+    <div class="flex items-center cursor-pointer p-2" (click)="editNotes()">
+      <mat-icon class="mr-2">edit_note</mat-icon>
+      <p class="m-0">{{ place.notes || 'Add a note' }}</p>
+    </div>
+</ng-template>
+  
+
+<!-- Image -->
 <p *ngIf="place.image.length != 0">
     <img [src]="place.image" alt="" width="200">
 </p>
-<button (click)="addNotes(date)" class="rounded bg-slate-200 text-xs py-1 px-1">Add notes</button>
 <button class="rounded bg-blue-200 text-xs py-1 px-1">Change Time</button>
 <button class="rounded bg-orange-200 text-xs py-1 px-1">Add Cost</button>
+

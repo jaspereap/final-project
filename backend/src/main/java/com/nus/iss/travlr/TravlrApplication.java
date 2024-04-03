@@ -56,8 +56,8 @@ public class TravlrApplication implements CommandLineRunner {
 		// Optional<Trip> optTrip = tripRepo.findById("1");
 		// System.out.println("\tTrip: \n" + optTrip.get());
 		// System.out.println(tripSvc.getAllTripsByUserId(4L));
-		String image = gSvc.searchImage("thailand scenic");
-		System.out.println("image: " + image);
+		// String image = gSvc.searchImage("thailand scenic");
+		// System.out.println("image: " + image);
 	}
 	private Date getDate(int year, int month, int day) {
 		Calendar calendar = Calendar.getInstance();
