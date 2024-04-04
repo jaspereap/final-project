@@ -1,7 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { provideComponentStore } from '@ngrx/component-store';
 import { TripStore } from './trip.store';
+import { AuthStore } from '../../auth/auth.store';
+import { combineLatest, map, switchMap, take } from 'rxjs';
 
 @Component({
   selector: 'app-trip-main',
@@ -13,8 +15,8 @@ export class TripMainComponent implements OnInit, OnDestroy{
   tripId!: string;
   currentTrip$ = this.tripStore.currentTrip$;
   isLoading$ = this.tripStore.isLoading$;
-
-  constructor(private route: ActivatedRoute, private tripStore: TripStore) {}
+  currentUser$ = this.authStore.user$;
+  constructor(private route: ActivatedRoute, private authStore: AuthStore, private tripStore: TripStore, private router: Router) {}
 
   ngOnInit(): void {
     // console.log("Trip-main init")
@@ -27,4 +29,5 @@ export class TripMainComponent implements OnInit, OnDestroy{
   ngOnDestroy() {
     console.log("OnDestroy trigger")
   }
+
 }

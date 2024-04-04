@@ -9,6 +9,8 @@ import { ChatroomComponent } from './chat/chatroom/chatroom.component';
 import { LoginMainComponent } from './auth/login-main/login-main.component';
 import { NewTripComponent } from './main/home/new-trip/new-trip.component';
 import { TripMainComponent } from './main/trip-main/trip-main.component';
+import { authGuard } from './guards/auth.guard';
+import { canViewTripGuard } from './guards/can-view-trip.guard';
 
 const routes: Routes = [
   {path: 'auth', canActivateChild: [],
@@ -18,14 +20,14 @@ const routes: Routes = [
       {path: 'register', component: RegisterComponent},
     ]
   },
-  {path: 'home', canActivateChild:[],
+  {path: 'home', canActivateChild:[authGuard],
     children: [
       {path: '', component: MainComponent},
       {path: 'new-trip', component: NewTripComponent},
       {path: 'chatroom', component: ChatroomComponent},
     ]
   },
-  {path: 'trip', 
+  {path: 'trip', canActivateChild: [authGuard, canViewTripGuard],
     children: [
       {path: ':tripId', component: TripMainComponent}
     ]
