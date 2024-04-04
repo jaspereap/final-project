@@ -21,23 +21,6 @@ export class ItineraryStore extends ComponentStore<ItineraryState>{
     })
   }
   readonly days$ = this.select((state) => state.days)
-
-  readonly addDay = this.updater((state, newDay: Day) => ({
-    ...state,
-    days: [...state.days, newDay]
-  }));
-
-  readonly addPlaceToDay = this.updater((state, payload: AddPlacePayload) => ({
-    ...state,
-    days: state.days.map(day =>
-      day.date === payload.date
-        ? {
-            ...day,
-            places: [...day.places, payload.place]
-          }
-        : day
-    )
-  }));
   
   readonly setItinerary = this.updater((state, iti: Itinerary) => ({
     ...state,

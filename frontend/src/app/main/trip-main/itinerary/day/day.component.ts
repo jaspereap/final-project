@@ -25,7 +25,7 @@ export class DayComponent implements OnInit, OnChanges {
       private tripStore: TripStore,
       private route: ActivatedRoute,
       private router: Router,
-      private itiStore: ItineraryStore
+      // private itiStore: ItineraryStore
       ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -58,7 +58,7 @@ export class DayComponent implements OnInit, OnChanges {
   }
 
   addPlace() {
-    this.itiStore.addPlaceToItineraryDay(
+    this.tripStore.addPlaceToItineraryDay(
       {
         tripId: this.tripId,
         date: this.day.date,

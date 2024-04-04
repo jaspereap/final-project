@@ -1,6 +1,6 @@
 <div class="text-lg">Itinerary</div>
 <!-- itinerary.component.html -->
-<div *ngIf="days$ | async as days; else noItinerary" class="ml-10">
+<div *ngIf="days$ | async as days; else noItinerary" class="">
     <app-day *ngFor="let day of days; let i = index"
         [day]="day">
     </app-day>

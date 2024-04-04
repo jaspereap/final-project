@@ -3,6 +3,7 @@ import { Place } from '../../../../../models/dtos';
 import { TripService } from '../../../trip.service';
 import { ItineraryStore } from '../../itinerary.store';
 import { ActivatedRoute } from '@angular/router';
+import { TripStore } from '../../../trip.store';
 
 @Component({
   selector: 'app-place',
@@ -22,7 +23,10 @@ export class PlaceComponent implements OnInit, OnChanges{
 
   testTime: string = "14:15";
 
-  constructor(private itiStore: ItineraryStore, private route: ActivatedRoute) {}
+  constructor(
+    // private itiStore: ItineraryStore, 
+    private tripStore: TripStore,
+    private route: ActivatedRoute) {}
   tripId!: string;
   ngOnInit(): void {
     this.tripId = this.route.snapshot.params['tripId'];
@@ -48,7 +52,7 @@ export class PlaceComponent implements OnInit, OnChanges{
     // console.log('after: ');
     // console.log(this.place.start.getTime());
     // console.log(this.place.end.getTime());
-    this.itiStore.savePlace(
+    this.tripStore.savePlace(
       {
         tripId: this.tripId,
         date: this.date,
@@ -77,7 +81,7 @@ export class PlaceComponent implements OnInit, OnChanges{
     console.log(this.date, notes)
     // Call a service to save the notes for the place
     this.place.notes = notes;
-    this.itiStore.savePlace(
+    this.tripStore.savePlace(
       {
         tripId: this.tripId,
         date: this.date,

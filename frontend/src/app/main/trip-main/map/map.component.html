@@ -1,4 +1,3 @@
-<p>map works!</p>
 <select (change)="onSelectionChange(catSelect.value)" #catSelect>
     <option value="lodging">Lodging</option>
     <option *ngFor="let day of itineraryDays; let i = index" [value]="day.date">

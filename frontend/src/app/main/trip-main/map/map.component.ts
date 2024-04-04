@@ -1,13 +1,16 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Day, Lodging, Marker } from '../../../models/dtos';
 import { environment as env } from "../../../../environments/environment";
 import LatLngLiteral = google.maps.LatLngLiteral;
+import { ItineraryStore } from '../itinerary/itinerary.store';
+import { provideComponentStore } from '@ngrx/component-store';
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
-  styleUrl: './map.component.scss'
+  styleUrl: './map.component.scss',
+  providers: [provideComponentStore(ItineraryStore)]
 })
-export class MapComponent implements OnInit {
+export class MapComponent implements OnInit, OnChanges {
   @Input() lodgings!: Lodging[];
   @Input() itineraryDays!: Day[];
 
@@ -20,25 +23,28 @@ export class MapComponent implements OnInit {
   displayMarkers: Marker[] = []
   markerOptions: google.maps.MarkerOptions = {draggable: false};
 
-  constructor() {
+  constructor(private itiStore: ItineraryStore) {
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log('map changes: ', changes)
   }
 
   ngOnInit(): void {
     // console.log('Map init')
-    // console.log('Lodgings: ', this.lodgings)
-    // console.log('itinerary days: ', this.itineraryDays)
     // Init displayMarkers
     this.displayMarkers = this.getAllLodgingMarkers(this.lodgings);
   }
 
-  onSelectionChange(selectedValue: string): void {
+  selected: string = 'lodging';
+  onSelectionChange(value: string): void {
+    this.selected = value
     this.displayMarkers = [];
-    if (selectedValue === 'lodging') {
+    if (value === 'lodging') {
       this.displayMarkers = this.getAllLodgingMarkers(this.lodgings);
     } else {
       this.displayMarkers = [
-          ...this.getDayMarkers(selectedValue, this.itineraryDays),
-          ...this.getLodgingMarkers(selectedValue, this.lodgings)]
+          ...this.getDayMarkers(value, this.itineraryDays),
+          ...this.getLodgingMarkers(value, this.lodgings)]
     }
   }
   
