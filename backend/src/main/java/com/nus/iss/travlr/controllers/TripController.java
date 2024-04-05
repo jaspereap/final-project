@@ -1,9 +1,6 @@
 package com.nus.iss.travlr.controllers;
 
-import java.io.StringReader;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,27 +15,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.google.maps.model.PlaceDetails;
-import com.google.maps.model.PlacesSearchResult;
 import com.nus.iss.travlr.TripUtils;
-import com.nus.iss.travlr.models.Itinerary;
 import com.nus.iss.travlr.models.Trip;
-import com.nus.iss.travlr.models.DTO.TripCard;
 import com.nus.iss.travlr.models.DTO.UserDTO;
 import com.nus.iss.travlr.models.DTO.Request.IdentityRequest;
-import com.nus.iss.travlr.models.DTO.Request.PlaceRequest;
 import com.nus.iss.travlr.models.DTO.Request.TripRequest;
 import com.nus.iss.travlr.models.DTO.Response.MessageResponse;
 import com.nus.iss.travlr.models.DTO.Response.TripResponse;
 import com.nus.iss.travlr.service.ItineraryService;
-import com.nus.iss.travlr.service.PlaceService;
 import com.nus.iss.travlr.service.TripService;
 
-import jakarta.json.Json;
 import jakarta.json.JsonArray;
-import jakarta.json.JsonObject;
-import jakarta.json.JsonString;
-import jakarta.json.JsonValue;
 
 @RestController
 @RequestMapping(path = "/api/v1/trip")
@@ -46,8 +33,8 @@ import jakarta.json.JsonValue;
 public class TripController {
 
     @Autowired private TripService tripSvc;
-    @Autowired private ItineraryService itiSvc;
 
+    // For displaying tripcards at homepage
     @PostMapping(path = "/all")
     public ResponseEntity<String> getTrips(@RequestBody IdentityRequest request) {
         System.out.println("\tGet TripSSSS controller triggered");
@@ -58,7 +45,7 @@ public class TripController {
         // return ResponseEntity.ok(new MessageResponse("success").get());
     }
 
-    // TODO: complete add trip
+    // For creating a fresh trip
     @PostMapping(path = "/new")
     public ResponseEntity<String> postAddTrip(@RequestBody TripRequest request) {
         System.out.println("\tPost add trip controller triggered");
@@ -81,6 +68,7 @@ public class TripController {
         return ResponseEntity.ok(new TripResponse(createdTrip).toJson().toString());
     }
 
+    // For retrieving a single trip details
     @GetMapping(path = "/show/{tripId}")
     public ResponseEntity<String> getTrip(@PathVariable String tripId) {
         System.out.println("\tGet trip controller triggered");
@@ -91,5 +79,14 @@ public class TripController {
         }
         return ResponseEntity.ok(optTrip.get().toJson().toString());
         // return ResponseEntity.ok(new MessageResponse("success").get());
+    }
+
+    // For checking if user is allowed to view trip
+    @GetMapping(path = "/is-allowed")
+    public ResponseEntity<Boolean> getAllowedUsers(@RequestParam String tripId, @RequestParam String userId) {
+        System.out.println("get allowed users controller");
+        System.out.println("\tparamsssss: " + userId);
+        System.out.println("\tparamsssss: " + tripId);
+        return ResponseEntity.ok(tripSvc.checkIsAllowed(tripId, userId));
     }
 }

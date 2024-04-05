@@ -2,12 +2,27 @@ import { inject } from '@angular/core';
 import { CanActivateChildFn, Router } from '@angular/router';
 import { AuthStore } from '../auth/auth.store';
 import { TripStore } from '../main/trip-main/trip.store';
-import { map, switchMap, take, withLatestFrom } from 'rxjs';
+import { Observable, map, of, switchMap, take, withLatestFrom } from 'rxjs';
+import { AuthService } from '../auth/auth.service';
+import { UserDTO } from '../models/dtos';
+import { LocalStorageService } from '../shared/services/local-storage.service';
 
 export const canViewTripGuard: CanActivateChildFn = (childRoute, state) => {
-  // console.log(childRoute, state)
-  const authStore = inject(AuthStore)
-  // const tripStore = inject(TripStore)
+  const authSvc = inject(AuthService)
   const router = inject(Router)
-  return true;
+  const localStore = inject(LocalStorageService)
+  const tripId = childRoute.params['tripId'];
+  const currentUserId = localStore.getUserId() ?? '';
+  
+  return authSvc.checkIsAllowed(tripId, currentUserId).pipe(
+    switchMap( isAllowed => {
+      // Check if currentUserId is in the list of allowed user IDs
+      console.log('server is allowed response: ', isAllowed)
+      if (isAllowed) {
+        return of(true);
+      } else {
+        return router.navigate(['/home']);
+      }
+    })
+  );
 };

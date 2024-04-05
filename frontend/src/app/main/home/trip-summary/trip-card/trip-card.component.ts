@@ -1,7 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { TripCard, UserDTO } from '../../../../models/dtos';
 import { Router } from '@angular/router';
-import { AuthStore } from '../../../../auth/auth.store';
+import { UserService } from '../../../../shared/services/user.service';
+import { Observable, map, take } from 'rxjs';
 
 @Component({
   selector: 'app-trip-card',
@@ -12,14 +13,13 @@ export class TripCardComponent implements OnInit{
   @Input() tripCard!: TripCard
   @Input() index!: number
   @Input() user!: UserDTO;
-  // user = this.authStore.user$;
+  owner$!: Observable<UserDTO>;
 
-  constructor(private router: Router, private authStore: AuthStore) {}
+  constructor(private router: Router, 
+    private userSvc: UserService) {}
 
   ngOnInit(): void {
-    // console.log('Trip Card init')
-    // console.log('tripCard: ', this.tripCard)
-    // console.log('index: ', this.index)
+    this.owner$ = this.userSvc.getUser(this.tripCard.ownerId);
   }
 
   openTrip(tripId: string) {

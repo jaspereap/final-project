@@ -14,7 +14,7 @@ import com.nus.iss.travlr.models.User.UserEntity;
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
     // Automatic custom queries - generate queries from method names
     Optional<UserEntity> findUserByUsername(String username);
-    Optional<UserEntity> findUserById(int id);
+    Optional<UserEntity> findUserById(Long id);
     boolean existsByUsername(String username);
     // List<UserEntity> findByUsernameContainingIgnoreCase(String username);
     Page<UserEntity> findByUsernameContainingIgnoreCase(String username, Pageable pageable);

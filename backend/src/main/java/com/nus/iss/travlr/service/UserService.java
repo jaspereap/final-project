@@ -45,4 +45,8 @@ public class UserService {
         Page<UserEntity> page = userRepo.findByUsernameContainingIgnoreCase(username, pageable);
         return page.getContent();
     }
+
+    public Optional<UserEntity> getUserByUserId(Long userId) {
+        return userRepo.findUserById(userId);
+    }
 }

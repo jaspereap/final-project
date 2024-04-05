@@ -99,4 +99,21 @@ public class TripService {
         .atZone(ZoneId.systemDefault())
         .toInstant());
     }
+
+    public boolean checkIsAllowed(String tripId, String userId) {
+        Optional<Trip> optTrip = tripRepo.findById(tripId);
+        if (optTrip.isEmpty()) {
+            return false;
+        }
+        Trip trip = optTrip.get();
+        if (trip.getOwnerId() == Long.parseLong(userId)) {
+            return true;
+        }
+        for (Long id: trip.getTripMatesId()) {
+            if (id == Long.parseLong(userId)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

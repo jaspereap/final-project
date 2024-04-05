@@ -12,10 +12,20 @@ export class UserService {
 
   constructor(private http: HttpClient, private authStore: AuthStore) { }
 
-  searchUsers(query: string): Observable<UserDTO[]> {
+  searchUsers(username: string): Observable<UserDTO[]> {
     const headers = this.authStore.getAuthHeader();
-    const params = new HttpParams().set('username', query);
+    const params = new HttpParams().set('username', username);
     return this.http.get<UserDTO[]>(`${env.backendUrl}/user/search`, 
+    {
+      params:  params , 
+      headers: headers
+    });
+  }
+
+  getUser(userId: number) {
+    const headers = this.authStore.getAuthHeader();
+    const params = new HttpParams().set('userId', userId);
+    return this.http.get<UserDTO>(`${env.backendUrl}/user/user`, 
     {
       params:  params , 
       headers: headers
