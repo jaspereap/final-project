@@ -38,6 +38,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { TripNotificationService } from './main/trip-main/trip-notification.service';
 import { FlightDialogComponent } from './main/trip-main/flight/flight-dialog/flight-dialog.component';
+import { LodgingDialogComponent } from './main/trip-main/lodging/lodging-dialog/lodging-dialog.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { FlightDialogComponent } from './main/trip-main/flight/flight-dialog/fli
     DayComponent,
     PlaceComponent,
     TripCardComponent,
-    FlightDialogComponent
+    FlightDialogComponent,
+    LodgingDialogComponent
   ],
   imports: [
     BrowserModule,

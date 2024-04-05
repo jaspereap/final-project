@@ -1,0 +1,11 @@
+<h2 mat-dialog-title>Add a new Lodging</h2>
+<mat-dialog-content>
+  <p>Enter your lodging details</p>
+    <form [formGroup]="form">
+
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-dialog-close class="rounded bg-blue-400 p-2">Close</button>
+  <button [mat-dialog-close]="form" cdkFocusInitial class="rounded bg-blue-600 p-2">Ok</button>
+</mat-dialog-actions>
