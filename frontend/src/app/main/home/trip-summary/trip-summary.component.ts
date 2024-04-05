@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { TripService } from '../../trip-main/trip.service';
 import { IdentityRequest, TripCard, UserDTO } from '../../../models/dtos';
 import { AuthStore } from '../../../auth/auth.store';
+import { LocalStorageService } from '../../../shared/services/local-storage.service';
 
 @Component({
   selector: 'app-trip-summary',
@@ -14,27 +15,32 @@ export class TripSummaryComponent implements OnInit {
 
   trips: string[] = ['hello', 'test'];
   tripCards: TripCard[] = [];
-  constructor(private authStore: AuthStore, private router: Router, private tripSvc: TripService) {}
+  constructor(private authStore: AuthStore, 
+    private router: Router, 
+    private tripSvc: TripService, 
+    private localStore: LocalStorageService) {}
 
   ngOnInit(): void {
     console.log('Trip summary init')
     
     const id: IdentityRequest = {
-      username: localStorage.getItem('username') ?? '',
-      userId: Number(localStorage.getItem('userId'))
+      username: this.localStore.getUsername() ?? '',
+      userId: Number(this.localStore.getUserId())
     }
 
     this.tripSvc.getTripCards(id).subscribe({
       next: (tripCards) => {
         console.log('tripCards: ', tripCards)
         this.tripCards = tripCards},
-      error: (error) => {console.error(error); this.router.navigate(['/auth/login']);},
-      complete: () => console.log('complete')
+      error: (error) => {
+        console.error(error); 
+        this.router.navigate(['/auth/login']);
+      }
     })
   }
 
   newTrip() {
-    console.log('new trip pressed')
+    // console.log('new trip pressed')
     this.router.navigate(['/home/new-trip'])
   }
 }

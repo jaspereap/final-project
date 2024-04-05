@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { User } from '../../models/dtos';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -11,7 +12,7 @@ import { User } from '../../models/dtos';
 })
 export class RegisterComponent {
   registerForm!: FormGroup;
-  constructor(private fb: FormBuilder, private authService: AuthService) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.registerForm = this.initRegisterForm();
   }
   
@@ -33,11 +34,14 @@ export class RegisterComponent {
     const user = {
       username: formData['username'],
       email: formData['email'],
-      password: formData['password']
+      password: formData['password'],
+      firstName: formData['firstName'],
+      lastName: formData['lastName'],
     } as User
     this.authService.register(user).subscribe(
       (resp) => {
-        console.log('response from server: ', resp)
+        console.log('Register response from server: ', resp)
+        this.router.navigate(['auth/login'])
       }
     );
   }

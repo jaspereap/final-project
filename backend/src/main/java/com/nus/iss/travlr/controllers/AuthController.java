@@ -63,7 +63,13 @@ public class AuthController {
             System.out.println("Username already exists!");
             return ResponseEntity.badRequest().build();
         }
-        UserEntity user = new UserEntity(request.getUsername(), request.getEmail(), encoder.encode(request.getPassword()));
+        UserEntity user = new UserEntity(
+            request.getUsername(), 
+            request.getEmail(), 
+            encoder.encode(request.getPassword()),
+            request.getFirstName(),
+            request.getLastName()
+        );
         userService.registerUser(user);
         return ResponseEntity.ok().body(user);
     }

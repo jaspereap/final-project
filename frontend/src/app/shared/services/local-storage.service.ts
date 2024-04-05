@@ -9,35 +9,35 @@ export class LocalStorageService {
   constructor() { }
 
   setToken(token: string) {
-    localStorage.setItem('token', token);
+    sessionStorage.setItem('token', token);
   }
   getToken(): string {
-    return localStorage.getItem('token') ?? '';
+    return sessionStorage.getItem('token') ?? '';
   }
   clear() {
-    localStorage.clear()
+    sessionStorage.clear()
   }
   getUser() {
     const user: UserDTO = {
-      username: localStorage.getItem('username') ?? '',
-      firstName: localStorage.getItem('firstName') ?? '',
-      lastName: localStorage.getItem('lastName') ?? '',
-      userId: Number(localStorage.getItem('userId')),
-      email: localStorage.getItem('email') ?? '',
+      username: sessionStorage.getItem('username') ?? '',
+      firstName: sessionStorage.getItem('firstName') ?? '',
+      lastName: sessionStorage.getItem('lastName') ?? '',
+      userId: Number(sessionStorage.getItem('userId')),
+      email: sessionStorage.getItem('email') ?? '',
     }
     return user;
   }
   getUsername() {
-    return localStorage.getItem('username')
+    return sessionStorage.getItem('username')
   }
   getUserId() {
-    return localStorage.getItem('userId')
+    return sessionStorage.getItem('userId')
   }
   setUser(user: UserDTO) {
-    localStorage.setItem('firstName', user.firstName)
-    localStorage.setItem('lastName', user.lastName)
-    localStorage.setItem('userId', user.userId.toString())
-    localStorage.setItem('username', user.username)
-    localStorage.setItem('email', user.email)
+    sessionStorage.setItem('firstName', user.firstName)
+    sessionStorage.setItem('lastName', user.lastName)
+    sessionStorage.setItem('userId', user.userId.toString())
+    sessionStorage.setItem('username', user.username)
+    sessionStorage.setItem('email', user.email)
   }
 }

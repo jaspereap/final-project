@@ -1,4 +1,3 @@
-<div>Register Component</div>
 <div class="flex min-h-80 justify-center px-6 py-12 lg:px-8">
 <mat-card class="">
     <mat-card-content class="w-96 mt-5">
@@ -55,6 +54,28 @@
                         autocomplete="email">
                     @if (registerForm.get('email')?.touched && registerForm.get('email')?.hasError) {
                         <mat-error>Email is required.</mat-error>
+                    }
+                </mat-form-field>
+            </p>
+            <p>
+                <mat-form-field appearance="fill" class="w-full">
+                    <mat-label>First Name</mat-label>
+                    <input matInput type="text" 
+                        placeholder="Enter your first name" 
+                        formControlName="firstName">
+                    @if (registerForm.get('firstName')?.touched && registerForm.get('firstName')?.hasError) {
+                        <mat-error>First name is required.</mat-error>
+                    }
+                </mat-form-field>
+            </p>
+            <p>
+                <mat-form-field appearance="fill" class="w-full">
+                    <mat-label>Last Name</mat-label>
+                    <input matInput type="text" 
+                        placeholder="Enter your Last name" 
+                        formControlName="lastName">
+                    @if (registerForm.get('lastName')?.touched && registerForm.get('lastName')?.hasError) {
+                        <mat-error>Last name is required.</mat-error>
                     }
                 </mat-form-field>
             </p>

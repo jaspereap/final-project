@@ -4,9 +4,10 @@ import { TripService } from '../../trip-main/trip.service';
 import { TripRequest, UserDTO } from '../../../models/dtos';
 import { countries } from '../../../shared/components/store/country-data-store';
 import { Country } from '../../../shared/model/models';
-import { Observable, map, startWith } from 'rxjs';
+import { Observable, debounceTime, map, startWith, switchMap, tap } from 'rxjs';
 import { LocalStorageService } from '../../../shared/services/local-storage.service';
 import { Router } from '@angular/router';
+import { UserService } from '../../../shared/services/user.service';
 
 @Component({
   selector: 'app-new-trip',
@@ -18,14 +19,14 @@ export class NewTripComponent implements OnInit{
   constructor(private localStore: LocalStorageService,
       private router: Router,
       private fb: FormBuilder,
-      private tripSvc: TripService) {}
+      private tripSvc: TripService,
+      private userSvc: UserService) {}
   form!: FormGroup;
 
   countries: Country[] = countries;
   filteredCountries!: Observable<Country[]>
 
   tripMateSearch: FormControl = this.fb.control('');
-  tripMates: UserDTO[] = [{ userId: 1, username: 'janeydoe', email: 'test@gmail.com', firstName: 'Jane', lastName: 'Doe'}]; // Sample data
   filteredTripMates!: Observable<UserDTO[]>;
 
   ngOnInit(): void {
@@ -37,8 +38,8 @@ export class NewTripComponent implements OnInit{
     );
 
     this.filteredTripMates = this.tripMateSearch.valueChanges.pipe(
-      startWith(''),
-      map(value => this._filterTripMates(value))
+      debounceTime(500),
+      switchMap(value => this.userSvc.searchUsers(value))
     );
   }
 
@@ -91,9 +92,4 @@ export class NewTripComponent implements OnInit{
     const filterValue = value.toLowerCase();
     return this.countries.filter(country => country.name.toLowerCase().includes(filterValue));
   }
-  private _filterTripMates(value: string): UserDTO[] {
-    const filterValue = value.toLowerCase();
-    return this.tripMates.filter(option => option.username.toLowerCase().includes(filterValue));
-  }
-
 }

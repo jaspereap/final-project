@@ -28,15 +28,4 @@ export class MainComponent implements OnInit {
     private msgSvc: MessageService,
     private authStore: AuthStore) {}
 
-  test() {
-    console.log('test pressed')
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${this.localStore.getToken()}`
-    })
-    this.http.get(`/test`, { headers : headers }).subscribe(
-      (resp) => {
-        console.log(resp)
-      }
-    )
-  }
 }

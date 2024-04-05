@@ -60,6 +60,13 @@ public class UserEntity implements UserDetails {
         this.email = email;
         this.password = password;
     }
+    public UserEntity(String username, String email, String password, String firstName, String lastName) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName().toString())).toList();

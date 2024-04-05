@@ -53,7 +53,6 @@ public class TripController {
         System.out.println("\tGet TripSSSS controller triggered");
         System.out.println(request);
         ArrayList<Trip> trips = tripSvc.getAllTripsByUserId(request.getUserId());
-        System.out.println(trips);
         JsonArray tripCards = TripUtils.tripToTripCards(trips);
         return ResponseEntity.ok(tripCards.toString());
         // return ResponseEntity.ok(new MessageResponse("success").get());
