@@ -28,7 +28,9 @@ export enum MessageType {
     ACK = 'ACK',
     USER_JOINED = 'USER_JOINED',
     USER_LEFT = 'USER_LEFT',
-    CHAT = 'CHAT'
+    CHAT = 'CHAT',
+    MODIFIED = 'MODIFIED',
+    ITINERARY_MODIFIED = 'ITINERARY_MODIFIED',
 }
 
 export interface TripRequest {

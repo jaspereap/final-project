@@ -28,7 +28,7 @@ export class TripSummaryComponent implements OnInit {
       next: (tripCards) => {
         console.log('tripCards: ', tripCards)
         this.tripCards = tripCards},
-      error: (error) => console.error(error),
+      error: (error) => {console.error(error); this.router.navigate(['/auth/login']);},
       complete: () => console.log('complete')
     })
   }

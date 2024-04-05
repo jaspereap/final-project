@@ -93,30 +93,4 @@ public class TripController {
         return ResponseEntity.ok(optTrip.get().toJson().toString());
         // return ResponseEntity.ok(new MessageResponse("success").get());
     }
-
-    @PostMapping(path = "/{tripId}/{date}/new-place")
-    public ResponseEntity<String> postAddPlaceToDate(@PathVariable String tripId, @PathVariable String date, @RequestBody String placeData) {
-        System.out.println("\tPost add palce to date controller");
-        System.out.println("\ttripId: " + tripId);
-        System.out.println("\tTo date: " + new Date(Long.parseLong(date)));
-        System.out.println("\tplaceData: " + placeData);
-        JsonObject placeRequest = Json.createReader(new StringReader(placeData)).readObject().getJsonObject("place");
-        JsonObject placeLocation = placeRequest.getJsonObject("latlng");
-
-        PlaceRequest place = new PlaceRequest(
-            placeRequest.getString("name", ""), 
-            placeRequest.getString("address", ""), 
-            new Float[]{
-                (float) placeLocation.getJsonNumber("lat").doubleValue(), 
-                (float) placeLocation.getJsonNumber("lng").doubleValue()
-            },
-            placeRequest.getString("image")
-        );
-
-        System.out.println(place);
-
-        Itinerary itinerary = itiSvc.addPlaceToItineraryDay(tripId, date, place);
-
-        return ResponseEntity.ok(itinerary.toJson().toString());
-    }
 }

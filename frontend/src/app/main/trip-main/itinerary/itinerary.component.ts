@@ -9,15 +9,17 @@ import { ActivatedRoute } from '@angular/router';
   selector: 'app-itinerary',
   templateUrl: './itinerary.component.html',
   styleUrl: './itinerary.component.scss',
-  providers: [provideComponentStore(TripStore)]
+  // providers: [provideComponentStore(TripStore)]
 })
 export class ItineraryComponent implements OnInit {
-  days$ = this.tripStore.days$;
+  // days$ = this.tripStore.days$;
   tripId!: string;
 
+  @Input()
   days!: Day[];
 
-  constructor(private tripStore: TripStore, 
+  constructor(
+    // private tripStore: TripStore, 
     // private itiStore: ItineraryStore, 
     private route: ActivatedRoute,) {}
 
@@ -25,7 +27,7 @@ export class ItineraryComponent implements OnInit {
     console.log('Itinerary init')
     this.tripId = this.route.snapshot.params['tripId'];
     // this.tripStore.getItinerary(this.tripId);
-    this.tripStore.getTripById(this.tripId)
+    // this.tripStore.getTripById(this.tripId)
   }
 
 }

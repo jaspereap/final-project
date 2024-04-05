@@ -31,11 +31,14 @@ export class TripStore extends ComponentStore<TripState> {
   readonly flights$ = this.select(this.currentTrip$, (currentTrip) => currentTrip?.flightDetails);
   readonly days$ = this.select((state) => state.currentTrip?.itinerary.days)
 // Updaters
+  // Set Trip
   readonly setTrip = this.updater((state, trip: Trip) => ({
     ...state,
     currentTrip: trip
   }))
+  // Set Itinerary
   readonly setItinerary = this.updater((state, newItinerary: Itinerary) => {
+    console.log('\tSetting itinerary..')
     // If there's no currentTrip in the state, log an error or handle as appropriate
     if (!state.currentTrip) {
       console.error('Cannot set itinerary because there is no current trip in the state.');
@@ -68,6 +71,7 @@ export class TripStore extends ComponentStore<TripState> {
             },
             (error) => {
               // this.patchState({ error: error, isLoading: false })
+              this.router.navigate(['/auth/login'])
               console.error(error);
             }
           )

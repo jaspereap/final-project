@@ -31,7 +31,7 @@ export class TripService {
 
   addPlaceToDay(tripId:string, date: Date, place: CustomPlaceResult) {
     const headers = this.authStore.getAuthHeader();
-    return this.http.post<Itinerary>(`${env.backendUrl}/trip/${tripId}/${date}/new-place`, {place: place}, {headers})
+    return this.http.post<Itinerary>(`${env.backendUrl}/itinerary/add/${tripId}/${date}`, {place: place}, {headers})
   }
 
   getItineraryByTripId(tripId: string) {

@@ -36,6 +36,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MtxCalendar } from '@ng-matero/extensions/datetimepicker';
 import { provideNativeDatetimeAdapter } from '@ng-matero/extensions/core';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { NotificationService } from './shared/services/notification.service';
 
 @NgModule({
   declarations: [
@@ -80,6 +81,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
   ],
   providers: [
     MessageService,
+    NotificationService,
     provideNativeDatetimeAdapter(),
     {
       provide: RxStompService,

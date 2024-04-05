@@ -34,9 +34,13 @@ public class TestController {
         return ResponseEntity.ok(response.toString());
     }
 
-    @GetMapping(path = "/pubtoroom/{roomId}")
-    public void pubToUser(@PathVariable String roomId) {
-        msgSvc.publishToRoom(roomId, "Test pub to game", MessageType.ACK);
+    @GetMapping(path = "/pubtouserid/{userId}")
+    public void pubToUser(@PathVariable String userId) {
+        msgSvc.publishToUser(userId, "Test pub to user", MessageType.ITINERARY_MODIFIED);
+    }
+    @GetMapping(path = "/pubtotripid/{tripId}")
+    public void pubToTrip(@PathVariable String tripId) {
+        msgSvc.publishToTrip(tripId, "Test pub to trip", MessageType.ITINERARY_MODIFIED);
     }
 
     @MessageMapping("/{gameId}/{playerName}/")

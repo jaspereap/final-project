@@ -9,7 +9,7 @@
             <br>
             <app-lodging [lodgings]="trip.lodgings"></app-lodging>
             <br>
-            <app-itinerary></app-itinerary>
+            <app-itinerary [days]="trip.itinerary.days"></app-itinerary>
             <br>
             <app-map
                 [lodgings]="trip.lodgings"
