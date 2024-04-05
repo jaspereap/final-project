@@ -39,9 +39,6 @@ public class ItineraryController {
     public ResponseEntity<String> getItinerary(@PathVariable String tripId) {
         Itinerary retrievedItinerary = itiSvc.getItineraryByTripId(tripId);
         System.out.println("getItinerary: ");
-        // System.out.println(retrievedItinerary.getDays().getFirst().getDate().getTime());
-        // System.out.println(retrievedItinerary.getDays().getFirst().getPlaces().getFirst().getStart().getTime());
-        // System.out.println(retrievedItinerary.getDays().getFirst().getPlaces().getFirst().getEnd().getTime());
         return ResponseEntity.ok(retrievedItinerary.toJson().toString());
     }
 // For updating place
@@ -89,7 +86,7 @@ public class ItineraryController {
 
         Itinerary itinerary = itiSvc.addPlaceToItineraryDay(tripId, date, place);
         // msgSvc.publishToTrip(tripId, itinerary.toJson().toString(), MessageType.ITINERARY_MODIFIED);
-        msgSvc.publishToTripWithAuthor(tripId, itinerary.toJson().toString(), MessageType.ITINERARY_MODIFIED, place.getIdentity().getUsername());
+        msgSvc.publishToTripWithAuthor(tripId, itinerary.toJson().toString(), MessageType.ITINERARY_ADDED, place.getIdentity().getUsername());
         return ResponseEntity.ok(itinerary.toJson().toString());
     }
 }

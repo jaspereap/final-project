@@ -1,15 +1,15 @@
 <!-- flight.component.html -->
 <div *ngIf="flights && flights.length > 0; else noFlights">
-    <div *ngFor="let flight of flights">
+    <div *ngFor="let flight of flights; let i = index;">
       <h3>{{ flight.airlineName }} ({{ flight.flightNumber }})</h3>
       <p>Departure: {{ flight.departureCountry }} - {{ flight.departureDate | date:'medium' }}</p>
       <p>Arrival: {{ flight.arrivalCountry }} - {{ flight.arrivalDate | date:'medium' }}</p>
       <p>Notes: {{ flight.notes }}</p>
-      <!-- Display costings and other details as needed -->
+      <button class="rounded p-1 bg-black text-white" (click)="deleteFlight(i)">Delete</button>
     </div>
-  </div>
+</div>
   
   <ng-template #noFlights>
     <p>No flight information available.</p>
   </ng-template>
-  
+  <button class="rounded bg-blue-300 p-2" (click)="openDialog()">Add a Flight</button>

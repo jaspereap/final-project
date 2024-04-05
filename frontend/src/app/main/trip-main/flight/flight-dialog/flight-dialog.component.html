@@ -1,0 +1,62 @@
+<h2 mat-dialog-title>Add a new Flight</h2>
+<mat-dialog-content>
+  <p>Enter your flight details</p>
+    <form [formGroup]="form">
+
+        <mat-form-field>
+          <mat-label>Airline Name</mat-label>
+          <input matInput formControlName="airlineName">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Flight Number</mat-label>
+          <input matInput formControlName="flightNumber">
+        </mat-form-field>
+<!-- Departure -->
+        <div class="flex flex-row justify-between">
+
+            <mat-form-field class="flex-grow mr-2">
+                <mat-label>Depart From</mat-label>
+                <input matInput 
+                    formControlName="departureCountry" 
+                    [matAutocomplete]="depart">
+                <mat-autocomplete autoActiveFirstOption #depart="matAutocomplete">
+                    @for (country of filteredDeparture | async; track country) {
+                    <mat-option [value]="country.name">{{country.name}}</mat-option>
+                    }
+                </mat-autocomplete>
+            </mat-form-field>
+
+            <mat-form-field class="flex-grow">
+                <mat-label>Departure Date</mat-label>
+                <input matInput [matDatepicker]="departurePicker" formControlName="departureDate">
+                <mat-datepicker-toggle matSuffix [for]="departurePicker"></mat-datepicker-toggle>
+                <mat-datepicker #departurePicker></mat-datepicker>
+              </mat-form-field>
+
+        </div>
+<!-- Arrival -->
+<div class="flex flex-row justify-between">
+    <mat-form-field class="flex-grow mr-2">
+        <mat-label>Arrival</mat-label>
+        <input matInput 
+            formControlName="arrivalCountry" 
+            [matAutocomplete]="arrive">
+        <mat-autocomplete autoActiveFirstOption #arrive="matAutocomplete">
+            @for (country of filteredArrival | async; track country) {
+            <mat-option [value]="country.name">{{country.name}}</mat-option>
+            }
+        </mat-autocomplete>
+    </mat-form-field>
+    <mat-form-field class="flex-grow">
+        <mat-label>Arrival Date</mat-label>
+        <input matInput [matDatepicker]="arrivalPicker" formControlName="arrivalDate">
+        <mat-datepicker-toggle matSuffix [for]="arrivalPicker"></mat-datepicker-toggle>
+        <mat-datepicker #arrivalPicker></mat-datepicker>
+      </mat-form-field>
+</div>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-dialog-close class="rounded bg-blue-400 p-2">Close</button>
+  <button [mat-dialog-close]="form" cdkFocusInitial class="rounded bg-blue-600 p-2">Ok</button>
+</mat-dialog-actions>

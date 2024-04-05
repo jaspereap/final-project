@@ -9,7 +9,10 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatIconModule} from '@angular/material/icon';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
-import { MtxDatetimepickerModule } from '@ng-matero/extensions/datetimepicker';
+// import { MtxDatetimepickerModule } from '@ng-matero/extensions/datetimepicker';
+import {MatDialogModule} from '@angular/material/dialog';
+
+
 
 @NgModule({
   declarations: [],
@@ -23,7 +26,7 @@ import { MtxDatetimepickerModule } from '@ng-matero/extensions/datetimepicker';
     MatAutocompleteModule,
     MatIconModule,
     MatSnackBarModule,
-    MtxDatetimepickerModule
+    MatDialogModule,
   ],
   exports: [
     MatCardModule,
@@ -34,7 +37,8 @@ import { MtxDatetimepickerModule } from '@ng-matero/extensions/datetimepicker';
     MatAutocompleteModule,
     MatIconModule,
     MatSnackBarModule,
-    MtxDatetimepickerModule
+    MatDialogModule,
+
   ]
 })
 export class MaterialModule { }

@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './auth/login-main/login/login.component';
 import { MainComponent } from './main/home/home.component';
 import { RegisterComponent } from './auth/register/register.component';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LogoutComponent } from './auth/logout/logout.component';
 import { MessageService } from './shared/services/message.service';
@@ -33,10 +33,11 @@ import { PlaceComponent } from './main/trip-main/itinerary/day/place/place.compo
 import { TripCardComponent } from './main/home/trip-summary/trip-card/trip-card.component';
 import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { MtxCalendar } from '@ng-matero/extensions/datetimepicker';
-import { provideNativeDatetimeAdapter } from '@ng-matero/extensions/core';
+// import { MtxCalendar } from '@ng-matero/extensions/datetimepicker';
+// import { provideNativeDatetimeAdapter } from '@ng-matero/extensions/core';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { NotificationService } from './shared/services/notification.service';
+import { TripNotificationService } from './main/trip-main/trip-notification.service';
+import { FlightDialogComponent } from './main/trip-main/flight/flight-dialog/flight-dialog.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { NotificationService } from './shared/services/notification.service';
     FlightComponent,
     DayComponent,
     PlaceComponent,
-    TripCardComponent
+    TripCardComponent,
+    FlightDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -81,14 +83,12 @@ import { NotificationService } from './shared/services/notification.service';
   ],
   providers: [
     MessageService,
-    NotificationService,
-    provideNativeDatetimeAdapter(),
+    TripNotificationService,
     {
       provide: RxStompService,
       useFactory: rxStompServiceFactory
     },
     provideAnimationsAsync(),
-    MtxCalendar
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent]

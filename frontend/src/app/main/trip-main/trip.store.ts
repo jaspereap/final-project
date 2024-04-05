@@ -1,9 +1,10 @@
 import { Injectable, NgZone } from '@angular/core';
 import { ComponentStore, tapResponse } from '@ngrx/component-store';
-import { AddPlaceToDayPayload, CustomPlaceResult, IdentityToken, Itinerary, Place, Trip } from '../../models/dtos';
+import { AddPlaceToDayPayload, CustomPlaceResult, Flight, IdentityToken, Itinerary, Place, Trip } from '../../models/dtos';
 import { TripService } from './trip.service';
 import { Observable, concatMap, switchMap, tap } from 'rxjs';
 import { Router } from '@angular/router';
+import { FlightService } from './flight/flight.service';
 
 export interface TripState {
   currentTrip: Trip | null;
@@ -15,7 +16,7 @@ export interface TripState {
 @Injectable()
 export class TripStore extends ComponentStore<TripState> {
 
-  constructor(private tripService: TripService, private router: Router, private ngZone: NgZone) { 
+  constructor(private tripService: TripService, private router: Router, private ngZone: NgZone, private flightService: FlightService) { 
     super({
       currentTrip: null,
       // currentItinerary: null,
@@ -36,6 +37,7 @@ export class TripStore extends ComponentStore<TripState> {
     ...state,
     currentTrip: trip
   }))
+
   // Set Itinerary
   readonly setItinerary = this.updater((state, newItinerary: Itinerary) => {
     console.log('\tSetting itinerary..')
@@ -50,6 +52,24 @@ export class TripStore extends ComponentStore<TripState> {
       currentTrip: {
         ...state.currentTrip,
         itinerary: newItinerary,
+      },
+    });
+  });
+
+  // Set Flights
+  readonly setFlightDetails = this.updater((state, newFlights: Flight[]) => {
+    console.log('\tSetting flight..')
+    // If there's no currentTrip in the state, log an error or handle as appropriate
+    if (!state.currentTrip) {
+      console.error('Cannot set itinerary because there is no current trip in the state.');
+      return state; // Return the unmodified state
+    }
+    // If currentTrip is present, update its itinerary
+    return ({
+      ...state,
+      currentTrip: {
+        ...state.currentTrip,
+        flightDetails: newFlights,
       },
     });
   });
@@ -112,4 +132,39 @@ export class TripStore extends ComponentStore<TripState> {
       )
     )
   );
+
+  // To add Flight details
+  readonly addFlight = this.effect((params$: Observable<{identity: IdentityToken, tripId: string, flightFormData: Flight}>) =>
+  params$.pipe(
+    tap(() => console.log('\tadd Flight triggered')),
+    switchMap((params) => {
+      return this.flightService.addNewFlight(params.identity, params.tripId, params.flightFormData).pipe(
+        tapResponse(
+          (resp: Flight[]) => {
+            console.log('Server resp: ', resp)
+            this.setFlightDetails(resp)
+          },
+          (err) => console.error(err)
+        )
+      );
+    })
+  )
+  )
+  // To delete a Flight
+  readonly deleteFlight = this.effect((params$: Observable<{identity: IdentityToken, tripId: string, index: number}>) =>
+  params$.pipe(
+    tap(() => console.log('\tdelete flight triggered')),
+    switchMap((params) => {
+      return this.flightService.deleteFlight(params.identity, params.tripId, params.index).pipe(
+        tapResponse(
+          (resp: Flight[]) => {
+            console.log('Server resp: ', resp)
+            this.setFlightDetails(resp)
+          },
+          (err) => console.error(err)
+        )
+      );
+    })
+  )
+  )
 }

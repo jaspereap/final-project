@@ -1,13 +1,9 @@
 package com.nus.iss.travlr.service;
 
-import java.io.StringReader;
-import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import com.nus.iss.travlr.models.Day;
@@ -16,8 +12,6 @@ import com.nus.iss.travlr.models.Place;
 import com.nus.iss.travlr.models.Trip;
 import com.nus.iss.travlr.models.DTO.Request.NewPlaceRequest;
 import com.nus.iss.travlr.repository.TripRepository;
-
-import jakarta.json.Json;
 
 @Service
 public class ItineraryService {
