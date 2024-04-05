@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ComponentStore, tapResponse } from '@ngrx/component-store';
-import { AddPlacePayload, AddPlaceToDayPayload, Day, Itinerary, Place } from '../../../models/dtos';
+import { AddPlacePayload, AddPlaceToDayPayload, CustomPlaceResult, Day, IdentityToken, Itinerary, Place } from '../../../models/dtos';
 import { TripService } from '../trip.service';
 import { Observable, Subject, concatMap, map, switchMap, tap } from 'rxjs';
 import { Router } from '@angular/router';
@@ -29,11 +29,11 @@ export class ItineraryStore extends ComponentStore<ItineraryState>{
   }))
 
   // Effect to add a place to a day in the itinerary
-  readonly addPlaceToItineraryDay = this.effect<AddPlaceToDayPayload>((params$) =>
+  readonly addPlaceToItineraryDay = this.effect((params$: Observable<{identity: IdentityToken, tripId:string, date: Date, place: CustomPlaceResult}>) =>
     params$.pipe(
       tap(() => console.log('\taddPlaceToItineraryDay triggered')),
-      concatMap(({ tripId, date, place }) =>
-        this.tripSvc.addPlaceToDay(tripId, date, place).pipe(
+      concatMap(({ identity, tripId, date, place }) =>
+        this.tripSvc.addPlaceToDay(identity, tripId, date, place).pipe(
           tapResponse(
             (resp: Itinerary) => {
               console.log('Server response: ', resp)
@@ -66,10 +66,10 @@ export class ItineraryStore extends ComponentStore<ItineraryState>{
     )  
   )
 
-  readonly savePlace = this.effect((params$: Observable<{tripId: string, date: Date, rank: number, place: Place}>) => 
+  readonly savePlace = this.effect((params$: Observable<{identity: IdentityToken, tripId: string, date: Date, rank: number, place: Place}>) => 
     params$.pipe(
       switchMap(param =>
-        this.tripSvc.savePlaceForItineraryDay(param.tripId, param.date, param.rank, param.place).pipe(
+        this.tripSvc.savePlaceForItineraryDay(param.identity, param.tripId, param.date, param.rank, param.place).pipe(
           tapResponse(
             (resp) => {
               console.log('Server resp: ', resp)

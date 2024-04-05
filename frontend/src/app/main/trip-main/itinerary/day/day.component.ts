@@ -6,6 +6,7 @@ import { TripService } from '../../trip.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TripStore } from '../../trip.store';
 import { ItineraryStore } from '../itinerary.store';
+import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 
 @Component({
   selector: 'app-day',
@@ -25,6 +26,7 @@ export class DayComponent implements OnInit, OnChanges {
       private tripStore: TripStore,
       private route: ActivatedRoute,
       private router: Router,
+      private localStore: LocalStorageService,
       // private itiStore: ItineraryStore
       ) {}
 
@@ -60,6 +62,7 @@ export class DayComponent implements OnInit, OnChanges {
   addPlace() {
     this.tripStore.addPlaceToItineraryDay(
       {
+        identity: {userId: Number(this.localStore.getUserId()), username: this.localStore.getUsername()},
         tripId: this.tripId,
         date: this.day.date,
         place: this.customPlace

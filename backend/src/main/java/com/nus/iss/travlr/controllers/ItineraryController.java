@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.nus.iss.travlr.models.Itinerary;
 import com.nus.iss.travlr.models.Place;
 import com.nus.iss.travlr.models.DTO.MessageType;
-import com.nus.iss.travlr.models.DTO.Request.PlaceRequest;
+import com.nus.iss.travlr.models.DTO.Request.IdentityToken;
+import com.nus.iss.travlr.models.DTO.Request.NewPlaceRequest;
+import com.nus.iss.travlr.models.DTO.Request.UpdatePlaceRequest;
 import com.nus.iss.travlr.models.DTO.Response.MessageResponse;
 import com.nus.iss.travlr.service.ItineraryService;
 import com.nus.iss.travlr.service.MessageService;
@@ -42,31 +44,38 @@ public class ItineraryController {
         // System.out.println(retrievedItinerary.getDays().getFirst().getPlaces().getFirst().getEnd().getTime());
         return ResponseEntity.ok(retrievedItinerary.toJson().toString());
     }
-
+// For updating place
     @PutMapping(path = "/update/{tripId}/{date}/{rank}")
     public ResponseEntity<String> updateItineraryDayPlace(
             @PathVariable String tripId, 
             @PathVariable String date, 
             @PathVariable String rank, 
-            @RequestBody Place place) {
+            @RequestBody UpdatePlaceRequest updatePlaceRequest) {
         System.out.println("\tupdate Itinerary day place controller");
-        System.out.println("Request: " + place);
-        Itinerary updatedIti = itiSvc.updatePlaceInItineraryDay(tripId, date, rank, place);
+        System.out.println("Request: " + updatePlaceRequest);
+
+        Itinerary updatedIti = itiSvc.updatePlaceInItineraryDay(tripId, date, rank, updatePlaceRequest.toPlace());
         // Temp test
-        msgSvc.publishToTrip(tripId, updatedIti.toJson().toString(), MessageType.ITINERARY_MODIFIED);
+        // msgSvc.publishToTrip(tripId, updatedIti.toJson().toString(), MessageType.ITINERARY_MODIFIED);
+        msgSvc.publishToTripWithAuthor(tripId, updatedIti.toJson().toString(), MessageType.ITINERARY_MODIFIED, updatePlaceRequest.getIdentity().getUsername());
         return ResponseEntity.ok(updatedIti.toJson().toString());
     }
-
+// For adding new place
     @PostMapping(path = "/add/{tripId}/{date}")
-    public ResponseEntity<String> postAddPlaceToItineraryDay(@PathVariable String tripId, @PathVariable String date, @RequestBody String placeData) {
-        System.out.println("\tPost add palce to date controller");
+    public ResponseEntity<String> postAddPlaceToItineraryDay(
+            @PathVariable String tripId, 
+            @PathVariable String date, 
+            @RequestBody String placeData) {
+        System.out.println("\tPost add place to date controller");
         System.out.println("\ttripId: " + tripId);
         System.out.println("\tTo date: " + new Date(Long.parseLong(date)));
         System.out.println("\tplaceData: " + placeData);
-        JsonObject placeRequest = Json.createReader(new StringReader(placeData)).readObject().getJsonObject("place");
+        JsonObject placeRequest = Json.createReader(new StringReader(placeData)).readObject();
+        JsonObject identity = placeRequest.getJsonObject("identity");
         JsonObject placeLocation = placeRequest.getJsonObject("latlng");
 
-        PlaceRequest place = new PlaceRequest(
+        NewPlaceRequest place = new NewPlaceRequest(
+            new IdentityToken(identity.getString("username", "unknown"), identity.getInt("userId", 0)),
             placeRequest.getString("name", ""), 
             placeRequest.getString("address", ""), 
             new Float[]{
@@ -79,7 +88,8 @@ public class ItineraryController {
         System.out.println(place);
 
         Itinerary itinerary = itiSvc.addPlaceToItineraryDay(tripId, date, place);
-        msgSvc.publishToTrip(tripId, itinerary.toJson().toString(), MessageType.ITINERARY_MODIFIED);
+        // msgSvc.publishToTrip(tripId, itinerary.toJson().toString(), MessageType.ITINERARY_MODIFIED);
+        msgSvc.publishToTripWithAuthor(tripId, itinerary.toJson().toString(), MessageType.ITINERARY_MODIFIED, place.getIdentity().getUsername());
         return ResponseEntity.ok(itinerary.toJson().toString());
     }
 }

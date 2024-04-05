@@ -1,5 +1,8 @@
 package com.nus.iss.travlr.service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +19,11 @@ public class MessageService {
         webSocketService.publishToTopic("trip/" + tripId, data, type);
     }
 
-    // public void publishToRoom(String roomId, String playerName, String data, MessageType type) {
-    //     webSocketService.publishToTopic("%s/%s".formatted(roomId, playerName), data, type);
-    // }
+    public void publishToTripWithAuthor(String tripId, String data, MessageType type, String author) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("type", type.toString());
+        headers.put("author", author);
+        webSocketService.publishToTopicWithCustomHeaders("trip/" + tripId, data, headers);
+    }
 
 }

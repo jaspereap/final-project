@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.nus.iss.travlr.TripUtils;
 import com.nus.iss.travlr.models.Trip;
 import com.nus.iss.travlr.models.DTO.UserDTO;
-import com.nus.iss.travlr.models.DTO.Request.IdentityRequest;
+import com.nus.iss.travlr.models.DTO.Request.IdentityToken;
 import com.nus.iss.travlr.models.DTO.Request.TripRequest;
 import com.nus.iss.travlr.models.DTO.Response.MessageResponse;
 import com.nus.iss.travlr.models.DTO.Response.TripResponse;
@@ -36,7 +36,7 @@ public class TripController {
 
     // For displaying tripcards at homepage
     @PostMapping(path = "/all")
-    public ResponseEntity<String> getTrips(@RequestBody IdentityRequest request) {
+    public ResponseEntity<String> getTrips(@RequestBody IdentityToken request) {
         System.out.println("\tGet TripSSSS controller triggered");
         System.out.println(request);
         ArrayList<Trip> trips = tripSvc.getAllTripsByUserId(request.getUserId());

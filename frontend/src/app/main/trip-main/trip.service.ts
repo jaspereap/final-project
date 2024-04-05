@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CustomPlaceResult, IdentityRequest, Itinerary, Place, Trip, TripCard, TripRequest, TripResponse } from '../../models/dtos';
+import { CustomPlaceResult, IdentityToken, Itinerary, Place, Trip, TripCard, TripRequest, TripResponse } from '../../models/dtos';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment as env } from "../../../environments/environment";
@@ -24,23 +24,23 @@ export class TripService {
     return this.http.get<Trip>(`${env.backendUrl}/trip/show/${tripId}`,{headers})
   }
 
-  getTripCards(id: IdentityRequest) {
+  getTripCards(id: IdentityToken) {
     const headers = this.authStore.getAuthHeader();
     return this.http.post<any>(`${env.backendUrl}/trip/all`, id, {headers})
-  }
-
-  addPlaceToDay(tripId:string, date: Date, place: CustomPlaceResult) {
-    const headers = this.authStore.getAuthHeader();
-    return this.http.post<Itinerary>(`${env.backendUrl}/itinerary/add/${tripId}/${date}`, {place: place}, {headers})
   }
 
   getItineraryByTripId(tripId: string) {
     const headers = this.authStore.getAuthHeader();
     return this.http.get<Itinerary>(`${env.backendUrl}/itinerary/get/${tripId}`,{headers})
   }
-
-  savePlaceForItineraryDay(tripId: string, date: Date, rank: number, place: Place) {
+  
+  addPlaceToDay(identity: IdentityToken,tripId:string, date: Date, place: CustomPlaceResult) {
     const headers = this.authStore.getAuthHeader();
-    return this.http.put(`${env.backendUrl}/itinerary/update/${tripId}/${date.getTime()}/${rank}`, place, {headers})
+    return this.http.post<Itinerary>(`${env.backendUrl}/itinerary/add/${tripId}/${date}`, {...place, identity}, {headers})
+  }
+
+  savePlaceForItineraryDay(identity: IdentityToken, tripId: string, date: Date, rank: number, place: Place) {
+    const headers = this.authStore.getAuthHeader();
+    return this.http.put(`${env.backendUrl}/itinerary/update/${tripId}/${date.getTime()}/${rank}`, {...place, identity}, {headers})
   }
 }

@@ -12,9 +12,9 @@ export const canViewTripGuard: CanActivateChildFn = (childRoute, state) => {
   const router = inject(Router)
   const localStore = inject(LocalStorageService)
   const tripId = childRoute.params['tripId'];
-  const currentUserId = localStore.getUserId() ?? '';
+  const currentUserId = localStore.getUserId();
   
-  return authSvc.checkIsAllowed(tripId, currentUserId).pipe(
+  return authSvc.checkIsAllowed(tripId, currentUserId.toString()).pipe(
     switchMap( isAllowed => {
       // Check if currentUserId is in the list of allowed user IDs
       console.log('server is allowed response: ', isAllowed)

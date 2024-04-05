@@ -9,7 +9,7 @@ import com.nus.iss.travlr.models.Day;
 import com.nus.iss.travlr.models.Itinerary;
 import com.nus.iss.travlr.models.Place;
 import com.nus.iss.travlr.models.Trip;
-import com.nus.iss.travlr.models.DTO.Request.PlaceRequest;
+import com.nus.iss.travlr.models.DTO.Request.NewPlaceRequest;
 import com.nus.iss.travlr.repository.TripRepository;
 
 @Service

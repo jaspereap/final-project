@@ -1,6 +1,6 @@
 import { Injectable, NgZone } from '@angular/core';
 import { ComponentStore, tapResponse } from '@ngrx/component-store';
-import { AddPlaceToDayPayload, Itinerary, Place, Trip } from '../../models/dtos';
+import { AddPlaceToDayPayload, CustomPlaceResult, IdentityToken, Itinerary, Place, Trip } from '../../models/dtos';
 import { TripService } from './trip.service';
 import { Observable, concatMap, switchMap, tap } from 'rxjs';
 import { Router } from '@angular/router';
@@ -78,10 +78,10 @@ export class TripStore extends ComponentStore<TripState> {
         ))
     ))
 // For updating place details
-  readonly savePlace = this.effect((params$: Observable<{tripId: string, date: Date, rank: number, place: Place}>) => 
+  readonly savePlace = this.effect((params$: Observable<{identity:IdentityToken, tripId: string, date: Date, rank: number, place: Place}>) => 
     params$.pipe(
       switchMap(param =>
-        this.tripService.savePlaceForItineraryDay(param.tripId, param.date, param.rank, param.place).pipe(
+        this.tripService.savePlaceForItineraryDay(param.identity, param.tripId, param.date, param.rank, param.place).pipe(
           tapResponse(
             (resp) => {
               console.log('Server resp: ', resp)
@@ -92,11 +92,11 @@ export class TripStore extends ComponentStore<TripState> {
     ))
 
   // Effect to add a place to a day in the itinerary
-  readonly addPlaceToItineraryDay = this.effect<AddPlaceToDayPayload>((params$) =>
+  readonly addPlaceToItineraryDay = this.effect((params$: Observable<{identity: IdentityToken, tripId:string, date: Date, place: CustomPlaceResult}>) =>
     params$.pipe(
       tap(() => console.log('\taddPlaceToItineraryDay triggered')),
-      concatMap(({ tripId, date, place }) =>
-        this.tripService.addPlaceToDay(tripId, date, place).pipe(
+      concatMap(({ identity, tripId, date, place }) =>
+      this.tripService.addPlaceToDay(identity, tripId, date, place).pipe(
           tapResponse(
             (resp: Itinerary) => {
               console.log('Server response: ', resp)

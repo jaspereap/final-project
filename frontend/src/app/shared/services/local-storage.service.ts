@@ -28,10 +28,10 @@ export class LocalStorageService {
     return user;
   }
   getUsername() {
-    return sessionStorage.getItem('username')
+    return sessionStorage.getItem('username') ?? ''
   }
   getUserId() {
-    return sessionStorage.getItem('userId')
+    return sessionStorage.getItem('userId') ?? 0
   }
   setUser(user: UserDTO) {
     sessionStorage.setItem('firstName', user.firstName)

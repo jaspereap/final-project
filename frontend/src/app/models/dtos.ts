@@ -12,7 +12,7 @@ export interface UserDTO {
     lastName: string
     userId: number
 }
-export interface IdentityRequest {
+export interface IdentityToken {
     username: string
     userId: number
 }
@@ -36,7 +36,7 @@ export enum MessageType {
 }
 
 export interface TripRequest {
-    identity: IdentityRequest
+    identity: IdentityToken
     country: string
     start: Date
     end: Date

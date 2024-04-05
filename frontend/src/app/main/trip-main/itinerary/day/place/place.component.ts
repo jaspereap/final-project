@@ -4,6 +4,7 @@ import { TripService } from '../../../trip.service';
 import { ItineraryStore } from '../../itinerary.store';
 import { ActivatedRoute } from '@angular/router';
 import { TripStore } from '../../../trip.store';
+import { LocalStorageService } from '../../../../../shared/services/local-storage.service';
 
 @Component({
   selector: 'app-place',
@@ -26,7 +27,9 @@ export class PlaceComponent implements OnInit, OnChanges{
   constructor(
     // private itiStore: ItineraryStore, 
     private tripStore: TripStore,
-    private route: ActivatedRoute) {}
+    private route: ActivatedRoute,
+    private localStore: LocalStorageService) {}
+
   tripId!: string;
   ngOnInit(): void {
     this.tripId = this.route.snapshot.params['tripId'];
@@ -54,6 +57,7 @@ export class PlaceComponent implements OnInit, OnChanges{
     // console.log(this.place.end.getTime());
     this.tripStore.savePlace(
       {
+        identity: {userId: Number(this.localStore.getUserId()), username: this.localStore.getUsername()},
         tripId: this.tripId,
         date: this.date,
         rank: this.place.rank,
@@ -83,6 +87,7 @@ export class PlaceComponent implements OnInit, OnChanges{
     this.place.notes = notes;
     this.tripStore.savePlace(
       {
+        identity: {userId: Number(this.localStore.getUserId()), username: this.localStore.getUsername()},
         tripId: this.tripId,
         date: this.date,
         rank: this.place.rank,

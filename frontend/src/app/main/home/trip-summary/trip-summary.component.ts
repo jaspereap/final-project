@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TripService } from '../../trip-main/trip.service';
-import { IdentityRequest, TripCard, UserDTO } from '../../../models/dtos';
+import { IdentityToken, TripCard, UserDTO } from '../../../models/dtos';
 import { AuthStore } from '../../../auth/auth.store';
 import { LocalStorageService } from '../../../shared/services/local-storage.service';
 
@@ -23,12 +23,12 @@ export class TripSummaryComponent implements OnInit {
   ngOnInit(): void {
     console.log('Trip summary init')
     
-    const id: IdentityRequest = {
+    const identity: IdentityToken = {
       username: this.localStore.getUsername() ?? '',
       userId: Number(this.localStore.getUserId())
     }
 
-    this.tripSvc.getTripCards(id).subscribe({
+    this.tripSvc.getTripCards(identity).subscribe({
       next: (tripCards) => {
         console.log('tripCards: ', tripCards)
         this.tripCards = tripCards},

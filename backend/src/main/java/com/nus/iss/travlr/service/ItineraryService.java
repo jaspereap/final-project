@@ -14,7 +14,7 @@ import com.nus.iss.travlr.models.Day;
 import com.nus.iss.travlr.models.Itinerary;
 import com.nus.iss.travlr.models.Place;
 import com.nus.iss.travlr.models.Trip;
-import com.nus.iss.travlr.models.DTO.Request.PlaceRequest;
+import com.nus.iss.travlr.models.DTO.Request.NewPlaceRequest;
 import com.nus.iss.travlr.repository.TripRepository;
 
 import jakarta.json.Json;
@@ -55,7 +55,7 @@ public class ItineraryService {
         return tripRepo.save(trip).getItinerary();
     }
 
-    public Itinerary addPlaceToItineraryDay(String tripId, String targetDate, PlaceRequest place) {
+    public Itinerary addPlaceToItineraryDay(String tripId, String targetDate, NewPlaceRequest place) {
         Place newPlace = new Place(place.getName(), place.getAddress(), place.getLatlng(), place.getImage());
         // Find the trip by ID
         Trip trip = tripRepo.findById(tripId)

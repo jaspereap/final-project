@@ -8,7 +8,8 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class PlaceRequest {
+public class NewPlaceRequest {
+    IdentityToken identity;
     String name;
     String address;
     Float[] latlng;
