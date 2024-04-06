@@ -12,7 +12,6 @@ jobs:
 
       - name: Checkout code
         uses: actions/checkout@v4
-      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
@@ -21,27 +20,27 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build and push Docker image
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v5
         with:
           context: ./backend
           file: ./backend/Dockerfile
           push: true
           tags: jaspereap/travlr:latest  
 
-#   deploy-to-railway:
-#     needs: build-and-push
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Install Railway CLI
-#         run: npm install -g railway
+  deploy-to-railway:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Railway CLI
+        run: npm install -g @railway/cli
         
-#       - name: Login to Railway
-#         run: railway login --token ${{ secrets.RAILWAY_TOKEN }}
+      - name: Login to Railway
+        run: railway login --token ${{ secrets.RAILWAY_TOKEN }}
         
-#       - name: Deploy to Railway
-#         run: |
-#           railway up
-#           railway link
-#           railway variables set DOCKER_IMAGE=yourusername/yourrepo:latest  # Update this with your image tag
-#         env:
-#           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+      - name: Deploy to Railway
+        run: |
+          railway up
+          railway link
+          railway variables set DOCKER_IMAGE=jaspereap/travlr:latest
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
