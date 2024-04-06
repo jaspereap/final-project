@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Lodging } from '../../../models/dtos';
+import { IdentityToken, Lodging } from '../../../models/dtos';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { LocalStorageService } from '../../../shared/services/local-storage.service';
@@ -15,6 +15,8 @@ import { FormGroup } from '@angular/forms';
 })
 export class LodgingComponent implements OnInit {
   @Input() lodgings!: Lodging[];
+  tripId!: string;
+
   constructor(
     public dialog: MatDialog, 
 
@@ -25,6 +27,13 @@ export class LodgingComponent implements OnInit {
     ) {}
   ngOnInit(): void {
     // console.log('Lodging init')
+    this.tripId = this.route.snapshot.params['tripId'];
+
+    this.notiSvc.updateLodging$.subscribe(
+      (lodgings) => {
+        this.tripStore.setLodgings(lodgings);
+      }
+    )
   }
 
   openDialog() {
@@ -38,9 +47,18 @@ export class LodgingComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       const form = result as FormGroup;
-      if (form.valid) {
-
+      if (result !== undefined && result !== null && form.valid) {
+        console.log('Dialog result received: ', result)
+        const lodgingFormData: Lodging =  form.value as Lodging;
+        const identity = {userId: Number(this.localStore.getUserId()), username: this.localStore.getUsername()}
+        this.tripStore.addLodging({identity, tripId: this.tripId, lodgingFormData})
       }
     })
+  }
+
+  deleteLodging(index: number) {
+    console.log(index)
+    const identity = {userId: Number(this.localStore.getUserId()), username: this.localStore.getUsername()} as IdentityToken;
+    this.tripStore.deleteLodging({identity, tripId: this.tripId, index})
   }
 }

@@ -49,7 +49,8 @@ export class FlightComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       const form = result as FormGroup;
-      if (form.valid) {
+      console.log('after dialog closed result: ',result)
+      if (result !== undefined && result !== null && form.valid) {
         const flightFormData: Flight =  form.value as Flight;
         const identity = {userId: Number(this.localStore.getUserId()), username: this.localStore.getUsername()}
         this.tripStore.addFlight({identity, tripId: this.tripId, flightFormData})

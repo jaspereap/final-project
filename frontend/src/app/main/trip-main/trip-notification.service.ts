@@ -1,6 +1,6 @@
 import { Injectable, OnDestroy, OnInit } from '@angular/core';
 import { MessageService } from '../../shared/services/message.service';
-import { Flight, Itinerary, MessageType } from '../../models/dtos';
+import { Flight, Itinerary, Lodging, MessageType } from '../../models/dtos';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { LocalStorageService } from '../../shared/services/local-storage.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -15,6 +15,7 @@ export class TripNotificationService implements OnInit, OnDestroy{
   userIdListener?: Subscription;
   updateItinerary$: Subject<Itinerary> = new Subject();
   updateFlight$: Subject<Flight[]> = new Subject();
+  updateLodging$: Subject<Lodging[]> = new Subject();
 
   constructor(private messageService: MessageService, 
     private localStore: LocalStorageService,
@@ -35,7 +36,6 @@ export class TripNotificationService implements OnInit, OnDestroy{
           switch(headers['type'] as MessageType) {
             case MessageType.ITINERARY_MODIFIED: {
               const author = headers['author'];
-              // this.tripStore.setItinerary(JSON.parse(body) as Itinerary);
               this.updateItinerary$.next(JSON.parse(body) as Itinerary);
               if (this.localStore.getUsername() !== author) {
                 this.showNotification("Itinerary modified by " + author);
@@ -44,7 +44,6 @@ export class TripNotificationService implements OnInit, OnDestroy{
             }
             case MessageType.ITINERARY_ADDED: {
               const author = headers['author'];
-              // this.tripStore.setItinerary(JSON.parse(body) as Itinerary);
               this.updateItinerary$.next(JSON.parse(body) as Itinerary);
               if (this.localStore.getUsername() !== author) {
                 this.showNotification(author + " added a new place to the itinerary!");
@@ -53,7 +52,6 @@ export class TripNotificationService implements OnInit, OnDestroy{
             }
             case MessageType.FLIGHT_ADDED: {
               const author = headers['author'];
-              // this.tripStore.setItinerary(JSON.parse(body) as Itinerary);
               this.updateFlight$.next(JSON.parse(body) as Flight[]);
               if (this.localStore.getUsername() !== author) {
                 this.showNotification(author + " added a new flight!");
@@ -64,7 +62,23 @@ export class TripNotificationService implements OnInit, OnDestroy{
               const author = headers['author'];
               this.updateFlight$.next(JSON.parse(body) as Flight[]);
               if (this.localStore.getUsername() !== author) {
-                this.showNotification(author + " added a modified the flight!");
+                this.showNotification(author + " modified the flight!");
+              }
+              break;
+            }
+            case MessageType.LODGING_ADDED: {
+              const author = headers['author'];
+              this.updateLodging$.next(JSON.parse(body) as Lodging[]);
+              if (this.localStore.getUsername() !== author) {
+                this.showNotification(author + " added a lodging!");
+              }
+              break;
+            }
+            case MessageType.LODGING_MODIFIED: {
+              const author = headers['author'];
+              this.updateLodging$.next(JSON.parse(body) as Lodging[]);
+              if (this.localStore.getUsername() !== author) {
+                this.showNotification(author + " modified a lodging!");
               }
               break;
             }

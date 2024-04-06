@@ -45,7 +45,6 @@ public class FlightController {
         return ResponseEntity.ok(flightDetailsArr.toString());
     }
 
-    // TODO:
     @PutMapping(path = "/delete/{tripId}/{index}")
     public ResponseEntity<String> deleteFlight(@PathVariable String tripId, @PathVariable String index, @RequestBody IdentityToken identity) {
         System.out.println("delete flight controller");

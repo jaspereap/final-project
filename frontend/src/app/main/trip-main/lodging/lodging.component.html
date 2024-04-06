@@ -1,13 +1,12 @@
-<!-- lodging.component.html -->
 <div *ngIf="lodgings && lodgings.length > 0; else noLodging">
-    <div *ngFor="let lodging of lodgings">
+    <div *ngFor="let lodging of lodgings; let i = index;">
       <h3>{{ lodging.name }}</h3>
       <p>Check-in: {{ lodging.checkIn | date }}</p>
       <p>Check-out: {{ lodging.checkOut | date }}</p>
       <p>Address: {{ lodging.address }}</p>
       <p>Notes: {{ lodging.notes }}</p>
       <p>Latlng: {{ lodging.latlng }}</p>
-      <!-- Display more details as needed -->
+      <button class="rounded p-1 bg-black text-white" (click)="deleteLodging(i)">Delete</button>
     </div>
 </div>
   

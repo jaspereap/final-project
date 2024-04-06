@@ -1,10 +1,11 @@
 import { Injectable, NgZone } from '@angular/core';
 import { ComponentStore, tapResponse } from '@ngrx/component-store';
-import { AddPlaceToDayPayload, CustomPlaceResult, Flight, IdentityToken, Itinerary, Place, Trip } from '../../models/dtos';
+import { AddPlaceToDayPayload, CustomPlaceResult, Flight, IdentityToken, Itinerary, Lodging, Place, Trip } from '../../models/dtos';
 import { TripService } from './trip.service';
 import { Observable, concatMap, switchMap, tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { FlightService } from './flight/flight.service';
+import { LodgingService } from './lodging/lodging.service';
 
 export interface TripState {
   currentTrip: Trip | null;
@@ -16,7 +17,7 @@ export interface TripState {
 @Injectable()
 export class TripStore extends ComponentStore<TripState> {
 
-  constructor(private tripService: TripService, private router: Router, private ngZone: NgZone, private flightService: FlightService) { 
+  constructor(private tripService: TripService, private router: Router, private ngZone: NgZone, private flightService: FlightService, private lodgingService: LodgingService) { 
     super({
       currentTrip: null,
       // currentItinerary: null,
@@ -37,42 +38,6 @@ export class TripStore extends ComponentStore<TripState> {
     ...state,
     currentTrip: trip
   }))
-
-  // Set Itinerary
-  readonly setItinerary = this.updater((state, newItinerary: Itinerary) => {
-    console.log('\tSetting itinerary..')
-    // If there's no currentTrip in the state, log an error or handle as appropriate
-    if (!state.currentTrip) {
-      console.error('Cannot set itinerary because there is no current trip in the state.');
-      return state; // Return the unmodified state
-    }
-    // If currentTrip is present, update its itinerary
-    return ({
-      ...state,
-      currentTrip: {
-        ...state.currentTrip,
-        itinerary: newItinerary,
-      },
-    });
-  });
-
-  // Set Flights
-  readonly setFlightDetails = this.updater((state, newFlights: Flight[]) => {
-    console.log('\tSetting flight..')
-    // If there's no currentTrip in the state, log an error or handle as appropriate
-    if (!state.currentTrip) {
-      console.error('Cannot set itinerary because there is no current trip in the state.');
-      return state; // Return the unmodified state
-    }
-    // If currentTrip is present, update its itinerary
-    return ({
-      ...state,
-      currentTrip: {
-        ...state.currentTrip,
-        flightDetails: newFlights,
-      },
-    });
-  });
   
 // For retrieving a single full trip
   readonly getTripById = this.effect((tripId$: Observable<string>) => 
@@ -97,6 +62,25 @@ export class TripStore extends ComponentStore<TripState> {
           )
         ))
     ))
+
+  // Set Itinerary
+  readonly setItinerary = this.updater((state, newItinerary: Itinerary) => {
+    console.log('\tSetting itinerary..')
+    // If there's no currentTrip in the state, log an error or handle as appropriate
+    if (!state.currentTrip) {
+      console.error('Cannot set itinerary because there is no current trip in the state.');
+      return state; // Return the unmodified state
+    }
+    // If currentTrip is present, update its itinerary
+    return ({
+      ...state,
+      currentTrip: {
+        ...state.currentTrip,
+        itinerary: newItinerary,
+      },
+    });
+  });
+
 // For updating place details
   readonly savePlace = this.effect((params$: Observable<{identity:IdentityToken, tripId: string, date: Date, rank: number, place: Place}>) => 
     params$.pipe(
@@ -133,6 +117,24 @@ export class TripStore extends ComponentStore<TripState> {
     )
   );
 
+  // Set Flights
+  readonly setFlightDetails = this.updater((state, newFlights: Flight[]) => {
+    console.log('\tSetting flight..')
+    // If there's no currentTrip in the state, log an error or handle as appropriate
+    if (!state.currentTrip) {
+      console.error('Cannot set itinerary because there is no current trip in the state.');
+      return state; // Return the unmodified state
+    }
+    // If currentTrip is present, update its itinerary
+    return ({
+      ...state,
+      currentTrip: {
+        ...state.currentTrip,
+        flightDetails: newFlights,
+      },
+    });
+  });
+
   // To add Flight details
   readonly addFlight = this.effect((params$: Observable<{identity: IdentityToken, tripId: string, flightFormData: Flight}>) =>
   params$.pipe(
@@ -148,8 +150,7 @@ export class TripStore extends ComponentStore<TripState> {
         )
       );
     })
-  )
-  )
+  ))
   // To delete a Flight
   readonly deleteFlight = this.effect((params$: Observable<{identity: IdentityToken, tripId: string, index: number}>) =>
   params$.pipe(
@@ -160,6 +161,58 @@ export class TripStore extends ComponentStore<TripState> {
           (resp: Flight[]) => {
             console.log('Server resp: ', resp)
             this.setFlightDetails(resp)
+          },
+          (err) => console.error(err)
+        )
+      );
+    })
+  )
+  )
+
+  // Set Lodgings
+  readonly setLodgings = this.updater((state, newLodgings: Lodging[]) => {
+    console.log('\tSetting lodgings..')
+    // If there's no currentTrip in the state, log an error or handle as appropriate
+    if (!state.currentTrip) {
+      console.error('Cannot set lodgings because there is no current trip in the state.');
+      return state; // Return the unmodified state
+    }
+    // If currentTrip is present, update its itinerary
+    return ({
+      ...state,
+      currentTrip: {
+        ...state.currentTrip,
+        lodgings: newLodgings,
+      },
+    });
+  });
+  // To add Lodging details
+  readonly addLodging = this.effect((params$: Observable<{identity: IdentityToken, tripId: string, lodgingFormData: Lodging}>) =>
+    params$.pipe(
+      tap(() => console.log('\tadd Lodging triggered')),
+      switchMap((params) => {
+        return this.lodgingService.addNewLodging(params.identity, params.tripId, params.lodgingFormData).pipe(
+          tapResponse(
+            (resp: Lodging[]) => {
+              console.log('add lodging Server resp: ', resp)
+              this.setLodgings(resp)
+            },
+            (err) => console.error(err)
+          )
+        );
+      })
+    ))
+
+ // To delete a Lodging
+ readonly deleteLodging = this.effect((params$: Observable<{identity: IdentityToken, tripId: string, index: number}>) =>
+  params$.pipe(
+    tap(() => console.log('\tdelete lodging triggered')),
+    switchMap((params) => {
+      return this.lodgingService.deleteLodging(params.identity, params.tripId, params.index).pipe(
+        tapResponse(
+          (resp: Lodging[]) => {
+            console.log('Delete lodging Server resp: ', resp)
+            this.setLodgings(resp)
           },
           (err) => console.error(err)
         )
