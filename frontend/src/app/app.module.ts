@@ -31,7 +31,7 @@ import { FlightComponent } from './main/trip-main/flight/flight.component';
 import { DayComponent } from './main/trip-main/itinerary/day/day.component';
 import { PlaceComponent } from './main/trip-main/itinerary/day/place/place.component';
 import { TripCardComponent } from './main/home/trip-summary/trip-card/trip-card.component';
-import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
+// import { MatGoogleMapsAutocompleteModule } from '@angular-material-extensions/google-maps-autocomplete';
 import { FlexLayoutModule } from '@angular/flex-layout';
 // import { MtxCalendar } from '@ng-matero/extensions/datetimepicker';
 // import { provideNativeDatetimeAdapter } from '@ng-matero/extensions/core';
@@ -74,7 +74,7 @@ import { LodgingDialogComponent } from './main/trip-main/lodging/lodging-dialog/
     MaterialModule,
     PrimengModule,
     MatNativeDateModule,
-    MatGoogleMapsAutocompleteModule.forRoot('AIzaSyA2prL195ajVFU_yddXDahSG76X4WA3AoI'),
+    // MatGoogleMapsAutocompleteModule.forRoot('AIzaSyA2prL195ajVFU_yddXDahSG76X4WA3AoI'),
     FlexLayoutModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
