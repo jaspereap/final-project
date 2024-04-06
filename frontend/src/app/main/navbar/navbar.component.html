@@ -4,7 +4,7 @@
       <div class="flex space-x-4">
         <!-- Logo or brand name -->
         <div>
-          <a href="#" class="flex items-center py-5 px-2 text-white-700 hover:text-white-100">
+          <a [routerLink]="['/home']" class="flex items-center py-5 px-2 text-white-700 hover:text-white-100">
             <span class="font-bold">Travlr.</span>
           </a>
         </div>
@@ -16,7 +16,7 @@
       </div>
       <!-- Secondary Nav -->
       <div class="hidden md:flex items-center space-x-1">
-        <!-- Add any links or buttons for secondary navigation -->
+        <a (click)="logout()" class="py-5 px-3 hover:underline">Logout</a>
       </div>
       <!-- Mobile menu button -->
       <div class="md:hidden flex items-center">

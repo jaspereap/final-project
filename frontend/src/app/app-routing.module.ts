@@ -13,6 +13,7 @@ import { authGuard } from './guards/auth.guard';
 import { canViewTripGuard } from './guards/can-view-trip.guard';
 
 const routes: Routes = [
+  {path: '', component: MainComponent},
   {path: 'auth', canActivateChild: [],
     children: [
       {path: 'login', component: LoginMainComponent},
@@ -32,7 +33,7 @@ const routes: Routes = [
       {path: ':tripId', component: TripMainComponent}
     ]
   },
-  {path: '**', redirectTo: '/login', pathMatch: 'full'}
+  {path: '**', redirectTo: 'home', pathMatch: 'full'}
 ];
 
 @NgModule({

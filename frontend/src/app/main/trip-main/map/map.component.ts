@@ -10,7 +10,7 @@ import { provideComponentStore } from '@ngrx/component-store';
   styleUrl: './map.component.scss',
   providers: [provideComponentStore(ItineraryStore)]
 })
-export class MapComponent implements OnInit, OnChanges {
+export class MapComponent implements OnInit {
   @Input() lodgings!: Lodging[];
   @Input() itineraryDays!: Day[];
 
@@ -25,10 +25,7 @@ export class MapComponent implements OnInit, OnChanges {
 
   constructor(private itiStore: ItineraryStore) {
   }
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log('map changes: ', changes)
-  }
-
+  
   ngOnInit(): void {
     if (this.lodgings.length !== 0) {
       this.center = {

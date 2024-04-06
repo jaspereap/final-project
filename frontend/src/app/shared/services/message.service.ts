@@ -19,9 +19,9 @@ export class MessageService {
         return { headers, body }
       }),
       tap(({ headers, body }) => {
-        console.log('INCOMING headers: ', headers);
-        console.log('INCOMING type header: ', headers['type'] as MessageType);
-        console.log('INCOMING body: ', body);
+        // console.log('INCOMING headers: ', headers);
+        // console.log('INCOMING type header: ', headers['type'] as MessageType);
+        // console.log('INCOMING body: ', body);
       })
     )
   }
@@ -33,8 +33,8 @@ export class MessageService {
     console.log(`SENDING: ${env.outboundPrefix}/${topic}`);
     const headers = {'type': type.toString()};
     const body = message;
-    console.log('OUTGOING headers: ', headers)
-    console.log('OUTGOING body: ', body)
+    // console.log('OUTGOING headers: ', headers)
+    // console.log('OUTGOING body: ', body)
     this.rxStompService.publish({
       destination: `${env.outboundPrefix}/${topic}`,
       headers: headers,

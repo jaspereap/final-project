@@ -50,7 +50,7 @@ export class DayComponent implements OnInit {
         latlng: place.geometry?.location,
         image: place.photos ? place.photos[0].getUrl({maxHeight: 1000, maxWidth: 1000}) : ''
       }
-      console.log('Autocomplete: ', this.customPlace);
+      // console.log('Autocomplete: ', this.customPlace);
     });
   }
 

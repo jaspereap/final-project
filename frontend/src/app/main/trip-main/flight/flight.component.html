@@ -6,8 +6,8 @@
   <div *ngFor="let flight of flights; let i = index" class="relative group p-4 border border-gray-200 rounded-lg hover:shadow-lg transition-shadow">
       <div>
           <h3 class="text-lg font-semibold">{{ flight.airlineName }} ({{ flight.flightNumber }})</h3>
-          <p class="text-sm text-gray-600">Departure: {{ flight.departureCountry }} - {{ flight.departureDate | date:'medium' }}</p>
-          <p class="text-sm text-gray-600">Arrival: {{ flight.arrivalCountry }} - {{ flight.arrivalDate | date:'medium' }}</p>
+          <p class="text-sm text-gray-600">Departure: {{ flight.departureCountry }} - {{ flight.departureDate | date:'mediumDate' }}</p>
+          <p class="text-sm text-gray-600">Arrival: {{ flight.arrivalCountry }} - {{ flight.arrivalDate | date:'mediumDate' }}</p>
           <p class="text-sm text-gray-600">Notes: {{ flight.notes }}</p>
       </div>
       <button class="rounded p-1 bg-red-500 text-white absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 ease-in-out text-xs"

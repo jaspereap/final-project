@@ -1,5 +1,5 @@
 <div class="m-5">
-    <div class="text-xl">{{ day.date | date:'fullDate' }}</div>
+    <div class="text-xl">{{ day.date | date:'EEEE, d MMMM' }}</div>
     <div class="space-y-2">
         <app-place *ngFor="let place of day.places; let i = index;" 
             [place]="place" 
@@ -8,7 +8,7 @@
             class="p-0.5">
         </app-place>
     </div>
-    <div class="mt-1 flex items-center space-x-2">
+    <div class="mt-1 flex items-center space-x-2 opacity-30 hover:opacity-100 transition">
         <input #searchInput
             placeholder="Add a new place"
             type="text"

@@ -1,15 +1,17 @@
-<div class="flex space-x-4 p-4 border-2 rounded-lg shadow group">
+<div class="flex space-x-4 p-4 rounded-lg shadow group relative">
     <!-- Details Section -->
     <div class="flex-grow space-y-4">
         <h4 class="text-lg font-semibold">{{ place.name }}</h4>
         <p class="text-sm text-gray-600">{{ place.address }}</p>
         
         <!-- Start and End Time -->
-        <div *ngIf="editingTime; else showTime" class="flex space-x-2 items-center">
-            <input type="time" [(ngModel)]="editableStart" class="border rounded p-2 text-sm">
-            <input type="time" [(ngModel)]="editableEnd" class="border rounded p-2 text-sm">
+        <div *ngIf="editingTime; else showTime" class="flex justify-between">
+            <div class="flex space-x-2 items-center">
+                <input type="time" [(ngModel)]="editableStart" class="border rounded p-2 text-sm">
+                <input type="time" [(ngModel)]="editableEnd" class="border rounded p-2 text-sm">
+                <button (click)="saveUpdatedTimes()" [disabled]="!editableStart || !editableEnd" class="bg-blue-600 text-white rounded p-2 hover:bg-blue-700 transition-colors disabled:opacity-50">Save</button>
+            </div>
             <button (click)="editingTime = false" class="text-red-500"><mat-icon>cancel</mat-icon></button>
-            <button (click)="saveUpdatedTimes()" [disabled]="!editableStart || !editableEnd" class="bg-blue-600 text-white rounded p-2 hover:bg-blue-700 transition-colors disabled:opacity-50">Save</button>
         </div>
         <ng-template #showTime>
             <div class="flex items-center">
@@ -35,8 +37,10 @@
     </div>
     
     <!-- Image Section -->
-    <div *ngIf="place.image.length != 0" class="w-1/4 min-w-[100px] max-h-52 overflow-hidden">
+    <div *ngIf="place.image.length != 0" class="w-1/3 min-w-[100px] max-h-52 overflow-hidden">
         <img [src]="place.image" alt="Place Image" class="w-full h-full object-cover rounded-lg shadow">
     </div>
-    <button (click)="deletePlace()">Delete</button>
+    <button (click)="deletePlace()" class="absolute top-0 right-0 mt-1 mr-1 bg-red-500 text-white p-1 rounded-full opacity-0 group-hover:opacity-100 hover:bg-red-700 transition-opacity">
+        <mat-icon>delete</mat-icon>
+    </button>
 </div>

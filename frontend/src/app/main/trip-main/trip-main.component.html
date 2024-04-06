@@ -1,6 +1,7 @@
 <div class="flex h-screen">
     <!-- Scrollable Trip Details on the Left -->
-    <div class="overflow-y-auto w-2/3 h-full">
+    <div class="overflow-auto w-2/3 h-full">
+        <app-navbar></app-navbar>
         <ng-container *ngIf="isLoading$ | async; else tripDetails">
             Loading...
         </ng-container>
@@ -18,7 +19,7 @@
     </div>
 
     <!-- Fixed Map on the Right -->
-    <div class="overflow-hidden w-1/3 h-full" *ngIf="currentTrip$ | async as trip; else noDetails">
+    <div class="w-1/3 h-full" *ngIf="currentTrip$ | async as trip; else noDetails">
         <app-map
             [lodgings]="trip.lodgings"
             [itineraryDays]="trip.itinerary.days"
