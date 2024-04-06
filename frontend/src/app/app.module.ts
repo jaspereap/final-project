@@ -76,12 +76,12 @@ import { LodgingDialogComponent } from './main/trip-main/lodging/lodging-dialog/
     MatNativeDateModule,
     // MatGoogleMapsAutocompleteModule.forRoot('AIzaSyA2prL195ajVFU_yddXDahSG76X4WA3AoI'),
     FlexLayoutModule,
-    ServiceWorkerModule.register('ngsw-worker.js', {
-      enabled: !isDevMode(),
-      // Register the ServiceWorker as soon as the application is stable
-      // or after 30 seconds (whichever comes first).
-      registrationStrategy: 'registerWhenStable:30000'
-    }),
+    // ServiceWorkerModule.register('ngsw-worker.js', {
+    //   enabled: !isDevMode(),
+    //   // Register the ServiceWorker as soon as the application is stable
+    //   // or after 30 seconds (whichever comes first).
+    //   registrationStrategy: 'registerWhenStable:30000'
+    // }),
   ],
   providers: [
     MessageService,
