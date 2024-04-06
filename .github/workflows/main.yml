@@ -23,6 +23,6 @@ jobs:
         run: |
           ls
           cd backend
-          railway up
+          railway up --service jasper-final-project
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
