@@ -1,11 +1,10 @@
-import { ChangeDetectorRef, Component, ElementRef, Input, NgZone, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import { CustomPlaceResult, Day, Place } from '../../../../models/dtos';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { CustomPlaceResult, Day } from '../../../../models/dtos';
+import { FormGroup } from '@angular/forms';
 import PlaceResult = google.maps.places.PlaceResult;
 import { TripService } from '../../trip.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TripStore } from '../../trip.store';
-import { ItineraryStore } from '../itinerary.store';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 
 @Component({
@@ -13,7 +12,7 @@ import { LocalStorageService } from '../../../../shared/services/local-storage.s
   templateUrl: './day.component.html',
   styleUrl: './day.component.scss'
 })
-export class DayComponent implements OnInit, OnChanges {
+export class DayComponent implements OnInit {
   @Input() day!: Day;
 
   form!: FormGroup;
@@ -29,10 +28,6 @@ export class DayComponent implements OnInit, OnChanges {
       private localStore: LocalStorageService,
       // private itiStore: ItineraryStore
       ) {}
-
-  ngOnChanges(changes: SimpleChanges): void {
-    // console.log('\tDAY CHANGED: ')
-  }
 
   ngOnInit(): void {
     // console.log('Day component init')
@@ -55,7 +50,7 @@ export class DayComponent implements OnInit, OnChanges {
         latlng: place.geometry?.location,
         image: place.photos ? place.photos[0].getUrl({maxHeight: 1000, maxWidth: 1000}) : ''
       }
-      console.log('Autcomplete: ', this.customPlace);
+      console.log('Autocomplete: ', this.customPlace);
     });
   }
 

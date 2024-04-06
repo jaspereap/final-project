@@ -1,16 +1,23 @@
-<div *ngIf="lodgings && lodgings.length > 0; else noLodging">
-    <div *ngFor="let lodging of lodgings; let i = index;">
-      <h3>{{ lodging.name }}</h3>
-      <p>Check-in: {{ lodging.checkIn | date }}</p>
-      <p>Check-out: {{ lodging.checkOut | date }}</p>
-      <p>Address: {{ lodging.address }}</p>
-      <p>Notes: {{ lodging.notes }}</p>
-      <p>Latlng: {{ lodging.latlng }}</p>
-      <button class="rounded p-1 bg-black text-white" (click)="deleteLodging(i)">Delete</button>
-    </div>
+<div class="flex justify-between">
+  <h2 class="text-2xl font-extrabold text-gray-800 mb-4 mt-4">Lodging</h2>
+  <button class="m-1 rounded bg-blue-100 p-2 text-white hover:bg-blue-600 transition-all" (click)="openDialog()">Add a Lodging</button>
 </div>
-  
+<div *ngIf="lodgings && lodgings.length > 0; else noLodging" class="space-y-4">
+  <div *ngFor="let lodging of lodgings; let i = index" class="relative group p-4 border border-gray-200 rounded-lg hover:shadow-lg transition-shadow">
+      <div>
+          <h3 class="text-lg font-semibold">{{ lodging.name }}</h3>
+          <p class="text-sm text-gray-600">Check-in: {{ lodging.checkIn | date }}</p>
+          <p class="text-sm text-gray-600">Check-out: {{ lodging.checkOut | date }}</p>
+          <p class="text-sm text-gray-600">Address: {{ lodging.address }}</p>
+          <p class="text-sm text-gray-600">Notes: {{ lodging.notes }}</p>
+          <p class="text-sm text-gray-600">Latlng: {{ lodging.latlng }}</p>
+      </div>
+      <button class="rounded p-1 bg-red-500 text-white absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 ease-in-out text-xs"
+              (click)="deleteLodging(i)">Delete</button>
+  </div>
+</div>
+
 <ng-template #noLodging>
-    <p>No lodging information available.</p>
+  <p class="text-gray-500">No lodging information available.</p>
 </ng-template>
-<button class="rounded bg-blue-300 p-2" (click)="openDialog()">Add a Lodging</button>
+

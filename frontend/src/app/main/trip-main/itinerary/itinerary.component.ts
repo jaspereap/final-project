@@ -4,6 +4,7 @@ import { TripStore } from '../trip.store';
 import { provideComponentStore } from '@ngrx/component-store';
 // import { ItineraryStore } from './itinerary.store';
 import { ActivatedRoute } from '@angular/router';
+import { TripNotificationService } from '../trip-notification.service';
 
 @Component({
   selector: 'app-itinerary',
@@ -19,15 +20,17 @@ export class ItineraryComponent implements OnInit {
   days!: Day[];
 
   constructor(
-    // private tripStore: TripStore, 
-    // private itiStore: ItineraryStore, 
+    private tripStore: TripStore,
+    private notiSvc: TripNotificationService,
     private route: ActivatedRoute,) {}
 
   ngOnInit(): void {
-    console.log('Itinerary init')
     this.tripId = this.route.snapshot.params['tripId'];
-    // this.tripStore.getItinerary(this.tripId);
-    // this.tripStore.getTripById(this.tripId)
+    this.notiSvc.updateItinerary$.subscribe(
+      (itinerary) => {
+        this.tripStore.setItinerary(itinerary);
+      }
+    )
   }
 
 }

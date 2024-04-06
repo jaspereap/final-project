@@ -2,7 +2,6 @@ package com.nus.iss.travlr.controllers;
 
 import java.io.StringReader;
 import java.util.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,12 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import com.nus.iss.travlr.models.Itinerary;
-import com.nus.iss.travlr.models.Place;
 import com.nus.iss.travlr.models.DTO.MessageType;
 import com.nus.iss.travlr.models.DTO.Request.IdentityToken;
 import com.nus.iss.travlr.models.DTO.Request.NewPlaceRequest;
 import com.nus.iss.travlr.models.DTO.Request.UpdatePlaceRequest;
-import com.nus.iss.travlr.models.DTO.Response.MessageResponse;
 import com.nus.iss.travlr.service.ItineraryService;
 import com.nus.iss.travlr.service.MessageService;
 
@@ -52,8 +49,6 @@ public class ItineraryController {
         System.out.println("Request: " + updatePlaceRequest);
 
         Itinerary updatedIti = itiSvc.updatePlaceInItineraryDay(tripId, date, rank, updatePlaceRequest.toPlace());
-        // Temp test
-        // msgSvc.publishToTrip(tripId, updatedIti.toJson().toString(), MessageType.ITINERARY_MODIFIED);
         msgSvc.publishToTripWithAuthor(tripId, updatedIti.toJson().toString(), MessageType.ITINERARY_MODIFIED, updatePlaceRequest.getIdentity().getUsername());
         return ResponseEntity.ok(updatedIti.toJson().toString());
     }
@@ -85,8 +80,19 @@ public class ItineraryController {
         System.out.println(place);
 
         Itinerary itinerary = itiSvc.addPlaceToItineraryDay(tripId, date, place);
-        // msgSvc.publishToTrip(tripId, itinerary.toJson().toString(), MessageType.ITINERARY_MODIFIED);
         msgSvc.publishToTripWithAuthor(tripId, itinerary.toJson().toString(), MessageType.ITINERARY_ADDED, place.getIdentity().getUsername());
+        return ResponseEntity.ok(itinerary.toJson().toString());
+    }
+
+    @PutMapping(path = "/delete/{tripId}/{date}/{rank}")
+    public ResponseEntity<String> deleteItineraryPlace(            
+        @PathVariable String tripId, 
+        @PathVariable String date, 
+        @PathVariable String rank,  
+        @RequestBody IdentityToken identity) {
+        System.out.println("delete itinerary place controller");
+        Itinerary itinerary = itiSvc.deleteItineraryPlace(tripId, date, rank);
+        msgSvc.publishToTripWithAuthor(tripId, itinerary.toJson().toString(), MessageType.ITINERARY_MODIFIED, identity.getUsername());
         return ResponseEntity.ok(itinerary.toJson().toString());
     }
 }

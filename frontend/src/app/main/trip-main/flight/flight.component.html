@@ -1,15 +1,20 @@
-<!-- flight.component.html -->
-<div *ngIf="flights && flights.length > 0; else noFlights">
-    <div *ngFor="let flight of flights; let i = index;">
-      <h3>{{ flight.airlineName }} ({{ flight.flightNumber }})</h3>
-      <p>Departure: {{ flight.departureCountry }} - {{ flight.departureDate | date:'medium' }}</p>
-      <p>Arrival: {{ flight.arrivalCountry }} - {{ flight.arrivalDate | date:'medium' }}</p>
-      <p>Notes: {{ flight.notes }}</p>
-      <button class="rounded p-1 bg-black text-white" (click)="deleteFlight(i)">Delete</button>
-    </div>
+<div class="flex justify-between">
+  <h2 class="text-2xl font-extrabold text-gray-800 mb-4 mt-4">Flights</h2>
+  <button class="m-1 rounded bg-blue-100 p-2 text-white hover:bg-blue-600 transition-all" (click)="openDialog()">Add a Flight</button>
 </div>
-  
-  <ng-template #noFlights>
-    <p>No flight information available.</p>
-  </ng-template>
-  <button class="rounded bg-blue-300 p-2" (click)="openDialog()">Add a Flight</button>
+<div *ngIf="flights && flights.length > 0; else noFlights" class="space-y-4">
+  <div *ngFor="let flight of flights; let i = index" class="relative group p-4 border border-gray-200 rounded-lg hover:shadow-lg transition-shadow">
+      <div>
+          <h3 class="text-lg font-semibold">{{ flight.airlineName }} ({{ flight.flightNumber }})</h3>
+          <p class="text-sm text-gray-600">Departure: {{ flight.departureCountry }} - {{ flight.departureDate | date:'medium' }}</p>
+          <p class="text-sm text-gray-600">Arrival: {{ flight.arrivalCountry }} - {{ flight.arrivalDate | date:'medium' }}</p>
+          <p class="text-sm text-gray-600">Notes: {{ flight.notes }}</p>
+      </div>
+      <button class="rounded p-1 bg-red-500 text-white absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 ease-in-out text-xs"
+              (click)="deleteFlight(i)">Delete</button>
+  </div>
+</div>
+
+<ng-template #noFlights>
+  <p class="text-gray-500">No flight information available.</p>
+</ng-template>

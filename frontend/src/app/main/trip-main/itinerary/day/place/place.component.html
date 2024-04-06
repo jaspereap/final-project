@@ -1,50 +1,42 @@
-<div class="border-2">
-    <h4>{{ place.name }}</h4>
-    <p>{{ place.address }}</p>
-    
-    <!-- Start End -->
-    <div *ngIf="editingTime; else showTime">
-        <input type="time" [(ngModel)]="editableStart">
-        <input type="time" [(ngModel)]="editableEnd">
-        <button mat-icon-button (click)="editingTime = false" class="mr-2"><mat-icon>cancel</mat-icon></button>
-        <button color="primary" (click)="saveUpdatedTimes()" class="bg-blue-600" [disabled]="!editableStart || !editableEnd">Save</button>
-    </div>
-    <ng-template #showTime>
-        <p *ngIf='place.start.getTime() !== 0 else addTime' (click)="editTime()" class="cursor-pointer">
-            <!-- {{ place.start | date:'mediumTime' }} - {{ place.end | date:'mediumTime' }} -->
-            {{ place.start | date:'h mm a' }} - {{ place.end | date:'h mm a' }}
-        </p>
-        <ng-template #addTime>
-            <div class="flex items-center cursor-pointer p-2" (click)="editTime()">
-                Add a time
+<div class="flex space-x-4 p-4 border-2 rounded-lg shadow group">
+    <!-- Details Section -->
+    <div class="flex-grow space-y-4">
+        <h4 class="text-lg font-semibold">{{ place.name }}</h4>
+        <p class="text-sm text-gray-600">{{ place.address }}</p>
+        
+        <!-- Start and End Time -->
+        <div *ngIf="editingTime; else showTime" class="flex space-x-2 items-center">
+            <input type="time" [(ngModel)]="editableStart" class="border rounded p-2 text-sm">
+            <input type="time" [(ngModel)]="editableEnd" class="border rounded p-2 text-sm">
+            <button (click)="editingTime = false" class="text-red-500"><mat-icon>cancel</mat-icon></button>
+            <button (click)="saveUpdatedTimes()" [disabled]="!editableStart || !editableEnd" class="bg-blue-600 text-white rounded p-2 hover:bg-blue-700 transition-colors disabled:opacity-50">Save</button>
+        </div>
+        <ng-template #showTime>
+            <div class="flex items-center">
+                <p class="flex-grow text-sm">
+                    {{ place.start | date:'h mm a' }} - {{ place.end | date:'h mm a' }}
+                </p>
+                <mat-icon class="text-gray-400 hover:text-gray-600 opacity-0 group-hover:opacity-100" (click)="editTime()">edit</mat-icon>
             </div>
         </ng-template>
-    </ng-template>
-    <!-- Notes -->
-    <div *ngIf="editingNotes; else showNotes" class="flex items-center w-full">
-        <mat-form-field class="flex-grow">
-            <input matInput [(ngModel)]="editableNotes" (keyup.enter)="saveNotes(editableNotes)">
-        </mat-form-field>
-        <button mat-icon-button (click)="editingNotes = false" class="ml-2 pb-4">
-            <mat-icon>cancel</mat-icon>
-        </button>
-    </div>
-    <ng-template #showNotes>
-        <div class="flex items-center cursor-pointer p-2" (click)="editNotes()">
-          <mat-icon class="mr-2">edit_note</mat-icon>
-          <p class="m-0">{{ place.notes || 'Add a note' }}</p>
+
+        <!-- Notes -->
+        <div *ngIf="editingNotes; else showNotes" class="flex items-center">
+            <input [(ngModel)]="editableNotes" class="flex-grow border p-2 rounded text-sm" (keyup.enter)="saveNotes(editableNotes)">
+            <button (click)="editingNotes = false" class="ml-2 text-red-500"><mat-icon>cancel</mat-icon></button>
         </div>
-    </ng-template>
-      
-    <!-- Image -->
-    <p *ngIf="place.image.length != 0">
-        <img [src]="place.image" alt="" width="200">
-    </p>
-    <button class="rounded bg-orange-200 text-xs py-1 px-1">Add Cost</button>
+        <ng-template #showNotes>
+            <div class="flex items-center space-x-2">
+                <p class="flex-grow text-sm">{{ place.notes || 'Add a note' }}</p>
+                <mat-icon class="text-gray-400 hover:text-gray-600 opacity-0 group-hover:opacity-100" (click)="editNotes()">edit_note</mat-icon>
+            </div>
+        </ng-template>
+        <button class="rounded bg-orange-200 hover:bg-orange-300 text-xs py-1 px-4 transition-colors">Add Cost</button>
+    </div>
+    
+    <!-- Image Section -->
+    <div *ngIf="place.image.length != 0" class="w-1/4 min-w-[100px] max-h-52 overflow-hidden">
+        <img [src]="place.image" alt="Place Image" class="w-full h-full object-cover rounded-lg shadow">
+    </div>
+    <button (click)="deletePlace()">Delete</button>
 </div>
-
-
-
-
-
-

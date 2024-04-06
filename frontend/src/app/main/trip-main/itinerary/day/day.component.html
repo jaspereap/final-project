@@ -1,25 +1,20 @@
-<br>
-<h4>Date: {{ day.date | date:'fullDate'}}</h4>
-
-<!-- <div style="margin-left:40px;">
-    <div *ngFor="let place of day.places">
-        <h4>{{ place.name }}</h4>
-        <p>{{ place.start | date:'h mm a' }} - {{ place.end | date:'h mm a' }}</p>
-        <p>{{ place.address }}</p>
-        <p>Latlng: {{ place.latlng }}</p>
+<div class="m-5">
+    <div class="text-xl">{{ day.date | date:'fullDate' }}</div>
+    <div class="space-y-2">
+        <app-place *ngFor="let place of day.places; let i = index;" 
+            [place]="place" 
+            [date]="day.date"
+            [index]="i" 
+            class="p-0.5">
+        </app-place>
     </div>
-</div> -->
-
-<div style="margin-left:40px;">
-    <app-place *ngFor="let place of day.places" 
-        [place]="place"
-        [date]="day.date">
-    </app-place>
+    <div class="mt-1 flex items-center space-x-2">
+        <input #searchInput
+            placeholder="Add a new place"
+            type="text"
+            class="rounded focus:shadow-outline focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-full border-2 border-gray-300 shadow-sm p-2 transition duration-150 ease-in-out">
+        <button (click)="addPlace()" class="rounded bg-blue-500 hover:bg-blue-600 p-2 text-white transition duration-150 ease-in-out">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+        </button>
+    </div>
 </div>
-
-<input #searchInput
-    placeholder="Add a new place"
-    type="text"
-    class="rounded focus:shadow-outline w-96 border-2 shadow-md">
-<button (click)="addPlace()" class="rounded bg-gray-500 hover:bg-gray-600 p-1 ms-3 text-white">Add</button>
-<br>

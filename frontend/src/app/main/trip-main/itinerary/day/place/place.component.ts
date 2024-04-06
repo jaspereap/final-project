@@ -1,7 +1,6 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Place } from '../../../../../models/dtos';
 import { TripService } from '../../../trip.service';
-import { ItineraryStore } from '../../itinerary.store';
 import { ActivatedRoute } from '@angular/router';
 import { TripStore } from '../../../trip.store';
 import { LocalStorageService } from '../../../../../shared/services/local-storage.service';
@@ -11,18 +10,17 @@ import { LocalStorageService } from '../../../../../shared/services/local-storag
   templateUrl: './place.component.html',
   styleUrl: './place.component.scss',
 })
-export class PlaceComponent implements OnInit, OnChanges{
+export class PlaceComponent implements OnInit {
 
   @Input() place!: Place;
   @Input() date!: Date;
+  @Input() index!: number;
 
   editingTime = false;
   editableStart!: Date;
   editableEnd!: Date;
   editingNotes = false;
   editableNotes!: string;
-
-  testTime: string = "14:15";
 
   constructor(
     // private itiStore: ItineraryStore, 
@@ -39,7 +37,16 @@ export class PlaceComponent implements OnInit, OnChanges{
     // console.log('initial: ', this.place.start.getTime())
   }
 
-  ngOnChanges(changes: SimpleChanges): void {}
+  deletePlace() {
+    this.tripStore.deletePlace(
+      {
+        identity: {userId: Number(this.localStore.getUserId()), username: this.localStore.getUsername()},
+        tripId: this.tripId,
+        date: this.date,
+        rank: this.index
+      }
+    )
+  }
 
   editTime() {
     this.editableStart = this.date;
@@ -52,9 +59,6 @@ export class PlaceComponent implements OnInit, OnChanges{
   saveUpdatedTimes() {
     this.place.start = new Date(this.convertTimeToMillis(this.editableStart.toString()) + this.date.getTime() );
     this.place.end = new Date(this.convertTimeToMillis(this.editableEnd.toString()) + this.date.getTime());
-    // console.log('after: ');
-    // console.log(this.place.start.getTime());
-    // console.log(this.place.end.getTime());
     this.tripStore.savePlace(
       {
         identity: {userId: Number(this.localStore.getUserId()), username: this.localStore.getUsername()},
@@ -71,10 +75,6 @@ export class PlaceComponent implements OnInit, OnChanges{
     const [hours, minutes] = timeString.split(':').map(Number);
     // Convert hours to milliseconds and add minutes converted to milliseconds
     return (hours * 60 * 60 * 1000) + (minutes * 60 * 1000);
-  }
-
-  addNotes(date: Date) {
-    console.log('add note pressed. date: ', date)
   }
 
   editNotes() {

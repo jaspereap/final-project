@@ -48,7 +48,7 @@ public class LodgingRequest {
             .add("checkOut", checkOut != null ? checkOut.getTime() : 0)
             .add("costings", costingsArr)
             .add("address", address != null ? address : "")
-            .add("latlng", latlng != null ? Json.createArrayBuilder().add(latlng[0]).add(latlng[1]) : Json.createArrayBuilder().add(0).add(0))
+            .add("latlng", latlng[0] != null ? Json.createArrayBuilder().add(latlng[0]).add(latlng[1]) : Json.createArrayBuilder().add(0).add(0))
             .build();
     }
 }

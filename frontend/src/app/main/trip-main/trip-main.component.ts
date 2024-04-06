@@ -23,13 +23,11 @@ export class TripMainComponent implements OnInit, OnDestroy{
   currentUser$ = this.authStore.user$;
   tripIdListener?: Subscription;
 
-  constructor(private route: ActivatedRoute, 
+  constructor(
+    private route: ActivatedRoute, 
     private authStore: AuthStore, 
     private tripStore: TripStore, 
-    private notificationService: TripNotificationService,
-    private _snackBar: MatSnackBar,
-    private localStore: LocalStorageService,
-    private router: Router) {}
+    private notificationService: TripNotificationService) {}
 
   ngOnInit(): void {
     // console.log("Trip-main init")
@@ -39,24 +37,8 @@ export class TripMainComponent implements OnInit, OnDestroy{
     this.tripStore.getTripById(this.tripId);
     // Subscribe to tripId websocket
     this.notificationService.listenTripId(this.tripId);
-    this.notificationService.updateItinerary$.subscribe(
-      (itinerary) => {
-        this.updateItinerary(itinerary)
-      }
-    )
   }
   
-  updateItinerary(itinerary: Itinerary) {
-    this.tripStore.setItinerary(itinerary);
-  }
-
-  showNotification(message: string, action: string = 'Close', duration: number = 3000) {
-    this._snackBar.open(message, action, {
-      duration: duration,
-      horizontalPosition: 'end'
-    });
-  }
-
   ngOnDestroy() {
     console.log("OnDestroy trigger");
     this.tripIdListener?.unsubscribe();

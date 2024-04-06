@@ -30,8 +30,18 @@ export class MapComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    // console.log('Map init')
-    // Init displayMarkers
+    if (this.lodgings.length !== 0) {
+      this.center = {
+        lat: this.lodgings[0].latlng[0],
+        lng: this.lodgings[0].latlng[1]
+      }
+      
+    } else if (this.itineraryDays.length !== 0 && this.itineraryDays[0].places.length !== 0) {
+      this.center = {
+        lat: this.itineraryDays[0].places[0].latlng[0],
+        lng: this.itineraryDays[0].places[0].latlng[1]
+      }
+    }
     this.displayMarkers = this.getAllLodgingMarkers(this.lodgings);
   }
 

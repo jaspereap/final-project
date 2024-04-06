@@ -6,6 +6,7 @@ import { Observable, concatMap, switchMap, tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { FlightService } from './flight/flight.service';
 import { LodgingService } from './lodging/lodging.service';
+import { ItineraryService } from './itinerary/itinerary.service';
 
 export interface TripState {
   currentTrip: Trip | null;
@@ -17,7 +18,7 @@ export interface TripState {
 @Injectable()
 export class TripStore extends ComponentStore<TripState> {
 
-  constructor(private tripService: TripService, private router: Router, private ngZone: NgZone, private flightService: FlightService, private lodgingService: LodgingService) { 
+  constructor(private tripService: TripService, private router: Router, private ngZone: NgZone, private flightService: FlightService, private lodgingService: LodgingService, private itineraryService: ItineraryService) { 
     super({
       currentTrip: null,
       // currentItinerary: null,
@@ -105,8 +106,6 @@ export class TripStore extends ComponentStore<TripState> {
             (resp: Itinerary) => {
               console.log('Server response: ', resp)
               this.setItinerary(resp);
-              console.log('setItinerary ran')
-              // this.tripStore.getTripById(tripId);
             },
             (error) => {
               console.error('Error adding place to day', error);
@@ -116,6 +115,23 @@ export class TripStore extends ComponentStore<TripState> {
       )
     )
   );
+  // To delete a Place in Itinerary
+  readonly deletePlace = this.effect((params$: Observable<{identity: IdentityToken, tripId: string, date: Date, rank: number}>) =>
+    params$.pipe(
+      tap(() => console.log('\tdelete place triggered')),
+      switchMap((params) => {
+        return this.itineraryService.deletePlace(params.identity, params.tripId, params.date, params.rank).pipe(
+          tapResponse(
+            (resp: Itinerary) => {
+              console.log('Server resp: ', resp)
+              this.setItinerary(resp)
+            },
+            (err) => console.error(err)
+          )
+        );
+      })
+    )
+    )
 
   // Set Flights
   readonly setFlightDetails = this.updater((state, newFlights: Flight[]) => {

@@ -58,8 +58,4 @@ export class FlightDialogComponent implements OnInit{
 
   }
 
-  onNoClick() {
-    this.dialogRef.close();
-  }
-
 }

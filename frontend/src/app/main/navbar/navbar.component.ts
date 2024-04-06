@@ -6,5 +6,8 @@ import { Component } from '@angular/core';
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent {
-
+  toggleMobileMenu() {
+    const menu = document.querySelector('.mobile-menu');
+    menu?.classList.toggle('hidden');
+  }
 }

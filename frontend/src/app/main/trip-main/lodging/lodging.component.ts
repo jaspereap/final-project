@@ -47,6 +47,7 @@ export class LodgingComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       const form = result as FormGroup;
+      // console.log('after dialog closed result: ',result)
       if (result !== undefined && result !== null && form.valid) {
         console.log('Dialog result received: ', result)
         const lodgingFormData: Lodging =  form.value as Lodging;

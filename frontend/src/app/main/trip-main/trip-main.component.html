@@ -1,27 +1,32 @@
 <div class="flex h-screen">
-    <ng-template #tripDetails>
-        <div *ngIf="currentTrip$ | async as trip; else noDetails" class="ps-10">
-            <!-- <div>{{trip | json}}</div> -->
-            <img *ngIf="trip.image !== ''" mat-card-image [src]="trip.image" alt="Trip Image" class="w-full h-40 object-cover rounded-sm">
-            <div class="text-5xl">Trip to {{ trip.country }}</div>
-            <br>
-            <app-flight [flights]="trip.flightDetails"></app-flight>
-            <br>
-            <app-lodging [lodgings]="trip.lodgings"></app-lodging>
-            <br>
-            <app-itinerary [days]="trip.itinerary.days"></app-itinerary>
-            <br>
-            <app-map
-                [lodgings]="trip.lodgings"
-                [itineraryDays]="trip.itinerary.days"></app-map>
-        </div>
-    </ng-template>
-    
-    <ng-template #noDetails>
-        No details
-    </ng-template>
-    <div *ngIf="isLoading$ | async; else tripDetails">
-        Loading...
+    <!-- Scrollable Trip Details on the Left -->
+    <div class="overflow-y-auto w-2/3 h-full">
+        <ng-container *ngIf="isLoading$ | async; else tripDetails">
+            Loading...
+        </ng-container>
+        
+        <ng-template #tripDetails>
+            <div *ngIf="currentTrip$ | async as trip; else noDetails" class="p-1">
+                <img *ngIf="trip.image" [src]="trip.image" alt="Trip Image" class="w-full h-40 object-cover rounded-md">
+                <div class="text-5xl">Trip to {{ trip.country }}</div>
+                <app-flight [flights]="trip.flightDetails" class="p-1"></app-flight>
+                <app-lodging [lodgings]="trip.lodgings" class="p-1"></app-lodging>
+                <app-itinerary [days]="trip.itinerary.days" class="p-1"></app-itinerary>
+            </div>
+
+        </ng-template>
+    </div>
+
+    <!-- Fixed Map on the Right -->
+    <div class="overflow-hidden w-1/3 h-full" *ngIf="currentTrip$ | async as trip; else noDetails">
+        <app-map
+            [lodgings]="trip.lodgings"
+            [itineraryDays]="trip.itinerary.days"
+            class="h-full">
+        </app-map>
     </div>
 </div>
 
+<ng-template #noDetails>
+    No details
+</ng-template>

@@ -1,17 +1,23 @@
-<select (change)="onSelectionChange(catSelect.value)" #catSelect>
-    <option value="lodging">Lodging</option>
-    <option *ngFor="let day of itineraryDays; let i = index" [value]="day.date">
-      {{ day.date | date:'fullDate' }}
-    </option>
-</select>
+<div>
+    <select (change)="onSelectionChange(catSelect.value)" #catSelect>
+        <option value="lodging">Lodging</option>
+        <option *ngFor="let day of itineraryDays; let i = index" [value]="day.date">
+          {{ day.date | date:'fullDate' }}
+        </option>
+    </select>
 
-<google-map
-    [center]="center"
-    [zoom]="zoom"
-    [mapId]="mapId">
-    <map-marker *ngFor="let marker of displayMarkers" 
-        [label]="marker.label"
-        [position]="marker.latlng"
-        [options]="markerOptions">
-    </map-marker>
-</google-map>
+    <div style="width: 100%; height: 95vh;">
+        <google-map
+            height="100%"
+            width="100%"
+            [center]="center"
+            [zoom]="zoom"
+            [mapId]="mapId">
+            <map-marker *ngFor="let marker of displayMarkers" 
+                [label]="marker.label"
+                [position]="marker.latlng"
+                [options]="markerOptions">
+            </map-marker>
+        </google-map>
+    </div>
+</div>

@@ -64,4 +64,18 @@ public class ItineraryService {
         // Save the updated trip back to MongoDB
         return tripRepo.save(trip).getItinerary();
     }
+
+    public Itinerary deleteItineraryPlace(String tripId, String targetDate, String rank) {
+        Optional<Trip> optTrip = tripRepo.findById(tripId);
+        if (optTrip.isEmpty()) {
+            return null;
+        }
+        Trip trip = optTrip.get();
+        for (Day day : trip.getItinerary().getDays()) {
+            if (day.getDate().getTime() == Long.parseLong(targetDate)) {
+                day.getPlaces().remove(Integer.parseInt(rank));
+            }
+        }
+        return tripRepo.save(trip).getItinerary();
+    }
 }
