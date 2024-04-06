@@ -5,42 +5,51 @@ on:
       - main
     paths:
       - 'backend/**'
+  pull_request:
+    branches:
+      - main
 jobs:
-  build-and-push:
-    runs-on: ubuntu-latest
-    steps:
+  # build-and-push:
+  #   runs-on: ubuntu-latest
+  #   steps:
 
-      - name: Checkout code
-        uses: actions/checkout@v4
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
 
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+  #     - name: Log in to Docker Hub
+  #       uses: docker/login-action@v3
+  #       with:
+  #         username: ${{ secrets.DOCKER_USERNAME }}
+  #         password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v5
-        with:
-          context: ./backend
-          file: ./backend/Dockerfile
-          push: true
-          tags: jaspereap/travlr:latest  
+  #     - name: Build and push Docker image
+  #       uses: docker/build-push-action@v5
+  #       with:
+  #         context: ./backend
+  #         file: ./backend/Dockerfile
+  #         push: true
+  #         tags: jaspereap/travlr:latest  
 
   deploy-to-railway:
-    needs: build-and-push
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install packages
+        run: npm ci
+
       - name: Install Railway CLI
-        run: npm install -g @railway/cli
-        
-      - name: Login to Railway
-        run: railway login --token ${{ secrets.RAILWAY_TOKEN }}
+        run: npm i -g @railway/cli
         
       - name: Deploy to Railway
-        run: |
+        run: 
           railway up
-          railway link
-          railway variables set DOCKER_IMAGE=jaspereap/travlr:latest
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
