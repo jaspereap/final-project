@@ -35,7 +35,7 @@ public class ItineraryController {
     @GetMapping(path = "/get/{tripId}")
     public ResponseEntity<String> getItinerary(@PathVariable String tripId) {
         Itinerary retrievedItinerary = itiSvc.getItineraryByTripId(tripId);
-        System.out.println("getItinerary: ");
+        // System.out.println("getItinerary: ");
         return ResponseEntity.ok(retrievedItinerary.toJson().toString());
     }
 // For updating place
@@ -46,7 +46,7 @@ public class ItineraryController {
             @PathVariable String rank, 
             @RequestBody UpdatePlaceRequest updatePlaceRequest) {
         System.out.println("\tupdate Itinerary day place controller");
-        System.out.println("Request: " + updatePlaceRequest);
+        // System.out.println("Request: " + updatePlaceRequest);
 
         Itinerary updatedIti = itiSvc.updatePlaceInItineraryDay(tripId, date, rank, updatePlaceRequest.toPlace());
         msgSvc.publishToTripWithAuthor(tripId, updatedIti.toJson().toString(), MessageType.ITINERARY_MODIFIED, updatePlaceRequest.getIdentity().getUsername());
@@ -59,9 +59,9 @@ public class ItineraryController {
             @PathVariable String date, 
             @RequestBody String placeData) {
         System.out.println("\tPost add place to date controller");
-        System.out.println("\ttripId: " + tripId);
-        System.out.println("\tTo date: " + new Date(Long.parseLong(date)));
-        System.out.println("\tplaceData: " + placeData);
+        // System.out.println("\ttripId: " + tripId);
+        // System.out.println("\tTo date: " + new Date(Long.parseLong(date)));
+        // System.out.println("\tplaceData: " + placeData);
         JsonObject placeRequest = Json.createReader(new StringReader(placeData)).readObject();
         JsonObject identity = placeRequest.getJsonObject("identity");
         JsonObject placeLocation = placeRequest.getJsonObject("latlng");
@@ -77,7 +77,7 @@ public class ItineraryController {
             placeRequest.getString("image")
         );
 
-        System.out.println(place);
+        // System.out.println(place);
 
         Itinerary itinerary = itiSvc.addPlaceToItineraryDay(tripId, date, place);
         msgSvc.publishToTripWithAuthor(tripId, itinerary.toJson().toString(), MessageType.ITINERARY_ADDED, place.getIdentity().getUsername());

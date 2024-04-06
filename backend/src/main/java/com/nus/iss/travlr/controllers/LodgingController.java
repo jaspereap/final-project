@@ -32,7 +32,7 @@ public class LodgingController {
 
     @PostMapping(path = "/add/{tripId}")
     public ResponseEntity<String> addNewLodging(@PathVariable String tripId, @RequestBody LodgingRequest lodgingRequest) {
-        System.out.println("lodging request: " + lodgingRequest);
+        // System.out.println("lodging request: " + lodgingRequest);
         List<Lodging> lodgingDetails = lodgingSvc.addLodging(tripId, lodgingRequest);
         JsonArrayBuilder lodgingDetailsArrBuilder = Json.createArrayBuilder();
         for (Lodging lodging : lodgingDetails) {

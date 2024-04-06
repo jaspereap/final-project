@@ -30,14 +30,14 @@ public class UserController {
     @GetMapping(path = "/search")
     public ResponseEntity<String> searchUsers(@RequestParam String username, @RequestParam(defaultValue = "2") int limit) {
         System.out.println("get users controller");
-        System.out.println("Request param: " + username);
+        // System.out.println("Request param: " + username);
         List<UserEntity> retrievedUsers = userService.getUsersByUsername(username, limit);
-        System.out.println(retrievedUsers);
+        // System.out.println(retrievedUsers);
         JsonArrayBuilder usersArr = Json.createArrayBuilder();
         for (UserEntity user : retrievedUsers) {
             usersArr.add(new UserDTO(user).toJson());
         }
-        System.out.println(usersArr.toString());
+        // System.out.println(usersArr.toString());
         return ResponseEntity.ok(usersArr.build().toString());
     }
 

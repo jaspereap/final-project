@@ -37,8 +37,8 @@ public class TripController {
     // For displaying tripcards at homepage
     @PostMapping(path = "/all")
     public ResponseEntity<String> getTrips(@RequestBody IdentityToken request) {
-        System.out.println("\tGet TripSSSS controller triggered");
-        System.out.println(request);
+        System.out.println("\tGet Trip controller triggered");
+        // System.out.println(request);
         ArrayList<Trip> trips = tripSvc.getAllTripsByUserId(request.getUserId());
         JsonArray tripCards = TripUtils.tripToTripCards(trips);
         return ResponseEntity.ok(tripCards.toString());
@@ -49,7 +49,7 @@ public class TripController {
     @PostMapping(path = "/new")
     public ResponseEntity<String> postAddTrip(@RequestBody TripRequest request) {
         System.out.println("\tPost add trip controller triggered");
-        System.out.println("\tRequest: " + request);
+        // System.out.println("\tRequest: " + request);
         Trip newTrip = new Trip(
             request.getIdentity().getUserId(), 
             request.getCountry(), 
@@ -72,7 +72,7 @@ public class TripController {
     @GetMapping(path = "/show/{tripId}")
     public ResponseEntity<String> getTrip(@PathVariable String tripId) {
         System.out.println("\tGet trip controller triggered");
-        System.out.println("\ttripId: " + tripId);
+        // System.out.println("\ttripId: " + tripId);
         Optional<Trip> optTrip = tripSvc.getTrip(tripId);
         if (!optTrip.isEmpty()) {
             return ResponseEntity.ok(optTrip.get().toJson().toString());
