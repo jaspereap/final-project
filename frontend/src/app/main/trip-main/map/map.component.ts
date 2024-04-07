@@ -2,13 +2,12 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { Day, Lodging, Marker } from '../../../models/dtos';
 import { environment as env } from "../../../../environments/environment";
 import LatLngLiteral = google.maps.LatLngLiteral;
-import { ItineraryStore } from '../itinerary/itinerary.store';
+
 import { provideComponentStore } from '@ngrx/component-store';
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
   styleUrl: './map.component.scss',
-  providers: [provideComponentStore(ItineraryStore)]
 })
 export class MapComponent implements OnInit {
   @Input() lodgings!: Lodging[];
@@ -23,7 +22,7 @@ export class MapComponent implements OnInit {
   displayMarkers: Marker[] = []
   markerOptions: google.maps.MarkerOptions = {draggable: false};
 
-  constructor(private itiStore: ItineraryStore) {
+  constructor() {
   }
   
   ngOnInit(): void {

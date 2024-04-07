@@ -1,12 +1,10 @@
 <h2 class="text-2xl font-extrabold text-gray-800 mb-4 mt-4">Itinerary</h2>
 <!-- itinerary.component.html -->
 <!-- <div *ngIf="days$ | async as days; else noItinerary" class=""> -->
-<div *ngIf="days as days; else noItinerary" class="">
-    <app-day *ngFor="let day of days; let i = index"
-        [day]="day">
-    </app-day>
+<div *ngIf="days" class="">
+    <ng-container *ngFor="let day of days; let i = index">
+        <app-day [day]="day">
+        </app-day>
+    </ng-container>
 </div>
 
-<ng-template #noItinerary>
-    <p>No itinerary details available.</p>
-</ng-template>

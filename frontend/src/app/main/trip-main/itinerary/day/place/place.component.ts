@@ -51,23 +51,26 @@ export class PlaceComponent implements OnInit {
   editTime() {
     this.editableStart = this.date;
     this.editableEnd = this.date;
-    console.log('editable start: ', this.editableStart)
-    console.log('editable end: ', this.editableEnd)
+    // console.log('editable start: ', this.editableStart)
+    // console.log('editable end: ', this.editableEnd)
     this.editingTime = true;
   }
   
   saveUpdatedTimes() {
     this.place.start = new Date(this.convertTimeToMillis(this.editableStart.toString()) + this.date.getTime() );
     this.place.end = new Date(this.convertTimeToMillis(this.editableEnd.toString()) + this.date.getTime());
-    this.tripStore.savePlace(
-      {
-        identity: {userId: Number(this.localStore.getUserId()), username: this.localStore.getUsername()},
-        tripId: this.tripId,
-        date: this.date,
-        rank: this.place.rank,
-        place: this.place
-      }
-    )
+    // console.log(this.place.start.toJSON(), this.place.end)
+    if (this.place.start.toJSON() !== null && this.place.end.toJSON() !== null ) {
+      this.tripStore.savePlace(
+        {
+          identity: {userId: Number(this.localStore.getUserId()), username: this.localStore.getUsername()},
+          tripId: this.tripId,
+          date: this.date,
+          rank: this.place.rank,
+          place: this.place
+        }
+      )
+    }
     this.editingTime = false;
   }
 

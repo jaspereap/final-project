@@ -18,7 +18,7 @@
         <select (change)="onSelectionChange(catSelect.value)" #catSelect class="bg-white border border-gray-300 rounded shadow p-2">
             <option value="lodging">Lodging</option>
             <option *ngFor="let day of itineraryDays; let i = index" [value]="day.date">
-                {{ day.date | date:'fullDate' }}
+                {{ day.date | date:'cccc, d MMMM' }}
             </option>
         </select>
     </div>

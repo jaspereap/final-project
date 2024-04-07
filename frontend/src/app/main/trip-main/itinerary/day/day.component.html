@@ -1,12 +1,17 @@
 <div class="m-5">
     <div class="text-xl">{{ day.date | date:'EEEE, d MMMM' }}</div>
     <div class="space-y-2">
-        <app-place *ngFor="let place of day.places; let i = index;" 
-            [place]="place" 
-            [date]="day.date"
-            [index]="i" 
-            class="p-0.5">
-        </app-place>
+        <ng-container *ngIf="day.places.length > 0; else noPlaces">
+            <app-place *ngFor="let place of day.places; let i = index;" 
+                [place]="place" 
+                [date]="day.date"
+                [index]="i" 
+                class="p-0.5">
+            </app-place>
+        </ng-container>
+        <ng-template #noPlaces>
+            <p class="text-gray-500 p-3">No places added yet.</p>
+        </ng-template>
     </div>
     <div class="mt-1 flex items-center space-x-2 opacity-30 hover:opacity-100 transition">
         <input #searchInput

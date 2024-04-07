@@ -1,4 +1,4 @@
-<div class="flex space-x-4 p-4 rounded-lg shadow group relative">
+<div class="flex space-x-4 p-4 rounded-lg shadow group relative bg-sky-50">
     <!-- Details Section -->
     <div class="flex-grow space-y-4">
         <h4 class="text-lg font-semibold">{{ place.name }}</h4>
@@ -9,14 +9,14 @@
             <div class="flex space-x-2 items-center">
                 <input type="time" [(ngModel)]="editableStart" class="border rounded p-2 text-sm">
                 <input type="time" [(ngModel)]="editableEnd" class="border rounded p-2 text-sm">
-                <button (click)="saveUpdatedTimes()" [disabled]="!editableStart || !editableEnd" class="bg-blue-600 text-white rounded p-2 hover:bg-blue-700 transition-colors disabled:opacity-50">Save</button>
+                <button (click)="saveUpdatedTimes()" [disabled]="editableEnd === date || editableStart === date" class="bg-blue-600 text-white rounded p-2 hover:bg-blue-700 transition-colors disabled:opacity-50">Save</button>
             </div>
             <button (click)="editingTime = false" class="text-red-500"><mat-icon>cancel</mat-icon></button>
         </div>
         <ng-template #showTime>
             <div class="flex items-center">
                 <p class="flex-grow text-sm">
-                    {{ place.start | date:'h mm a' }} - {{ place.end | date:'h mm a' }}
+                    {{ place.start | date:'h:mm a' }} - {{ place.end | date:'h:mm a' }}
                 </p>
                 <mat-icon class="text-gray-400 hover:text-gray-600 opacity-0 group-hover:opacity-100" (click)="editTime()">edit</mat-icon>
             </div>
@@ -29,7 +29,7 @@
         </div>
         <ng-template #showNotes>
             <div class="flex items-center space-x-2">
-                <p class="flex-grow text-sm">{{ place.notes || 'Add a note' }}</p>
+                <p class="flex-grow text-xs">{{ place.notes || 'No notes added.' }}</p>
                 <mat-icon class="text-gray-400 hover:text-gray-600 opacity-0 group-hover:opacity-100" (click)="editNotes()">edit_note</mat-icon>
             </div>
         </ng-template>
