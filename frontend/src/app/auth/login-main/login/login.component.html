@@ -1,12 +1,13 @@
+<!-- login.component.html -->
 <mat-card class="">
     <mat-card-header>
         <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-            <img class="mx-auto h-10 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="Your Company">
+            <img class="mx-auto h-10 w-auto" src="/assets/logos/travlr-logo-small-white.png" alt="Travlr logo">
             <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Sign in to your account</h2>
         </div>
     </mat-card-header>
 
-    <mat-card-content class="w-96 mt-5">
+    <mat-card-content class="w-full mt-5">
         <form [formGroup]="loginForm" (submit)="login()">
             <p>
                 <mat-form-field appearance="fill" class="w-full">

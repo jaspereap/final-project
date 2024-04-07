@@ -1,4 +1,16 @@
-<div class="flex min-h-full justify-center px-6 py-12 lg:px-8">
-    <app-login></app-login>
+<div class="flex min-h-screen bg-gray-100 
+    justify-center items-center 
+    px-6 py-12 bg-cover bg-center" 
+    style="background-image: url('/assets/backgrounds/login-cover.jpg');">
+    <div class="max-w-md w-full space-y-8 p-10 bg-white rounded-xl shadow-lg z-10 bg-opacity-70">
+        <div class="text-center">
+            <h2 class="mt-6 text-3xl font-extrabold text-gray-900">
+                Welcome Back!
+            </h2>
+            <p class="mt-2 text-sm text-gray-600">
+                Sign in to continue
+            </p>
+        </div>
+        <app-login></app-login>
+    </div>
 </div>
-
