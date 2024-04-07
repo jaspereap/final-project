@@ -1,4 +1,6 @@
-<mat-card class="max-w-sm mx-auto overflow-hidden shadow-lg transition-transform hover:-translate-y-2 cursor-pointer" (click)="openTrip(tripCard.id)">
+<mat-card class="max-w-sm mx-auto overflow-hidden
+    shadow-lg transition-transform hover:-translate-y-2 
+    cursor-pointer group relative" (click)="openTrip(tripCard.id)">
     <img *ngIf="tripCard.image !== ''" mat-card-image [src]="tripCard.image" alt="Trip Image" class="w-full h-40 object-cover">
     <mat-card-header class="flex flex-col items-center p-4">
         <mat-card-title class="text-xl font-semibold">Trip to {{tripCard.country}}</mat-card-title>

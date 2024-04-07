@@ -25,4 +25,8 @@ export class TripCardComponent implements OnInit{
   openTrip(tripId: string) {
     this.router.navigate([`trip/${tripId}`])
   }
+
+  deleteTrip(tripId: string) {
+    console.log(tripId)
+  }
 }

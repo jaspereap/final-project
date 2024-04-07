@@ -9,7 +9,7 @@
         </div>
     </div>
     <!-- Grid container for trip cards, centered with mx-auto and limited by max-w-4xl -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full max-w-4xl">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 w-full max-w-full p-4">
         <ng-container *ngIf="user | async as user">
             <ng-container *ngFor="let card of tripCards; let i = index">
                 <app-trip-card [tripCard]="card" [index]="i" [user]="user"></app-trip-card>
