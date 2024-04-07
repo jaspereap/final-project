@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.nus.iss.travlr.models.Itinerary;
 import com.nus.iss.travlr.models.DTO.MessageType;
+import com.nus.iss.travlr.models.DTO.Request.CostingsRequest;
 import com.nus.iss.travlr.models.DTO.Request.IdentityToken;
 import com.nus.iss.travlr.models.DTO.Request.NewPlaceRequest;
 import com.nus.iss.travlr.models.DTO.Request.UpdatePlaceRequest;
@@ -91,6 +92,33 @@ public class ItineraryController {
         @RequestBody IdentityToken identity) {
         System.out.println("delete itinerary place controller");
         Itinerary itinerary = itiSvc.deleteItineraryPlace(tripId, date, rank);
+        msgSvc.publishToTripWithAuthor(tripId, itinerary.toJson().toString(), MessageType.ITINERARY_MODIFIED, identity.getUsername());
+        return ResponseEntity.ok(itinerary.toJson().toString());
+    }
+
+    @PostMapping(path = "/costings/add/{tripId}/{date}/{rank}")
+    public ResponseEntity<String> postAddCosting (
+        @PathVariable String tripId, 
+        @PathVariable String date, 
+        @PathVariable String rank,  
+        @RequestBody CostingsRequest costingsRequest
+    ) {
+        System.out.println("post add costings controller");
+        System.out.println("costing req: " + costingsRequest);
+        Itinerary itinerary = itiSvc.addCostingToItineraryPlace(tripId, date, rank, costingsRequest.toCosting());
+        msgSvc.publishToTripWithAuthor(tripId, itinerary.toJson().toString(), MessageType.ITINERARY_MODIFIED, costingsRequest.getIdentity().getUsername());
+        return ResponseEntity.ok(itinerary.toJson().toString());
+    }
+
+    @PutMapping(path = "/costings/delete/{tripId}/{date}/{rank}/{costingIndex}")
+    public ResponseEntity<String> deleteCosting(            
+        @PathVariable String tripId, 
+        @PathVariable String date, 
+        @PathVariable String rank,  
+        @PathVariable String costingIndex,
+        @RequestBody IdentityToken identity) {
+        System.out.println("delete costing controller");
+        Itinerary itinerary = itiSvc.deleteCosting(tripId, date, rank, costingIndex);
         msgSvc.publishToTripWithAuthor(tripId, itinerary.toJson().toString(), MessageType.ITINERARY_MODIFIED, identity.getUsername());
         return ResponseEntity.ok(itinerary.toJson().toString());
     }

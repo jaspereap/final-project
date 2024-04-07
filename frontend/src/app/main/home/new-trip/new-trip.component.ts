@@ -33,7 +33,7 @@ export class NewTripComponent implements OnInit{
     this.form = this.initForm();
 
     this.filteredCountries = this.form.get('country')!.valueChanges.pipe(
-      startWith(''),
+      debounceTime(300),
       map(value => this._filterCountries(value)),
     );
 

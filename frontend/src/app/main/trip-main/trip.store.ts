@@ -1,12 +1,13 @@
 import { Injectable, NgZone } from '@angular/core';
 import { ComponentStore, tapResponse } from '@ngrx/component-store';
-import { AddPlaceToDayPayload, CustomPlaceResult, Flight, IdentityToken, Itinerary, Lodging, Place, Trip } from '../../models/dtos';
+import { Costing, Flight, IdentityToken, Itinerary, Lodging, Place, Trip } from '../../models/dtos';
 import { TripService } from './trip.service';
 import { Observable, concatMap, switchMap, tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { FlightService } from './flight/flight.service';
 import { LodgingService } from './lodging/lodging.service';
 import { ItineraryService } from './itinerary/itinerary.service';
+import { CostingsPlaceRequest, DeleteCostingPlaceRequest, DeletePlaceRequest, NewPlaceRequest, UpdatePlaceRequest } from '../../models/itinerary.requests';
 
 export interface TripState {
   currentTrip: Trip | null;
@@ -64,7 +65,7 @@ export class TripStore extends ComponentStore<TripState> {
         ))
     ))
 
-  // Set Itinerary
+// Set Itinerary
   readonly setItinerary = this.updater((state, newItinerary: Itinerary) => {
     console.log('\tSetting itinerary..')
     // If there's no currentTrip in the state, log an error or handle as appropriate
@@ -82,8 +83,8 @@ export class TripStore extends ComponentStore<TripState> {
     });
   });
 
-// For updating place details
-  readonly savePlace = this.effect((params$: Observable<{identity:IdentityToken, tripId: string, date: Date, rank: number, place: Place}>) => 
+  // For updating place details
+  readonly savePlace = this.effect((params$: Observable<UpdatePlaceRequest>) => 
     params$.pipe(
       switchMap(param =>
         this.tripService.savePlaceForItineraryDay(param.identity, param.tripId, param.date, param.rank, param.place).pipe(
@@ -97,7 +98,8 @@ export class TripStore extends ComponentStore<TripState> {
     ))
 
   // Effect to add a place to a day in the itinerary
-  readonly addPlaceToItineraryDay = this.effect((params$: Observable<{identity: IdentityToken, tripId:string, date: Date, place: CustomPlaceResult}>) =>
+  readonly addPlaceToItineraryDay = this.effect((params$: Observable<NewPlaceRequest>) =>
+  // readonly addPlaceToItineraryDay = this.effect((params$: Observable<{identity: IdentityToken, tripId:string, date: Date, place: CustomPlaceResult}>) =>
     params$.pipe(
       tap(() => console.log('\taddPlaceToItineraryDay triggered')),
       concatMap(({ identity, tripId, date, place }) =>
@@ -116,7 +118,7 @@ export class TripStore extends ComponentStore<TripState> {
     )
   );
   // To delete a Place in Itinerary
-  readonly deletePlace = this.effect((params$: Observable<{identity: IdentityToken, tripId: string, date: Date, rank: number}>) =>
+  readonly deletePlace = this.effect((params$: Observable<DeletePlaceRequest>) =>
     params$.pipe(
       tap(() => console.log('\tdelete place triggered')),
       switchMap((params) => {
@@ -131,9 +133,41 @@ export class TripStore extends ComponentStore<TripState> {
         );
       })
     )
+  )
+  readonly addCostingsToPlace = this.effect((params$: Observable<CostingsPlaceRequest>) =>
+    params$.pipe(
+      tap(() => console.log('\tadd costings to place triggered')),
+      switchMap((params) => {
+        return this.itineraryService.addCostingsToPlace(params.identity, params.tripId, params.date, params.rank, params.costing).pipe(
+          tapResponse(
+            (resp: Itinerary) => {
+              console.log('Server resp: ', resp)
+              this.setItinerary(resp)
+            },
+            (error) => console.error(error)
+          )
+        )
+      })
     )
+  )
+  readonly deleteCosting = this.effect((params$: Observable<DeleteCostingPlaceRequest>) =>
+    params$.pipe(
+      tap(() => console.log('\tdelete costings triggered')),
+      switchMap((params) => {
+        return this.itineraryService.deleteCosting(params.identity, params.tripId, params.date, params.rank, params.costingIndex).pipe(
+          tapResponse(
+            (resp: Itinerary) => {
+              console.log('Server resp: ', resp)
+              this.setItinerary(resp)
+            },
+            (error) => console.error(error)
+          )
+        )
+      })
+    )
+  )
 
-  // Set Flights
+// Set Flights
   readonly setFlightDetails = this.updater((state, newFlights: Flight[]) => {
     console.log('\tSetting flight..')
     // If there's no currentTrip in the state, log an error or handle as appropriate
@@ -185,7 +219,8 @@ export class TripStore extends ComponentStore<TripState> {
   )
   )
 
-  // Set Lodgings
+
+// Set Lodgings
   readonly setLodgings = this.updater((state, newLodgings: Lodging[]) => {
     console.log('\tSetting lodgings..')
     // If there's no currentTrip in the state, log an error or handle as appropriate

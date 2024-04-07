@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
+import com.nus.iss.travlr.models.Costing;
 import com.nus.iss.travlr.models.Day;
 import com.nus.iss.travlr.models.Itinerary;
 import com.nus.iss.travlr.models.Place;
@@ -74,6 +75,33 @@ public class ItineraryService {
         for (Day day : trip.getItinerary().getDays()) {
             if (day.getDate().getTime() == Long.parseLong(targetDate)) {
                 day.getPlaces().remove(Integer.parseInt(rank));
+            }
+        }
+        return tripRepo.save(trip).getItinerary();
+    }
+
+    public Itinerary addCostingToItineraryPlace(String tripId, String targetDate, String rank, Costing costing) {
+        Optional<Trip> optTrip = tripRepo.findById(tripId);
+        if (optTrip.isEmpty()) {
+            return null;
+        }
+        Trip trip = optTrip.get();
+        for (Day day : trip.getItinerary().getDays()) {
+            if (day.getDate().getTime() == Long.parseLong(targetDate)) {
+                day.getPlaces().get(Integer.parseInt(rank)).getCostings().add(costing);
+            }
+        }
+        return tripRepo.save(trip).getItinerary();
+    }
+    public Itinerary deleteCosting(String tripId, String targetDate, String rank, String costingIndex) {
+        Optional<Trip> optTrip = tripRepo.findById(tripId);
+        if (optTrip.isEmpty()) {
+            return null;
+        }
+        Trip trip = optTrip.get();
+        for (Day day : trip.getItinerary().getDays()) {
+            if (day.getDate().getTime() == Long.parseLong(targetDate)) {
+                day.getPlaces().get(Integer.parseInt(rank)).getCostings().remove(Integer.parseInt(costingIndex));
             }
         }
         return tripRepo.save(trip).getItinerary();

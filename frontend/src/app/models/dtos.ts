@@ -32,14 +32,13 @@ export enum MessageType {
     USER_LEFT = 'USER_LEFT',
     CHAT = 'CHAT',
     MODIFIED = 'MODIFIED',
-    ITINERARY_MODIFIED = 'ITINERARY_MODIFIED',
     ITINERARY_ADDED = 'ITINERARY_ADDED',
+    ITINERARY_MODIFIED = 'ITINERARY_MODIFIED',
     FLIGHT_ADDED = 'FLIGHT_ADDED',
     FLIGHT_MODIFIED = 'FLIGHT_MODIFIED',
     LODGING_ADDED = 'LODGING_ADDED',
     LODGING_MODIFIED = 'LODGING_MODIFIED'
 }
-
 export interface TripRequest {
     identity: IdentityToken
     country: string
@@ -64,7 +63,6 @@ export interface TripCard {
     endDate: Date
     image: string
 }
-
 export interface Trip {
     id: string
     country: string
@@ -121,29 +119,9 @@ export interface Place {
     // Cost
     costings: Costing[]
 }
-export interface CustomPlaceResult {
-    name: string | undefined
-    address: string | undefined
-    latlng: google.maps.LatLng | undefined
-    image: string
-}
-export interface AddPlaceToDayPayload {
-    tripId: string;
-    date: Date;
-    place: CustomPlaceResult;
-}
-export interface AddPlacePayload {
-    date: Date;
-    place: Place;
-  }
-  
+
 export interface Costing {
     payer: string
     cost: number
     currency: string
-}
-
-export interface Marker {
-    label: string
-    latlng: {lat: number, lng: number}
 }

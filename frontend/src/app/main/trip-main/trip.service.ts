@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { CustomPlaceResult, IdentityToken, Itinerary, Place, Trip, TripCard, TripRequest, TripResponse } from '../../models/dtos';
+import { IdentityToken, Itinerary, Place, Trip, TripCard, TripRequest, TripResponse } from '../../models/dtos';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment as env } from "../../../environments/environment";
 import { AuthStore } from '../../auth/auth.store';
 import PlaceResult = google.maps.places.PlaceResult;
+import { CustomPlaceResult } from '../../models/itinerary.models';
 
 @Injectable({
   providedIn: 'root'

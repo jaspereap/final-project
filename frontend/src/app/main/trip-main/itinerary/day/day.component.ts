@@ -1,11 +1,12 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { CustomPlaceResult, Day } from '../../../../models/dtos';
+import { Day } from '../../../../models/dtos';
 import { FormGroup } from '@angular/forms';
 import PlaceResult = google.maps.places.PlaceResult;
 import { TripService } from '../../trip.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TripStore } from '../../trip.store';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
+import { CustomPlaceResult } from '../../../../models/itinerary.models';
 
 @Component({
   selector: 'app-day',

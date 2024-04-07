@@ -5,7 +5,7 @@ import { TripStore } from './trip.store';
 import { AuthStore } from '../../auth/auth.store';
 import { Subscription, combineLatest, map, switchMap, take } from 'rxjs';
 import { TripNotificationService } from './trip-notification.service';
-import { Itinerary, MessageType } from '../../models/dtos';
+import { MessageType } from '../../models/dtos';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LocalStorageService } from '../../shared/services/local-storage.service';
 

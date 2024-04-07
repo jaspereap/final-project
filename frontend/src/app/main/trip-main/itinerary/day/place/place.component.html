@@ -33,7 +33,22 @@
                 <mat-icon class="text-gray-400 hover:text-gray-600 opacity-0 group-hover:opacity-100" (click)="editNotes()">edit_note</mat-icon>
             </div>
         </ng-template>
-        <button class="rounded bg-orange-200 hover:bg-orange-300 text-xs py-1 px-4 transition-colors">Add Cost</button>
+        <!-- Costings -->
+        <ng-container *ngIf="place.costings.length > 0; else noCostings">
+            <div class="font-extrabold">Costs:</div>
+                <div *ngFor="let costing of place.costings; let i = index;" class="flex justify-between">
+                    <div>{{costing.cost | currency: costing.currency}} paid by {{costing.payer}}</div>
+                    <button (click)="deleteCosting(i)" class="text-red-500 opacity-0 hover:opacity-100"><mat-icon>cancel</mat-icon></button>
+                </div>
+        </ng-container>
+        <ng-template #noCostings>
+            <div>
+                <button class="rounded bg-orange-200 hover:bg-orange-300 text-xs py-1 px-4 transition-colors"
+                    (click)="openDialog()">
+                    Add a Cost
+                </button>
+            </div>
+        </ng-template>
     </div>
     
     <!-- Image Section -->

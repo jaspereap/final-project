@@ -1,9 +1,12 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { Place } from '../../../../../models/dtos';
+import { Costing, Place } from '../../../../../models/dtos';
 import { TripService } from '../../../trip.service';
 import { ActivatedRoute } from '@angular/router';
 import { TripStore } from '../../../trip.store';
 import { LocalStorageService } from '../../../../../shared/services/local-storage.service';
+import { MatDialog } from '@angular/material/dialog';
+import { CostingDialogComponent } from './costing-dialog/costing-dialog.component';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-place',
@@ -23,7 +26,7 @@ export class PlaceComponent implements OnInit {
   editableNotes!: string;
 
   constructor(
-    // private itiStore: ItineraryStore, 
+    public dialog: MatDialog, 
     private tripStore: TripStore,
     private route: ActivatedRoute,
     private localStore: LocalStorageService) {}
@@ -99,5 +102,48 @@ export class PlaceComponent implements OnInit {
     )
     this.editingNotes = false;
     // Update the place.notes with the new notes
+  }
+
+  openDialog() {
+    const dialogRef = this.dialog.open(CostingDialogComponent, {
+      // Share data with dialog component
+      data: {test: 'data'},
+      // Dialog config
+      height:'400px',
+      width:'280px'
+    })
+
+    dialogRef.afterClosed().subscribe(result => {
+      const form = result as FormGroup;
+      console.log('after dialog closed result: ',result)
+      if (result !== undefined && result !== null && form.valid) {
+        const costingFormData: Costing =  form.value as Costing;
+        this.addCosting(costingFormData)
+      }
+    })
+  }
+
+  addCosting(costing: Costing) {
+    this.tripStore.addCostingsToPlace(
+      {
+        identity: {userId: Number(this.localStore.getUserId()), username: this.localStore.getUsername()},
+        tripId: this.tripId,
+        date: this.date,
+        rank: this.index,
+        costing: costing
+      }
+    )
+  }
+
+  deleteCosting(i: number) {
+    this.tripStore.deleteCosting(
+      {
+        identity: {userId: Number(this.localStore.getUserId()), username: this.localStore.getUsername()},
+        tripId: this.tripId,
+        date: this.date,
+        rank: this.index,
+        costingIndex: i
+      }
+    )
   }
 }

@@ -1,5 +1,5 @@
 import { Component, DoCheck, Input, IterableDiffers, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { Day, Itinerary } from '../../../models/dtos';
+import { Day } from '../../../models/dtos';
 import { TripStore } from '../trip.store';
 import { provideComponentStore } from '@ngrx/component-store';
 // import { ItineraryStore } from './itinerary.store';

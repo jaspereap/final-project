@@ -52,10 +52,14 @@ export class FlightComponent implements OnInit {
       // console.log('after dialog closed result: ',result)
       if (result !== undefined && result !== null && form.valid) {
         const flightFormData: Flight =  form.value as Flight;
-        const identity = {userId: Number(this.localStore.getUserId()), username: this.localStore.getUsername()}
-        this.tripStore.addFlight({identity, tripId: this.tripId, flightFormData})
+        this.addFlight(flightFormData);
       }
     })
+  }
+  
+  addFlight(flight: Flight) {
+    const identity = {userId: Number(this.localStore.getUserId()), username: this.localStore.getUsername()}
+    this.tripStore.addFlight({identity, tripId: this.tripId, flightFormData: flight})
   }
 
   deleteFlight(index: number) {

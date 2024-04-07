@@ -1,9 +1,10 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { Day, Lodging, Marker } from '../../../models/dtos';
+import { Day, Lodging } from '../../../models/dtos';
 import { environment as env } from "../../../../environments/environment";
 import LatLngLiteral = google.maps.LatLngLiteral;
 
 import { provideComponentStore } from '@ngrx/component-store';
+import { Marker } from '../../../models/itinerary.models';
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',

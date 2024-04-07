@@ -2,7 +2,8 @@ import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import PlaceResult = google.maps.places.PlaceResult;
-import { CustomPlaceResult } from '../../../../models/dtos';
+import { CustomPlaceResult } from '../../../../models/itinerary.models';
+
 
 @Component({
   selector: 'app-lodging-dialog',
