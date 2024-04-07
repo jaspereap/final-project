@@ -1,9 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Observable, startWith, switchMap } from 'rxjs';
+import { Observable, debounceTime, startWith, switchMap } from 'rxjs';
 import { UserDTO } from '../../../../../../models/dtos';
 import { UserService } from '../../../../../../shared/services/user.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-costing-dialog',
@@ -18,7 +19,7 @@ export class CostingDialogComponent implements OnInit{
     private userSvc: UserService) {}
 
   filteredTripMates!: Observable<UserDTO[]>;
-
+  tripId!: string;
   form: FormGroup = this.fb.group(
     {
       payer: this.fb.control<string>('', [Validators.required]),
@@ -28,8 +29,8 @@ export class CostingDialogComponent implements OnInit{
   )
 
   ngOnInit(): void {
-    this.filteredTripMates = this.form.get('payer')!.valueChanges.pipe(
-      switchMap(value => this.userSvc.searchUsers(value))
-    )
+    this.tripId = this.data.tripId;
+    console.log('TRIPID: ', this.tripId)
+    this.filteredTripMates = this.userSvc.getTripMates(this.tripId);
   }
 }

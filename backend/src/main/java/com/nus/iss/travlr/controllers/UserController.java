@@ -40,6 +40,20 @@ public class UserController {
         // System.out.println(usersArr.toString());
         return ResponseEntity.ok(usersArr.build().toString());
     }
+    @GetMapping(path = "/search/trip")
+    public ResponseEntity<String> getUsersFromTrip(
+            @RequestParam String tripId) {
+        System.out.println("get users from trip controller");
+        System.out.println("Request param: " + tripId);
+        List<UserEntity> retrievedUsers = userService.getUsersFromTrip(tripId);
+        System.out.println(retrievedUsers);
+        JsonArrayBuilder usersArr = Json.createArrayBuilder();
+        for (UserEntity user : retrievedUsers) {
+            usersArr.add(new UserDTO(user).toJson());
+        }
+        // System.out.println(usersArr.toString());
+        return ResponseEntity.ok(usersArr.build().toString());
+    }
 
     @GetMapping(path = "user")
     public ResponseEntity<String> getUserDetails(@RequestParam String userId) {

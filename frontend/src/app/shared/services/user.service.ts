@@ -21,7 +21,16 @@ export class UserService {
       headers: headers
     });
   }
-
+  getTripMates(tripId: string) {
+    const headers = this.authStore.getAuthHeader();
+    const params = new HttpParams()
+      .set('tripId', tripId);
+    return this.http.get<UserDTO[]>(`${env.backendUrl}/user/search/trip`, 
+    {
+      params:  params , 
+      headers: headers
+    });
+  }
   getUser(userId: number) {
     const headers = this.authStore.getAuthHeader();
     const params = new HttpParams().set('userId', userId);
@@ -31,5 +40,4 @@ export class UserService {
       headers: headers
     });
   }
-
 }

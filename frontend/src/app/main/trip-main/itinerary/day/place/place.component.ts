@@ -107,7 +107,7 @@ export class PlaceComponent implements OnInit {
   openDialog() {
     const dialogRef = this.dialog.open(CostingDialogComponent, {
       // Share data with dialog component
-      data: {test: 'data'},
+      data: {tripId: this.tripId},
       // Dialog config
       height:'400px',
       width:'280px'
