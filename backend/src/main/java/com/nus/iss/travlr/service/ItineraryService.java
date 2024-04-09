@@ -3,7 +3,6 @@ package com.nus.iss.travlr.service;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
 import com.nus.iss.travlr.models.Costing;
@@ -17,7 +16,6 @@ import com.nus.iss.travlr.repository.TripRepository;
 @Service
 public class ItineraryService {
     @Autowired private TripRepository tripRepo;
-    @Autowired private MongoTemplate mt;
 
     public Itinerary getItineraryByTripId(String tripId) {
         Optional<Trip> optTrip = tripRepo.findById(tripId);

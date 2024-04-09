@@ -1,6 +1,5 @@
 package com.nus.iss.travlr.service;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -53,7 +52,7 @@ public class UserService {
     public Optional<UserEntity> getUserByUserId(Long userId) {
         return userRepo.findUserById(userId);
     }
-// TODO
+
 public List<UserEntity> getUsersFromTrip(String tripId) {
     Optional<Trip> optTrip = tripRepo.findById(tripId);
     if (optTrip.isEmpty()) {

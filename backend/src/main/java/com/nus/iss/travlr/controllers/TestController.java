@@ -2,10 +2,6 @@ package com.nus.iss.travlr.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.handler.annotation.DestinationVariable;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,15 +37,5 @@ public class TestController {
     @GetMapping(path = "/pubtotripid/{tripId}")
     public void pubToTrip(@PathVariable String tripId) {
         msgSvc.publishToTrip(tripId, "Test pub to trip", MessageType.ITINERARY_MODIFIED);
-    }
-
-    @MessageMapping("/{gameId}/{playerName}/")
-    public void playerAck(@DestinationVariable String gameId, 
-        @DestinationVariable String playerName, 
-        @Payload String body, 
-        SimpMessageHeaderAccessor header) {
-        System.out.printf("\tInbound Ack: \n\tgameId: %s \n\tplayerName: %s \n\tBody: %s\n", gameId, playerName, body);
-        System.out.println("\tInbound Headers: " + header.getFirstNativeHeader("type"));
-        String type = header.getFirstNativeHeader("type");
     }
 }

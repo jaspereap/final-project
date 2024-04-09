@@ -8,14 +8,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PlaceDTO {
-    // TODO: placeDTO
     private Integer rank;
     private String name;
     private String image;
     private String notes;
-    // Consider including start and end times if applicable
     private String address;
-    private String[] latlng; // Consider using a more structured type for latitude and longitude
+    private String[] latlng;
 
 
 }

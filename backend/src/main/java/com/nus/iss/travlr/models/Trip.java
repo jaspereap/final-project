@@ -42,7 +42,6 @@ public class Trip {
         this.endDate = endDate;
     }
 
-    // TODO: Complete toJson
     public JsonObject toJson() {
         JsonArrayBuilder tripMatesIdArr = Json.createArrayBuilder();
         JsonArrayBuilder flightDetailsArr = Json.createArrayBuilder();

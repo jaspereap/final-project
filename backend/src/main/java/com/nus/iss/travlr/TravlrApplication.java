@@ -6,9 +6,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -129,10 +126,9 @@ public class TravlrApplication implements CommandLineRunner {
 	}
 
 	public List<Flight> createFlightData() {
-		List<Flight> flights = new ArrayList<>();
 		List<Costing> costings1 = new ArrayList<>();
 		costings1.add(new Costing(500.50f, "SGD"));
-		Flight flight1 = new Flight(
+		Flight flight = new Flight(
 			"Singapore Airlines",
 			"SQ888",
 			"Japan",
@@ -144,7 +140,7 @@ public class TravlrApplication implements CommandLineRunner {
 			costings1
 		);
 		
-		return Arrays.asList(flight1);
+		return Arrays.asList(flight);
 	}
 
 	public Trip createTrip() {

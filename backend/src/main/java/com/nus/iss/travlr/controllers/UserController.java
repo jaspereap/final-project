@@ -1,6 +1,5 @@
 package com.nus.iss.travlr.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,6 +39,7 @@ public class UserController {
         // System.out.println(usersArr.toString());
         return ResponseEntity.ok(usersArr.build().toString());
     }
+    
     @GetMapping(path = "/search/trip")
     public ResponseEntity<String> getUsersFromTrip(
             @RequestParam String tripId) {

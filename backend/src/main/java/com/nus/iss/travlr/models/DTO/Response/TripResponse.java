@@ -1,13 +1,11 @@
 package com.nus.iss.travlr.models.DTO.Response;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 import com.nus.iss.travlr.models.Trip;
 
 import jakarta.json.Json;
-import jakarta.json.JsonArray;
 import jakarta.json.JsonArrayBuilder;
 import jakarta.json.JsonObject;
 import lombok.Data;

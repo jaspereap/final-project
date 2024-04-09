@@ -1,11 +1,8 @@
 package com.nus.iss.travlr.models.DTO;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
-import com.nus.iss.travlr.models.Flight;
-import com.nus.iss.travlr.models.Lodging;
 import com.nus.iss.travlr.models.Trip;
 
 import jakarta.json.Json;

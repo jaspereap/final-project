@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.messaging.Message;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +21,6 @@ import com.nus.iss.travlr.models.DTO.Request.IdentityToken;
 import com.nus.iss.travlr.models.DTO.Request.TripRequest;
 import com.nus.iss.travlr.models.DTO.Response.MessageResponse;
 import com.nus.iss.travlr.models.DTO.Response.TripResponse;
-import com.nus.iss.travlr.service.ItineraryService;
 import com.nus.iss.travlr.service.TripService;
 
 import jakarta.json.JsonArray;
@@ -42,7 +40,6 @@ public class TripController {
         ArrayList<Trip> trips = tripSvc.getAllTripsByUserId(request.getUserId());
         JsonArray tripCards = TripUtils.tripToTripCards(trips);
         return ResponseEntity.ok(tripCards.toString());
-        // return ResponseEntity.ok(new MessageResponse("success").get());
     }
 
     // For creating a fresh trip
@@ -78,7 +75,6 @@ public class TripController {
             return ResponseEntity.ok(optTrip.get().toJson().toString());
         }
         return ResponseEntity.ok(optTrip.get().toJson().toString());
-        // return ResponseEntity.ok(new MessageResponse("success").get());
     }
 
     // For checking if user is allowed to view trip

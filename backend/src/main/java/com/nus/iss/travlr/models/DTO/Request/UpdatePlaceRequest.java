@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.data.annotation.Id;
-
 import com.nus.iss.travlr.models.Costing;
 import com.nus.iss.travlr.models.Place;
 
