@@ -37,6 +37,7 @@ import { FlightDialogComponent } from './main/trip-main/flight/flight-dialog/fli
 import { LodgingDialogComponent } from './main/trip-main/lodging/lodging-dialog/lodging-dialog.component';
 import { LandingComponent } from './auth/landing/landing.component';
 import { CostingDialogComponent } from './main/trip-main/itinerary/day/place/costing-dialog/costing-dialog.component';
+import { TripDialogComponent } from './main/trip-main/trip-dialog/trip-dialog.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { CostingDialogComponent } from './main/trip-main/itinerary/day/place/cos
     FlightDialogComponent,
     LodgingDialogComponent,
     LandingComponent,
-    CostingDialogComponent
+    CostingDialogComponent,
+    TripDialogComponent
   ],
   imports: [
     BrowserModule,

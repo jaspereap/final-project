@@ -16,11 +16,14 @@ import com.nus.iss.travlr.models.Day;
 import com.nus.iss.travlr.models.Flight;
 import com.nus.iss.travlr.models.Itinerary;
 import com.nus.iss.travlr.models.Trip;
+import com.nus.iss.travlr.models.User.UserEntity;
 import com.nus.iss.travlr.repository.TripRepository;
+import com.nus.iss.travlr.repository.UserRepository;
 
 @Service
 public class TripService {
     @Autowired private TripRepository tripRepo;
+    @Autowired private UserRepository userRepo;
     @Autowired private GoogleSearchAPIService googleSvc;
     // Get trip
     public Optional<Trip> getTrip(String tripId) {
@@ -74,6 +77,22 @@ public class TripService {
 
         // Save the updated trip back to MongoDB
         return tripRepo.save(trip);
+    }
+    public Trip addTripMateByUsername(String tripId, String newUsername) {
+        // Find the trip by ID
+        Trip trip = tripRepo.findById(tripId)
+                .orElseThrow(() -> new RuntimeException("Trip not found with id: " + tripId));
+
+        Optional<UserEntity> optUser = userRepo.findUserByUsername(newUsername);
+        if (optUser.isEmpty()) {
+            return null;
+        }
+        UserEntity user = optUser.get();
+        // Add the new trip mate's ID to the set
+        trip.getTripMatesId().add(user.getId());
+        // Save the updated trip back to MongoDB
+        return tripRepo.save(trip);
+
     }
 
     public Trip addFlightToTrip(String tripId, Flight flight) {

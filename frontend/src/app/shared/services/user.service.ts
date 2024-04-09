@@ -17,7 +17,7 @@ export class UserService {
     const params = new HttpParams().set('username', username);
     return this.http.get<UserDTO[]>(`${env.backendUrl}/user/search`, 
     {
-      params:  params , 
+      params:  params, 
       headers: headers
     });
   }

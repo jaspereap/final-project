@@ -9,6 +9,20 @@
             <div *ngIf="currentTrip$ | async as trip; else noDetails" class="p-1">
                 <img *ngIf="trip.image" [src]="trip.image" alt="Trip Image" class="w-full h-40 object-cover rounded-md">
                 <div class="text-5xl">Trip to {{ trip.country }}</div>
+
+                <div class="flex justify-between mt-4">
+                    <h2 class="text-md font-light text-gray-800 mb-4">Trip Buddies</h2>
+                    <button (click)="openDialog()" class="rounded bg-sky-100 hover:bg-sky-200 h-5">+Trip Mate</button>
+                </div>
+                <div class="flex flex-wrap justify-center items-center">
+                    <div *ngFor="let user of tripMates$ | async" class="w-32 h-25 m-2 flex flex-col justify-center items-center bg-blue-100 rounded-lg shadow hover:bg-blue-200 transition-colors">
+                      <p class="text-gray-800 text-sm font-thin">{{ user.username }}</p>
+                      <p class="text-gray-800 text-sm font-normal">{{ user.firstName }} {{user.lastName}}</p>
+                      <p class="text-gray-600 text-xs">{{ user.email }}</p>
+                    </div>
+                </div>
+                  
+                  
                 <app-flight [flights]="trip.flightDetails" class="p-1"></app-flight>
                 <app-lodging [lodgings]="trip.lodgings" class="p-1"></app-lodging>
                 <app-itinerary [days]="trip.itinerary.days" class="p-1"></app-itinerary>

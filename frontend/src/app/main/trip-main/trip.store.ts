@@ -8,6 +8,7 @@ import { FlightService } from './flight/flight.service';
 import { LodgingService } from './lodging/lodging.service';
 import { ItineraryService } from './itinerary/itinerary.service';
 import { CostingsPlaceRequest, DeleteCostingPlaceRequest, DeletePlaceRequest, NewPlaceRequest, UpdatePlaceRequest } from '../../models/itinerary.requests';
+import { NewTripMateRequest } from '../../models/trip.requests';
 
 export interface TripState {
   currentTrip: Trip | null;
@@ -40,30 +41,46 @@ export class TripStore extends ComponentStore<TripState> {
     ...state,
     currentTrip: trip
   }))
-  
 // For retrieving a single full trip
   readonly getTripById = this.effect((tripId$: Observable<string>) => 
     tripId$.pipe(
       tap(() => {
         console.log('getTrip triggered')
-        // this.patchState({isLoading: true});
+        this.patchState({isLoading: true});
       }),
       switchMap((tripId) => 
         this.tripService.getTrip(tripId).pipe(
           tapResponse(
             (resp) => {
               console.log('Get trip server resp: ', resp)
-              // this.patchState({ currentTrip: resp, isLoading: false })
               this.setTrip(resp);
+              this.patchState({isLoading: false })
             },
             (error) => {
-              // this.patchState({ error: error, isLoading: false })
+              this.patchState({ error: error, isLoading: false })
               this.router.navigate(['/auth/login'])
               console.error(error);
             }
           )
         ))
     ))
+// For adding new trip mates to trip
+    readonly addTripMate = this.effect((params$: Observable<NewTripMateRequest>) =>
+      params$.pipe(
+        tap(() => console.log('addTripMate triggered')),
+        switchMap((params) =>
+          this.tripService.addTripMates(params.identity, params.tripId, params.username).pipe(
+            tapResponse(
+              (resp) => {
+                console.log('Server resp: ', resp)
+                this.setTrip(resp)
+              },
+              (err) => console.error(err)
+            )
+          )
+        )
+      )
+    )
 
 // Set Itinerary
   readonly setItinerary = this.updater((state, newItinerary: Itinerary) => {

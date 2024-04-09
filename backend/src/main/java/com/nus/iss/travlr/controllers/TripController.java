@@ -18,6 +18,7 @@ import com.nus.iss.travlr.TripUtils;
 import com.nus.iss.travlr.models.Trip;
 import com.nus.iss.travlr.models.DTO.UserDTO;
 import com.nus.iss.travlr.models.DTO.Request.IdentityToken;
+import com.nus.iss.travlr.models.DTO.Request.TripMateRequest;
 import com.nus.iss.travlr.models.DTO.Request.TripRequest;
 import com.nus.iss.travlr.models.DTO.Response.MessageResponse;
 import com.nus.iss.travlr.models.DTO.Response.TripResponse;
@@ -84,5 +85,13 @@ public class TripController {
         System.out.println("\tparamsssss: " + userId);
         System.out.println("\tparamsssss: " + tripId);
         return ResponseEntity.ok(tripSvc.checkIsAllowed(tripId, userId));
+    }
+
+    @PostMapping(path = "/add/trip-mate/{tripId}/{newUsername}")
+    public ResponseEntity<String> postAddTripMate(@PathVariable String tripId, @PathVariable String newUsername, @RequestBody IdentityToken identity) {
+        System.out.println("post add trip mate controller");
+        System.out.println("New username: " + newUsername);
+        Trip trip = tripSvc.addTripMateByUsername(tripId, newUsername);
+        return ResponseEntity.ok(trip.toJson().toString());
     }
 }

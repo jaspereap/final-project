@@ -48,7 +48,6 @@ export class NewTripComponent implements OnInit{
       country: this.fb.control<string>('', [Validators.required]),
       start: this.fb.control<Date>(new Date(), [Validators.required]),
       end: this.fb.control<Date>(new Date(), [Validators.required]),
-      // tripMateSearch: this.fb.control<string>(''),
       tripMates: this.fb.array([])
     })
   }
