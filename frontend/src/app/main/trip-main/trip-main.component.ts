@@ -74,6 +74,12 @@ export class TripMainComponent implements OnInit, OnDestroy{
     this.tripStore.addTripMate({identity, tripId: this.tripId, username});
   }
 
+  deleteTripMate(userId: number) {
+    console.log(userId)
+    const identity = {userId: Number(this.localStore.getUserId()), username: this.localStore.getUsername()};
+    this.tripStore.deleteTripMate({identity, tripId: this.tripId, userId})
+  }
+
   ngOnDestroy() {
     console.log("OnDestroy trigger");
     this.tripIdListener?.unsubscribe();

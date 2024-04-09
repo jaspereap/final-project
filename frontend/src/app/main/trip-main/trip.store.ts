@@ -8,7 +8,7 @@ import { FlightService } from './flight/flight.service';
 import { LodgingService } from './lodging/lodging.service';
 import { ItineraryService } from './itinerary/itinerary.service';
 import { CostingsPlaceRequest, DeleteCostingPlaceRequest, DeletePlaceRequest, NewPlaceRequest, UpdatePlaceRequest } from '../../models/itinerary.requests';
-import { NewTripMateRequest } from '../../models/trip.requests';
+import { DeleteTripMateRequest, NewTripMateRequest } from '../../models/trip.requests';
 
 export interface TripState {
   currentTrip: Trip | null;
@@ -41,6 +41,23 @@ export class TripStore extends ComponentStore<TripState> {
     ...state,
     currentTrip: trip
   }))
+  // Set Trip Mates Id
+  readonly setTripMatesId = this.updater((state: TripState, tripMatesId: number[]) => {
+    // Check if currentTrip exists before updating it
+    if (!state.currentTrip) {
+      console.error('Cannot set tripMatesId because there is no current trip in the state.');
+      return state; // Return the unmodified state if currentTrip is null
+    }
+    // If currentTrip exists, update its tripMatesId
+    return {
+      ...state,
+      currentTrip: {
+        ...state.currentTrip,
+        tripMatesId: [...tripMatesId],
+      },
+    };
+  });
+  
 // For retrieving a single full trip
   readonly getTripById = this.effect((tripId$: Observable<string>) => 
     tripId$.pipe(
@@ -73,7 +90,26 @@ export class TripStore extends ComponentStore<TripState> {
             tapResponse(
               (resp) => {
                 console.log('Server resp: ', resp)
-                this.setTrip(resp)
+                // this.setTrip(resp)
+                this.getTripById(params.tripId)
+              },
+              (err) => console.error(err)
+            )
+          )
+        )
+      )
+    )
+// For Deleting trip mates from trip
+    readonly deleteTripMate = this.effect((params$: Observable<DeleteTripMateRequest>) =>
+      params$.pipe(
+        tap(() => console.log('deleteTripMate triggered')),
+        switchMap((params) =>
+          this.tripService.deleteTripMate(params.identity, params.tripId, params.userId).pipe(
+            tapResponse(
+              (resp) => {
+                console.log('Server resp: ', resp)
+                // this.setTrip(resp)
+                this.getTripById(params.tripId)
               },
               (err) => console.error(err)
             )

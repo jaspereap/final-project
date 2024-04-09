@@ -78,6 +78,7 @@ public class TripService {
         // Save the updated trip back to MongoDB
         return tripRepo.save(trip);
     }
+
     public Trip addTripMateByUsername(String tripId, String newUsername) {
         // Find the trip by ID
         Trip trip = tripRepo.findById(tripId)
@@ -92,7 +93,13 @@ public class TripService {
         trip.getTripMatesId().add(user.getId());
         // Save the updated trip back to MongoDB
         return tripRepo.save(trip);
+    }
 
+    public Trip deleteTripMateByUserId(String tripId, String userId) {
+        Trip trip = tripRepo.findById(tripId)
+                .orElseThrow(() -> new RuntimeException("Trip not found with id: " + tripId));
+        trip.getTripMatesId().removeIf((id) -> id == Long.parseLong(userId));
+        return tripRepo.save(trip);
     }
 
     public Trip addFlightToTrip(String tripId, Flight flight) {

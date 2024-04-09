@@ -30,11 +30,14 @@ export class TripService {
     return this.http.post<any>(`${env.backendUrl}/trip/all`, id, {headers})
   }
 
-  // TODO
   addTripMates(identity: IdentityToken, tripId: string, newUsername: string) {
     const headers = this.authStore.getAuthHeader();
-
     return this.http.post<Trip>(`${env.backendUrl}/trip/add/trip-mate/${tripId}/${newUsername}`, identity, {headers})
+  }
+  
+  deleteTripMate(identity: IdentityToken, tripId: string, userid: number) {
+    const headers = this.authStore.getAuthHeader();
+    return this.http.post<Trip>(`${env.backendUrl}/trip/delete/trip-mate/${tripId}/${userid}`, identity, {headers})
   }
 
   getItineraryByTripId(tripId: string) {

@@ -5,3 +5,8 @@ export interface NewTripMateRequest {
     tripId: string
     username: string
 }
+export interface DeleteTripMateRequest {
+    identity: IdentityToken
+    tripId: string
+    userId: number
+}

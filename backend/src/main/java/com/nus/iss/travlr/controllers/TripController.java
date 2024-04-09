@@ -94,4 +94,11 @@ public class TripController {
         Trip trip = tripSvc.addTripMateByUsername(tripId, newUsername);
         return ResponseEntity.ok(trip.toJson().toString());
     }
+    @PostMapping(path = "/delete/trip-mate/{tripId}/{userId}")
+    public ResponseEntity<String> postDeleteTripMate(@PathVariable String tripId, @PathVariable String userId, @RequestBody IdentityToken identity) {
+        System.out.println("post add trip mate controller");
+        System.out.println("Delete user id: " + userId);
+        Trip trip = tripSvc.deleteTripMateByUserId(tripId, userId);
+        return ResponseEntity.ok(trip.toJson().toString());
+    }
 }
