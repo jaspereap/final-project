@@ -2,12 +2,23 @@
   <div class="max-w-6xl mx-auto px-4">
     <div class="flex justify-between">
       <div class="flex space-x-4">
-        <!-- Logo or brand name -->
+
         <div>
           <a [routerLink]="['/home']" class="flex items-center py-5 px-2 text-white-700 hover:text-white-100">
             <img src="/assets/logos/travlr-logo-small-white.png" alt="logo" 
             class="h-6 w-auto"
             style="mix-blend-mode:color-burn">
+          </a>
+        </div>
+
+        <div>
+          <a [routerLink]="['/home']" class="flex items-center py-5 px-2 text-white-700 hover:text-white-100">
+            Your Trips
+          </a>
+        </div>
+        <div>
+          <a [routerLink]="['/home/new-trip']" class="flex items-center py-5 px-2 text-white-700 hover:text-white-100">
+            Create new trip
           </a>
         </div>
         <!-- Primary Nav -->

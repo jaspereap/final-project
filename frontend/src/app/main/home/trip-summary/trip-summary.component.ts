@@ -21,7 +21,6 @@ export class TripSummaryComponent implements OnInit {
     private localStore: LocalStorageService) {}
 
   ngOnInit(): void {
-    console.log('Trip summary init')
     
     const identity: IdentityToken = {
       username: this.localStore.getUsername() ?? '',
@@ -30,7 +29,6 @@ export class TripSummaryComponent implements OnInit {
 
     this.tripSvc.getTripCards(identity).subscribe({
       next: (tripCards) => {
-        console.log('tripCards: ', tripCards)
         this.tripCards = tripCards},
       error: (error) => {
         console.error(error); 
@@ -40,7 +38,6 @@ export class TripSummaryComponent implements OnInit {
   }
 
   newTrip() {
-    // console.log('new trip pressed')
     this.router.navigate(['/home/new-trip'])
   }
 }

@@ -15,17 +15,9 @@ export class MainComponent implements OnInit {
   isAuthenticated$ = this.authStore.isAuthenticated$;
   user$ = this.authStore.user$;
 
-  ngOnInit() {
-    this.isAuthenticated$.pipe(withLatestFrom(this.user$)).subscribe(
-      (([isAuthenticated, user]) => {
-        console.log('user: ' , user)
-        console.log('isAuthenticated: ', isAuthenticated)
-      })
-    )
-  }
+  ngOnInit() {}
+
   constructor(private http: HttpClient, 
-    private localStore: LocalStorageService,
-    private msgSvc: MessageService,
     private authStore: AuthStore) {}
 
 }

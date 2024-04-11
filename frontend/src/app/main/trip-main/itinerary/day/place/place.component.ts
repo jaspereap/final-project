@@ -38,9 +38,6 @@ export class PlaceComponent implements OnInit {
     this.date = new Date(this.date);
     this.place.start = new Date(this.place.start);
     this.place.end = new Date(this.place.end);
-    console.log('name: ', this.place.name)
-    console.log('initial: ', this.place.start.getTime())
-    console.log('compare: ', this.noDate)
   }
 
   deletePlace() {
