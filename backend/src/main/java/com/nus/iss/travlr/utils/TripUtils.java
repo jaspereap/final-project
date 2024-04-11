@@ -1,9 +1,9 @@
-package com.nus.iss.travlr;
+package com.nus.iss.travlr.utils;
 
 import java.util.List;
 
 import com.nus.iss.travlr.models.Trip;
-import com.nus.iss.travlr.models.DTO.TripCard;
+import com.nus.iss.travlr.models.TripCard;
 
 import jakarta.json.Json;
 import jakarta.json.JsonArray;

@@ -6,7 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.nus.iss.travlr.models.DTO.MessageType;
+import com.nus.iss.travlr.models.MessageType;
 
 @Service
 public class MessageService {

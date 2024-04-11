@@ -46,14 +46,10 @@ public class WebSecurityConfig {
             .authorizeHttpRequests(auth -> 
                 auth.requestMatchers("/api/v1/auth/**").permitAll()
                     .requestMatchers("/ws").permitAll()
-                    .requestMatchers("/test/**").permitAll()
                     .anyRequest().authenticated())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authenticationProvider(authenticationProvider())
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-            // .userDetailsService(authService)
-            // .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))
-            // .httpBasic(Customizer.withDefaults())
             .build();
     }
     @Bean

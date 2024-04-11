@@ -1,9 +1,7 @@
-package com.nus.iss.travlr.models.DTO;
+package com.nus.iss.travlr.models;
 
 import java.util.Date;
 import java.util.Set;
-
-import com.nus.iss.travlr.models.Trip;
 
 import jakarta.json.Json;
 import jakarta.json.JsonArrayBuilder;

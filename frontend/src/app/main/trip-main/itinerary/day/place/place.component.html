@@ -16,7 +16,11 @@
         <ng-template #showTime>
             <div class="flex items-center">
                 <p class="flex-grow text-sm">
-                    {{ place.start | date:'h:mm a' }} - {{ place.end | date:'h:mm a' }}
+                    @if (place.start.getTime() !== noDate.getTime()) {
+                        {{ place.start | date:'h:mm a' }} - {{ place.end | date:'h:mm a' }}
+                    } @else {
+                        No time added.
+                    }
                 </p>
                 <mat-icon class="text-gray-400 hover:text-gray-600 opacity-0 group-hover:opacity-100" (click)="editTime()">edit</mat-icon>
             </div>

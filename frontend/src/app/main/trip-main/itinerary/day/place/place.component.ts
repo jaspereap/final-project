@@ -25,6 +25,7 @@ export class PlaceComponent implements OnInit {
   editingNotes = false;
   editableNotes!: string;
 
+  noDate = new Date(0);
   constructor(
     public dialog: MatDialog, 
     private tripStore: TripStore,
@@ -37,7 +38,9 @@ export class PlaceComponent implements OnInit {
     this.date = new Date(this.date);
     this.place.start = new Date(this.place.start);
     this.place.end = new Date(this.place.end);
-    // console.log('initial: ', this.place.start.getTime())
+    console.log('name: ', this.place.name)
+    console.log('initial: ', this.place.start.getTime())
+    console.log('compare: ', this.noDate)
   }
 
   deletePlace() {
@@ -54,15 +57,12 @@ export class PlaceComponent implements OnInit {
   editTime() {
     this.editableStart = this.date;
     this.editableEnd = this.date;
-    // console.log('editable start: ', this.editableStart)
-    // console.log('editable end: ', this.editableEnd)
     this.editingTime = true;
   }
   
   saveUpdatedTimes() {
     this.place.start = new Date(this.convertTimeToMillis(this.editableStart.toString()) + this.date.getTime() );
     this.place.end = new Date(this.convertTimeToMillis(this.editableEnd.toString()) + this.date.getTime());
-    // console.log(this.place.start.toJSON(), this.place.end)
     if (this.place.start.toJSON() !== null && this.place.end.toJSON() !== null ) {
       this.tripStore.savePlace(
         {

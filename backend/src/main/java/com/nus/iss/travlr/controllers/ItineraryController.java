@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import com.nus.iss.travlr.models.Itinerary;
-import com.nus.iss.travlr.models.DTO.MessageType;
+import com.nus.iss.travlr.models.MessageType;
 import com.nus.iss.travlr.models.DTO.Request.CostingsRequest;
 import com.nus.iss.travlr.models.DTO.Request.IdentityToken;
 import com.nus.iss.travlr.models.DTO.Request.NewPlaceRequest;

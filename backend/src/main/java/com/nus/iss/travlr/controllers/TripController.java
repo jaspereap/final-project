@@ -14,15 +14,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.nus.iss.travlr.TripUtils;
 import com.nus.iss.travlr.models.Trip;
 import com.nus.iss.travlr.models.DTO.UserDTO;
 import com.nus.iss.travlr.models.DTO.Request.IdentityToken;
-import com.nus.iss.travlr.models.DTO.Request.TripMateRequest;
 import com.nus.iss.travlr.models.DTO.Request.TripRequest;
 import com.nus.iss.travlr.models.DTO.Response.MessageResponse;
 import com.nus.iss.travlr.models.DTO.Response.TripResponse;
 import com.nus.iss.travlr.service.TripService;
+import com.nus.iss.travlr.utils.TripUtils;
 
 import jakarta.json.JsonArray;
 
@@ -94,6 +93,7 @@ public class TripController {
         Trip trip = tripSvc.addTripMateByUsername(tripId, newUsername);
         return ResponseEntity.ok(trip.toJson().toString());
     }
+    
     @PostMapping(path = "/delete/trip-mate/{tripId}/{userId}")
     public ResponseEntity<String> postDeleteTripMate(@PathVariable String tripId, @PathVariable String userId, @RequestBody IdentityToken identity) {
         System.out.println("post add trip mate controller");

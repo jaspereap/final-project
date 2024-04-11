@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.nus.iss.travlr.models.DTO.UserDTO;
 import com.nus.iss.travlr.models.DTO.Request.LoginRequest;
 import com.nus.iss.travlr.models.DTO.Request.RegisterRequest;
-import com.nus.iss.travlr.models.DTO.Response.AuthData;
+import com.nus.iss.travlr.models.DTO.Response.AuthDataResponse;
 import com.nus.iss.travlr.models.User.UserEntity;
 import com.nus.iss.travlr.repository.UserRepository;
 import com.nus.iss.travlr.security.JwtService;
@@ -35,7 +35,7 @@ public class AuthController {
     @Autowired private AuthenticationManager authManager;
 
     @PostMapping(path = "/login")
-    public ResponseEntity<AuthData> postLogin(@RequestBody LoginRequest request) {
+    public ResponseEntity<AuthDataResponse> postLogin(@RequestBody LoginRequest request) {
         try {
             Authentication auth = authManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword())
@@ -47,7 +47,7 @@ public class AuthController {
             
             String token = jwtService.generateToken(userDetails);
             System.out.println("TOKEN: " + token);
-            return ResponseEntity.ok(new AuthData(token, new UserDTO(userDetails)));
+            return ResponseEntity.ok(new AuthDataResponse(token, new UserDTO(userDetails)));
             
         } catch (AuthenticationException e) {
             System.out.println(e);

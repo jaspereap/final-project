@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nus.iss.travlr.models.Flight;
-import com.nus.iss.travlr.models.DTO.MessageType;
+import com.nus.iss.travlr.models.MessageType;
 import com.nus.iss.travlr.models.DTO.Request.FlightRequest;
 import com.nus.iss.travlr.models.DTO.Request.IdentityToken;
 import com.nus.iss.travlr.service.FlightService;

@@ -8,7 +8,7 @@ import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.nus.iss.travlr.models.DTO.MessageType;
+import com.nus.iss.travlr.models.MessageType;
 import com.nus.iss.travlr.service.MessageService;
 
 @RestController

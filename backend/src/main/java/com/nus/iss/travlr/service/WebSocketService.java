@@ -7,7 +7,7 @@ import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
-import com.nus.iss.travlr.models.DTO.MessageType;
+import com.nus.iss.travlr.models.MessageType;
 
 @Service
 public class WebSocketService {
