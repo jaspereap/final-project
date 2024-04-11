@@ -1,10 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { UserDTO } from '../../../models/dtos';
+import { UserDTO } from '../../../../models/dtos';
 import { Observable, debounceTime, switchMap } from 'rxjs';
-import { TripService } from '../trip.service';
-import { UserService } from '../../../shared/services/user.service';
+import { TripService } from '../../trip.service';
+import { UserService } from '../../../../shared/services/user.service';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 @Component({

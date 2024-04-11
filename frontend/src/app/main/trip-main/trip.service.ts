@@ -39,20 +39,4 @@ export class TripService {
     const headers = this.authStore.getAuthHeader();
     return this.http.post<Trip>(`${env.backendUrl}/trip/delete/trip-mate/${tripId}/${userid}`, identity, {headers})
   }
-
-  getItineraryByTripId(tripId: string) {
-    const headers = this.authStore.getAuthHeader();
-    return this.http.get<Itinerary>(`${env.backendUrl}/itinerary/get/${tripId}`,{headers})
-  }
-  
-  addPlaceToDay(identity: IdentityToken, tripId:string, date: Date, place: CustomPlaceResult) {
-    const headers = this.authStore.getAuthHeader();
-    return this.http.post<Itinerary>(`${env.backendUrl}/itinerary/add/${tripId}/${date}`, {...place, identity}, {headers})
-  }
-
-  savePlaceForItineraryDay(identity: IdentityToken, tripId: string, date: Date, rank: number, place: Place) {
-    const headers = this.authStore.getAuthHeader();
-    return this.http.put(`${env.backendUrl}/itinerary/update/${tripId}/${date.getTime()}/${rank}`, {...place, identity}, {headers})
-  }
-
 }

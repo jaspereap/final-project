@@ -19,7 +19,6 @@ export interface AuthState {
 export class AuthStore extends ComponentStore<AuthState>{
 
   constructor(private authSvc: AuthService, private router: Router, private localStore: LocalStorageService) { 
-    console.log('Auth Store init')
     super({
       user: null,
       token: null,
@@ -58,12 +57,10 @@ export class AuthStore extends ComponentStore<AuthState>{
 // Login
   readonly login = this.effect((loginRequest$: Observable<LoginRequest>) => 
     loginRequest$.pipe(
-      tap(() => console.log('login triggered')),
       switchMap(req => 
         this.authSvc.login(req.username, req.password).pipe(
           tapResponse(
             (resp) => {
-              console.log('Login Server Response: ', resp)
               this.setToken(resp.authToken)
               this.setUser(resp.user)
               this.localStore.setToken(resp.authToken)
@@ -80,7 +77,6 @@ export class AuthStore extends ComponentStore<AuthState>{
   readonly logout = this.effect((trigger$) => 
     trigger$.pipe(
       tap(() => {
-        console.log('logout triggered')
         this.unsetToken();
         this.unsetUser();
       }),

@@ -1,116 +1,81 @@
-<div class="flex min-h-full justify-center px-6 py-12 lg:px-8">
-    <form [formGroup]="form" (submit)="submit()">
-<!-- Country Form Field -->
-        <mat-form-field appearance="fill" class="w-full">
-            <mat-label>Country</mat-label>
-            <input matInput 
-                [matAutocomplete]="auto"
-                placeholder="Destination Country" 
-                type="text" 
-                formControlName="country" 
-                >
-            @if (form.get('country')?.touched && form.get('country')?.hasError('required')) {
-                <mat-error>Country is required</mat-error>
-            }
-        </mat-form-field>
-
-        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-            @for (country of filteredCountries | async; track country) {
-              <mat-option [value]="country.name">{{country.name}}</mat-option>
-            }
-        </mat-autocomplete>
-
-<!-- Start and End date Form Field -->
-        <mat-form-field appearance="fill" class="w-full">
-            <mat-label>Enter a date range</mat-label>
-            <mat-date-range-input [rangePicker]="picker">
-              <input matStartDate formControlName="start" placeholder="Start date">
-              <input matEndDate formControlName="end" placeholder="End date">
-            </mat-date-range-input>
-     
-            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-date-range-picker #picker></mat-date-range-picker>
-          
-            @if (form.get('start')?.hasError('matStartDateInvalid')) {
-              <mat-error>Invalid start date</mat-error>
-            }
-            @if (form.get('end')?.hasError('matEndDateInvalid')) {
-              <mat-error>Invalid end date</mat-error>
-            }
-        </mat-form-field>
-<!-- Trip Mate Search Field -->
-        <mat-form-field appearance="fill" class="w-full">
-            <mat-label>Search Trip Mate</mat-label>
-            <input matInput
-                [matAutocomplete]="autoMate"
-                placeholder="Search Trip Mate"
-                [formControl]="tripMateSearch">
-            <mat-autocomplete autoActiveFirstOption #autoMate="matAutocomplete" (optionSelected)="addTripMate($event.option.value)">
-                <mat-option *ngFor="let mate of filteredTripMates | async" [value]="mate">
-                    {{mate.username}}
-                </mat-option>
-            </mat-autocomplete>
-        </mat-form-field>
-<!-- Selected Trip Mates List -->
-    <div formArrayName="tripMates" class="w-full">
-        <div *ngFor="let mate of tripMatesFormArray.controls; let i = index" [formGroupName]="i" class="flex justify-between items-center">
-          <p class="py-2">{{ mate.value.username }}</p>
-          <button type="button" (click)="removeTripMate(i)" class="ml-2 bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded">
-            Remove
-          </button>
-        </div>
+<app-navbar></app-navbar>
+<div class="px-6 py-12">
+    <div class="flex font-extrabold text-xl">
+        Create a new trip
     </div>
-<!-- Submit -->
-        <div>
-            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
-                Start planning
-            </button>
+    <div class="flex min-h-full justify-center">
+        <form [formGroup]="form" (submit)="submit()">
+    <!-- Country Form Field -->
+            <mat-form-field appearance="fill" class="w-full">
+                <mat-label>Country</mat-label>
+                <input matInput 
+                    [matAutocomplete]="auto"
+                    placeholder="Destination Country" 
+                    type="text" 
+                    formControlName="country" 
+                    >
+                @if (form.get('country')?.touched && form.get('country')?.hasError('required')) {
+                    <mat-error>Country is required</mat-error>
+                }
+            </mat-form-field>
+    
+            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                @for (country of filteredCountries | async; track country) {
+                  <mat-option [value]="country.name">{{country.name}}</mat-option>
+                }
+            </mat-autocomplete>
+    
+    <!-- Start and End date Form Field -->
+            <mat-form-field appearance="fill" class="w-full">
+                <mat-label>Enter a date range</mat-label>
+                <mat-date-range-input [rangePicker]="picker">
+                  <input matStartDate formControlName="start" placeholder="Start date">
+                  <input matEndDate formControlName="end" placeholder="End date">
+                </mat-date-range-input>
+         
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
+              
+                @if (form.get('start')?.hasError('matStartDateInvalid')) {
+                  <mat-error>Invalid start date</mat-error>
+                }
+                @if (form.get('end')?.hasError('matEndDateInvalid')) {
+                  <mat-error>Invalid end date</mat-error>
+                }
+            </mat-form-field>
+    <!-- Trip Mate Search Field -->
+            <mat-form-field appearance="fill" class="w-full">
+                <mat-label>Include a trip mate</mat-label>
+                <input matInput
+                    [matAutocomplete]="autoMate"
+                    placeholder="Search Trip Mate"
+                    [formControl]="tripMateSearch">
+                <mat-autocomplete autoActiveFirstOption #autoMate="matAutocomplete" (optionSelected)="addTripMate($event.option.value)">
+                    <mat-option *ngFor="let mate of filteredTripMates | async" [value]="mate">
+                        {{mate.username}}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+    <!-- Selected Trip Mates List -->
+        <div formArrayName="tripMates" class="w-full">
+            <div *ngFor="let mate of tripMatesFormArray.controls; let i = index" [formGroupName]="i" class="flex justify-between items-center">
+              <p class="py-2">{{ mate.value.username }}</p>
+              <button type="button" (click)="removeTripMate(i)" class="ml-2 bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded">
+                Remove
+              </button>
+            </div>
         </div>
-    </form>
-</div>
-
-<!-- Debug -->
-<div>
-    <h3>FormGroup Stats</h3>
-    <table *ngIf="form as form" border="">
-        <div>form</div>
-        <tr>
-            <td>.invalid</td>
-            <td>.valid</td>
-            <td>.touched</td>
-            <td>.pristine</td>
-            <td>.status</td>
-
-            <td>.value</td>
-        </tr>
-        <tr>
-            <td>{{ form.invalid }}</td>
-            <td>{{ form.valid }}</td>
-            <td>{{ form.touched }}</td>
-            <td>{{ form.pristine }}</td>
-            <td>{{ form.status }}</td>
-
-            <td>{{form.value | json}}</td>
-        </tr>
-    </table>
-    <h3>FormControl Stats</h3>
-    <table *ngIf="form">
-        <div>form.get('country')</div>
-        <tr>
-            <td>.valid</td>
-            <td>.status</td>
-            <td>.touched</td>
-            <td>.pristine</td>
-            <td>.hasError('country')</td>
-            <td>.value</td>
-        </tr>
-        <tr>
-            <td>{{ form.get('country')?.valid }}</td>
-            <td>{{ form.get('country')?.status }}</td>
-            <td>{{ form.get('country')?.touched }}</td>
-            <td>{{ form.get('country')?.pristine }}</td>
-            <td>{{ form.get('country')?.hasError('required') }}</td>
-            <td>{{ form.get('country')?.value }}</td>
-        </tr>
-    </table>
+    <!-- Submit -->
+            <div>
+                <button [routerLink]="['home']" class="bg-blue-300 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-full">
+                    Back
+                </button>
+                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+                    Start planning
+                </button>
+            </div>
+            <div>
+            </div>
+        </form>
+    </div>
 </div>

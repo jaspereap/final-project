@@ -10,7 +10,7 @@ import { NewTripComponent } from './main/home/new-trip/new-trip.component';
 import { TripMainComponent } from './main/trip-main/trip-main.component';
 import { authGuard } from './guards/auth.guard';
 import { canViewTripGuard } from './guards/can-view-trip.guard';
-import { LandingComponent } from './auth/landing/landing.component';
+import { LandingComponent } from './main/landing/landing.component';
 
 const routes: Routes = [
   {path: '', component: LandingComponent},

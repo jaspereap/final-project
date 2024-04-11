@@ -17,7 +17,6 @@ export const canViewTripGuard: CanActivateChildFn = (childRoute, state) => {
   return authSvc.checkIsAllowed(tripId, currentUserId.toString()).pipe(
     switchMap( isAllowed => {
       // Check if currentUserId is in the list of allowed user IDs
-      console.log('server is allowed response: ', isAllowed)
       if (isAllowed) {
         return of(true);
       } else {

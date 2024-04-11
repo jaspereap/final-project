@@ -35,9 +35,10 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { TripNotificationService } from './main/trip-main/trip-notification.service';
 import { FlightDialogComponent } from './main/trip-main/flight/flight-dialog/flight-dialog.component';
 import { LodgingDialogComponent } from './main/trip-main/lodging/lodging-dialog/lodging-dialog.component';
-import { LandingComponent } from './auth/landing/landing.component';
+import { LandingComponent } from './main/landing/landing.component';
 import { CostingDialogComponent } from './main/trip-main/itinerary/day/place/costing-dialog/costing-dialog.component';
-import { TripDialogComponent } from './main/trip-main/trip-dialog/trip-dialog.component';
+import { TripDialogComponent } from './main/trip-main/tripmate/tripmate-dialog/trip-dialog.component';
+import { TripmateComponent } from './main/trip-main/tripmate/tripmate.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import { TripDialogComponent } from './main/trip-main/trip-dialog/trip-dialog.co
     LodgingDialogComponent,
     LandingComponent,
     CostingDialogComponent,
-    TripDialogComponent
+    TripDialogComponent,
+    TripmateComponent
   ],
   imports: [
     BrowserModule,

@@ -19,14 +19,11 @@ export class TripNotificationService implements OnInit, OnDestroy{
 
   constructor(private messageService: MessageService, 
     private localStore: LocalStorageService,
-    private _snackBar: MatSnackBar,
-    ) { }
-  
+    private _snackBar: MatSnackBar,) { }
 
   ngOnInit(): void {
     console.log('NotificationSvc init')
   }
-
 
   listenTripId(tripId: string) {
     this.tripIdListener = this.messageService.subscribe(`trip/${tripId.toString()}`)
