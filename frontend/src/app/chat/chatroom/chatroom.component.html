@@ -1,13 +1,15 @@
 <ng-container *ngIf="showChat">
     <div class="flex flex-col rounded-lg">
         <div class="max-h-32 min-h-32 md:max-h-64 md:min-h-64 overflow-y-auto w-96" #messageContainer>
-            <div *ngFor="let chat of chatHistory" class="bg-white border border-gray-300 shadow-md p-4 rounded-lg">
-                <div>
-                    {{chat.sender.username}}: {{chat.message}}
+            <ng-container *ngIf="chatHistory.length > 0">
+                <div *ngFor="let chat of chatHistory" class="bg-white border border-gray-300 shadow-md p-2 rounded-lg m-1">
+                    <div>
+                        {{chat.sender.username}}: {{chat.message}}
+                    </div>
                 </div>
-            </div>
+            </ng-container>
         </div>
-        <div class="flex">
+        <div class="flex m-1">
             <input type="text" [(ngModel)]="messageText" class="w-full rounded-l-lg px-4 py-2 border border-gray-300 focus:outline-none focus:border-blue-500" (keyup.enter)="sendMessage()">
             <button (click)="sendMessage()" class="bg-gray-800 rounded-r-lg text-white px-4 py-2">Send</button>
         </div>

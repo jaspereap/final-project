@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { LocalStorageService } from '../../shared/services/local-storage.service';
 import { ChatService } from '../chat.service';
 import { ActivatedRoute } from '@angular/router';
@@ -22,32 +22,26 @@ export class ChatroomComponent implements OnInit {
     private localStore: LocalStorageService,
     private chatSvc: ChatService,
     private route: ActivatedRoute,) {}
-    
   
   ngOnInit(): void {
     this.tripId = this.route.snapshot.params['tripId'];
     this.currentUser = this.localStore.getUser();
     this.chatSvc.subscribeToTripChat(this.tripId);
     this.loadChatHistory();
-    
     this.chatSvc.newMessage.subscribe(
       (chatMessage) => {
-        console.log('new message: ', chatMessage)
         this.chatHistory.push(chatMessage);
-        this.scrollMessageContainerToBottom();
       }
     )
   }
 
   loadChatHistory() {
-    this.chatHistory = [
-      {
-        sender: this.currentUser,
-        destination: this.tripId,
-        message: 'test message here'
+    this.chatSvc.getHistory(this.tripId).subscribe(
+      (messages) => {
+        this.chatHistory = messages;
+        console.log('chat history loaded')
       }
-    ] as ChatMessage[]
-    console.log('chat history loaded')
+    );
   }
 
   sendMessage() {
@@ -55,11 +49,4 @@ export class ChatroomComponent implements OnInit {
     this.messageText = '';
   }
 
-  private scrollMessageContainerToBottom(): void {
-    try {
-      this.messageContainer.nativeElement.scrollTop = this.messageContainer.nativeElement.scrollHeight;
-    } catch(err) {
-      console.error('Error scrolling to bottom:', err);
-    }
-  }
 }

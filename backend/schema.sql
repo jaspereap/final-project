@@ -15,3 +15,12 @@ CREATE TABLE users (
 INSERT INTO role (id, name) VALUES (1, 'ADMIN');
 INSERT INTO role (id, name) VALUES (2, 'USER');
 -- End Role
+
+-- Chat
+DROP TABLE IF EXISTS chat;
+CREATE TABLE chat (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    message VARCHAR(255),
+    tripId VARCHAR(20),
+    sender BIGINT
+)

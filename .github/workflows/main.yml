@@ -1,11 +1,11 @@
 name: Deploy to Railway and Vercel
 on:
   workflow_dispatch:
-  # push:
-  #   branches:
-  #     - main
-  #   paths:
-  #     - 'backend/**'
+  push:
+    branches:
+      - main
+    paths:
+      - 'backend/**'
 jobs:
   deploy-to-railway:
     runs-on: ubuntu-latest
