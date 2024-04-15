@@ -12,11 +12,8 @@ import com.nus.iss.travlr.models.MessageType;
 public class MessageService {
     @Autowired private WebSocketService webSocketService;
 
-    public void publishToUser(String userId, String data, MessageType type) {
-        webSocketService.publishToTopic("user/" + userId, data, type);
-    }
     public void publishToTrip(String tripId, String data, MessageType type) {
-        webSocketService.publishToTopic("trip/" + tripId, data, type);
+        webSocketService.publishToTopic("chat/" + tripId, data, type);
     }
 
     public void publishToTripWithAuthor(String tripId, String data, MessageType type, String author) {

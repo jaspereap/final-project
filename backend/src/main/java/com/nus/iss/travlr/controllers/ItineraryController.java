@@ -59,28 +59,28 @@ public class ItineraryController {
             @PathVariable String date, 
             @RequestBody String placeData) {
         System.out.println("\tPost add place to date controller");
-        // System.out.println("\ttripId: " + tripId);
-        // System.out.println("\tTo date: " + new Date(Long.parseLong(date)));
-        // System.out.println("\tplaceData: " + placeData);
-        JsonObject placeRequest = Json.createReader(new StringReader(placeData)).readObject();
-        JsonObject identity = placeRequest.getJsonObject("identity");
-        JsonObject placeLocation = placeRequest.getJsonObject("latlng");
+        Itinerary itinerary = new Itinerary();
+        try {
+            JsonObject placeRequest = Json.createReader(new StringReader(placeData)).readObject();
+            JsonObject identity = placeRequest.getJsonObject("identity");
+            JsonObject placeLocation = placeRequest.getJsonObject("latlng");
+    
+            NewPlaceRequest place = new NewPlaceRequest(
+                new IdentityToken(identity.getString("username", "unknown"), identity.getInt("userId", 0)),
+                placeRequest.getString("name", ""), 
+                placeRequest.getString("address", ""), 
+                new Float[]{
+                    (float) placeLocation.getJsonNumber("lat").doubleValue(), 
+                    (float) placeLocation.getJsonNumber("lng").doubleValue()
+                },
+                placeRequest.getString("image")
+                );
+            itinerary = itiSvc.addPlaceToItineraryDay(tripId, date, place);
+            msgSvc.publishToTripWithAuthor(tripId, itinerary.toJson().toString(), MessageType.ITINERARY_ADDED, place.getIdentity().getUsername());
+        } catch (Exception e) {
+            System.out.println("Error adding place: " + e.getMessage());
+        }
 
-        NewPlaceRequest place = new NewPlaceRequest(
-            new IdentityToken(identity.getString("username", "unknown"), identity.getInt("userId", 0)),
-            placeRequest.getString("name", ""), 
-            placeRequest.getString("address", ""), 
-            new Float[]{
-                (float) placeLocation.getJsonNumber("lat").doubleValue(), 
-                (float) placeLocation.getJsonNumber("lng").doubleValue()
-            },
-            placeRequest.getString("image")
-        );
-
-        // System.out.println(place);
-
-        Itinerary itinerary = itiSvc.addPlaceToItineraryDay(tripId, date, place);
-        msgSvc.publishToTripWithAuthor(tripId, itinerary.toJson().toString(), MessageType.ITINERARY_ADDED, place.getIdentity().getUsername());
         return ResponseEntity.ok(itinerary.toJson().toString());
     }
 

@@ -13,6 +13,16 @@ export const myRxStompConfig: RxStompConfig = {
   //   passcode: 'guest',
   // },
 
+  beforeConnect: (stompClient: any) => {
+    const token = sessionStorage.getItem('token');
+    // console.log(token)
+    if (token) {
+      stompClient.connectHeaders = {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  },
+
   // How often to heartbeat?
   // Interval in milliseconds, set to 0 to disable
   // heartbeatIncoming: 0, // Typical value 0 - disabled

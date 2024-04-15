@@ -17,13 +17,15 @@ public class ChatController {
     @Autowired
     MessageService msgSvc;
 
-    @MessageMapping("/chat/{userId}")
-    public void userToUserMessage(@DestinationVariable String userId, 
+    @MessageMapping("/chat/{tripId}")
+    public void userToTrip(@DestinationVariable String tripId, 
         @Payload String body, 
         SimpMessageHeaderAccessor header) {
-        System.out.printf("\tInbound Message: %s\n\troomId: %s", body, userId );
+        System.out.printf("\tInbound Message: %s\n\troomId: %s", body, tripId );
         System.out.println("\tInbound Headers: " + header.getFirstNativeHeader("type"));
         String type = header.getFirstNativeHeader("type");
-        msgSvc.publishToUser(userId, body, MessageType.CHAT);
+        if (type.equals(MessageType.CHAT.toString())) {
+            this.msgSvc.publishToTrip(tripId, body, MessageType.CHAT);
+        }
     }
 }

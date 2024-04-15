@@ -1,16 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { provideComponentStore } from '@ngrx/component-store';
 import { TripStore } from './trip.store';
 import { AuthStore } from '../../auth/auth.store';
-import { Observable, Subscription, combineLatest, from, map, of, switchMap, take, toArray } from 'rxjs';
+import { Observable } from 'rxjs';
 import { TripNotificationService } from './trip-notification.service';
-import { MessageType, UserDTO } from '../../models/dtos';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { LocalStorageService } from '../../shared/services/local-storage.service';
-import { MatDialog } from '@angular/material/dialog';
-import { TripDialogComponent } from './tripmate/tripmate-dialog/trip-dialog.component';
-import { FormGroup } from '@angular/forms';
+import { UserDTO } from '../../models/dtos';
 import { UserService } from '../../shared/services/user.service';
 
 @Component({
@@ -26,7 +21,7 @@ export class TripMainComponent implements OnInit {
   isLoading$ = this.tripStore.isLoading$;
   currentUser$ = this.authStore.user$;
   tripMates$!: Observable<UserDTO[]>;
-
+  showChat: boolean = false;
   constructor(
     private route: ActivatedRoute, 
     private authStore: AuthStore, 
@@ -39,5 +34,13 @@ export class TripMainComponent implements OnInit {
     this.tripStore.getTripById(this.tripId);
     this.notificationService.listenTripId(this.tripId);
     this.tripMates$ = this.userService.getTripMates(this.tripId);
+  }
+
+  toggleChat() {
+    if (this.showChat) {
+      this.showChat = false;
+    } else {
+      this.showChat = true;
+    }
   }
 }

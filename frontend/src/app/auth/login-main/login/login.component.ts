@@ -21,18 +21,15 @@ export class LoginComponent {
   initLoginForm(): FormGroup {
     return this.fb.group({
       username: this.fb.control<string>('', [Validators.required, Validators.minLength(2)]),
-      password: this.fb.control<string>('', [Validators.required])
+      password: this.fb.control<string>('', [Validators.required, Validators.minLength(4)])
     })
   }
   login() {
-    console.log('log in clicked')
     if (this.loginForm.valid) {
-      console.log('login form valid: ', this.loginForm.value)
       const loginReq = {
         username: this.loginForm.get('username')?.value,
         password: this.loginForm.get('password')?.value
       } as LoginRequest
-  
       this.authStore.login(loginReq);
     } else {
       console.log('login form invalid')
