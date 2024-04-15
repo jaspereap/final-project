@@ -20,7 +20,8 @@ INSERT INTO role (id, name) VALUES (2, 'USER');
 DROP TABLE IF EXISTS chat;
 CREATE TABLE chat (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    message VARCHAR(255),
-    tripId VARCHAR(20),
-    sender BIGINT
-)
+    message VARCHAR(255) NOT NULL,
+    tripId VARCHAR(20) NOT NULL,
+    sender_id BIGINT NOT NULL,
+    FOREIGN KEY (sender_id) REFERENCES users(id)
+);

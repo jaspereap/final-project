@@ -45,7 +45,9 @@ export class ChatroomComponent implements OnInit {
   }
 
   sendMessage() {
-    this.chatSvc.sendMessage(this.tripId, this.currentUser, this.messageText);
+    if (this.messageText.length !== 0) {
+      this.chatSvc.sendMessage(this.tripId, this.currentUser, this.messageText);
+    }
     this.messageText = '';
   }
 

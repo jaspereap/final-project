@@ -11,6 +11,7 @@ import java.util.Optional;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.nus.iss.travlr.models.Day;
 import com.nus.iss.travlr.models.Flight;
@@ -40,6 +41,7 @@ public class TripService {
     }
 
     // Create new trip
+    @Transactional
     public Trip createTrip(Trip trip) throws IllegalArgumentException {
         String image = googleSvc.searchImage(trip.getCountry() + " scenic");
         trip.setImage(image);
@@ -66,7 +68,7 @@ public class TripService {
         
         return tripRepo.save(trip);
     }
-
+    @Transactional
     public Trip addTripMate(String tripId, Long newTripMateId) {
         // Find the trip by ID
         Trip trip = tripRepo.findById(tripId)
@@ -78,7 +80,7 @@ public class TripService {
         // Save the updated trip back to MongoDB
         return tripRepo.save(trip);
     }
-
+    @Transactional
     public Trip addTripMateByUsername(String tripId, String newUsername) {
         // Find the trip by ID
         Trip trip = tripRepo.findById(tripId)
@@ -94,14 +96,14 @@ public class TripService {
         // Save the updated trip back to MongoDB
         return tripRepo.save(trip);
     }
-
+    @Transactional
     public Trip deleteTripMateByUserId(String tripId, String userId) {
         Trip trip = tripRepo.findById(tripId)
                 .orElseThrow(() -> new RuntimeException("Trip not found with id: " + tripId));
         trip.getTripMatesId().removeIf((id) -> id == Long.parseLong(userId));
         return tripRepo.save(trip);
     }
-
+    @Transactional
     public Trip addFlightToTrip(String tripId, Flight flight) {
         // Find the trip by ID
         Trip trip = tripRepo.findById(tripId)

@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.nus.iss.travlr.models.Trip;
 import com.nus.iss.travlr.models.User.Role;
@@ -27,6 +28,8 @@ public class UserService {
     @Autowired private RoleRepository roleRepo;
     @Autowired PasswordEncoder passwordEncoder;
     @Autowired private TripRepository tripRepo;
+
+    @Transactional
     public UserEntity registerUser(UserEntity user) {
         Set<Role> roles = new HashSet<>();
         Role role = roleRepo.findByName(RoleEnum.USER).orElseThrow(() -> new RuntimeException("Role doesn't exist"));
@@ -53,15 +56,15 @@ public class UserService {
         return userRepo.findUserById(userId);
     }
 
-public List<UserEntity> getUsersFromTrip(String tripId) {
-    Optional<Trip> optTrip = tripRepo.findById(tripId);
-    if (optTrip.isEmpty()) {
-        return Collections.emptyList(); // Return an empty list instead of null
+    public List<UserEntity> getUsersFromTrip(String tripId) {
+        Optional<Trip> optTrip = tripRepo.findById(tripId);
+        if (optTrip.isEmpty()) {
+            return Collections.emptyList(); // Return an empty list instead of null
+        }
+        Trip trip = optTrip.get();
+        Set<Long> tripUsers = trip.getTripMatesId();
+        tripUsers.add(trip.getOwnerId());
+        return userRepo.findByIdIn(tripUsers);
     }
-    Trip trip = optTrip.get();
-    Set<Long> tripUsers = trip.getTripMatesId();
-    tripUsers.add(trip.getOwnerId());
-    return userRepo.findByIdIn(tripUsers);
-}
 
 }

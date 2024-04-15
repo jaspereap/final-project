@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.nus.iss.travlr.models.Lodging;
 import com.nus.iss.travlr.models.Trip;
@@ -14,6 +15,8 @@ import com.nus.iss.travlr.repository.TripRepository;
 @Service
 public class LodgingService {
     @Autowired private TripRepository tripRepo;
+    
+    @Transactional
     public List<Lodging> addLodging(String tripId, LodgingRequest lodging) {
         Optional<Trip> optTrip = tripRepo.findById(tripId);
         if (optTrip.isEmpty()) {
@@ -24,6 +27,7 @@ public class LodgingService {
         return tripRepo.save(trip).getLodgings();
     }
 
+    @Transactional
     public List<Lodging> deleteLodging(String tripId, String index) {
         Optional<Trip> optTrip = tripRepo.findById(tripId);
         if (optTrip.isEmpty()) {

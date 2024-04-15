@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.nus.iss.travlr.models.Costing;
 import com.nus.iss.travlr.models.Day;
@@ -24,6 +25,7 @@ public class ItineraryService {
         return trip.getItinerary();
     }
     // Updates Place
+    @Transactional
     public Itinerary updatePlaceInItineraryDay(String tripId, String date, String rank, Place place) {
         // Json.createReader(new StringReader(place)).readObject()
         Optional<Trip> optTrip = tripRepo.findById(tripId);
@@ -48,6 +50,7 @@ public class ItineraryService {
         return tripRepo.save(trip).getItinerary();
     }
 
+    @Transactional
     public Itinerary addPlaceToItineraryDay(String tripId, String targetDate, NewPlaceRequest place) {
         Place newPlace = new Place(place.getName(), place.getAddress(), place.getLatlng(), place.getImage());
         // Find the trip by ID
@@ -64,6 +67,7 @@ public class ItineraryService {
         return tripRepo.save(trip).getItinerary();
     }
 
+    @Transactional
     public Itinerary deleteItineraryPlace(String tripId, String targetDate, String rank) {
         Optional<Trip> optTrip = tripRepo.findById(tripId);
         if (optTrip.isEmpty()) {
@@ -78,6 +82,7 @@ public class ItineraryService {
         return tripRepo.save(trip).getItinerary();
     }
 
+    @Transactional
     public Itinerary addCostingToItineraryPlace(String tripId, String targetDate, String rank, Costing costing) {
         Optional<Trip> optTrip = tripRepo.findById(tripId);
         if (optTrip.isEmpty()) {
@@ -91,6 +96,8 @@ public class ItineraryService {
         }
         return tripRepo.save(trip).getItinerary();
     }
+    
+    @Transactional
     public Itinerary deleteCosting(String tripId, String targetDate, String rank, String costingIndex) {
         Optional<Trip> optTrip = tripRepo.findById(tripId);
         if (optTrip.isEmpty()) {
