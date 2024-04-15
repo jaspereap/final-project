@@ -4,6 +4,7 @@ import { TripService } from '../../trip-main/trip.service';
 import { IdentityToken, TripCard, UserDTO } from '../../../models/dtos';
 import { AuthStore } from '../../../auth/auth.store';
 import { LocalStorageService } from '../../../shared/services/local-storage.service';
+import { TripStore } from '../../trip-main/trip.store';
 
 @Component({
   selector: 'app-trip-summary',
@@ -12,16 +13,15 @@ import { LocalStorageService } from '../../../shared/services/local-storage.serv
 })
 export class TripSummaryComponent implements OnInit {
   user = this.authStore.user$;
-
   trips: string[] = ['hello', 'test'];
   tripCards: TripCard[] = [];
+  isLoading: boolean = true;
   constructor(private authStore: AuthStore, 
     private router: Router, 
     private tripSvc: TripService, 
     private localStore: LocalStorageService) {}
 
   ngOnInit(): void {
-    
     const identity: IdentityToken = {
       username: this.localStore.getUsername() ?? '',
       userId: Number(this.localStore.getUserId())
@@ -29,7 +29,9 @@ export class TripSummaryComponent implements OnInit {
 
     this.tripSvc.getTripCards(identity).subscribe({
       next: (tripCards) => {
-        this.tripCards = tripCards},
+        this.tripCards = tripCards
+        this.isLoading = false;
+      },
       error: (error) => {
         console.error(error); 
         this.router.navigate(['/auth/login']);

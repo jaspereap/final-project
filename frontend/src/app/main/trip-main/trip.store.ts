@@ -54,7 +54,7 @@ export class TripStore extends ComponentStore<TripState> {
       },
     };
   });
-  
+
 // For retrieving a single full trip
   readonly getTripById = this.effect((tripId$: Observable<string>) => 
     tripId$.pipe(
