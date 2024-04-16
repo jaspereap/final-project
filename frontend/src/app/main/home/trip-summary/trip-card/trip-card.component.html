@@ -2,20 +2,20 @@
     shadow-lg transition-transform hover:-translate-y-2 
     cursor-pointer group relative" (click)="openTrip(tripCard.id)">
     <img *ngIf="tripCard.image !== ''" mat-card-image [src]="tripCard.image" alt="Trip Image" class="w-full h-40 object-cover">
-    <mat-card-header class="flex flex-col items-center p-4">
+    <mat-card-header class="flex flex-col items-start p-4">
         <mat-card-title class="text-xl font-semibold">Trip to {{tripCard.country}}</mat-card-title>
         <mat-card-subtitle class="text-gray-600">{{tripCard.startDate | date:'d MMMM'}} - {{tripCard.endDate | date: 'd MMMM'}}</mat-card-subtitle>
         @if (user.userId === tripCard.ownerId) {
             <div class="flex items-center justify-start">
                 <mat-card-subtitle>
-                    <img src="assets/default_user.jpeg" class="w-8 h-8 rounded-full mr-2" alt="User Image">
+                    <img src="../../../../assets/empty_user.jpg" class="w-8 h-8 rounded-full mr-2" alt="User Image">
                 </mat-card-subtitle>
                 <mat-card-subtitle>You own this trip.</mat-card-subtitle>
             </div>
         } @else {
             <div *ngIf="owner$ | async as owner" class="flex items-center justify-start">
                 <mat-card-subtitle>
-                    <img src="assets/default_user.jpeg" class="w-8 h-8 rounded-full mr-2" alt="User Image">
+                    <img src="../../../../assets/empty_user.jpg" class="w-8 h-8 rounded-full mr-2" alt="User Image">
                 </mat-card-subtitle>
                 <mat-card-subtitle>{{ owner.username | titlecase }}'s trip</mat-card-subtitle>
             </div>

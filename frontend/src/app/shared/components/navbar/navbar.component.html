@@ -25,7 +25,8 @@
       </div>
       <!-- Secondary Nav -->
       <div class="md:flex items-center">
-        <div class="bg-gray-600 rounded-lg p-1">
+        <div class="bg-gray-600 rounded-lg p-1 flex">
+          <img src="../../../../assets/empty_user.jpg" class="w-5 h-5 rounded-full mr-2" alt="User Image">
           {{currentUser.username}}
         </div>
         <a (click)="logout()" class="py-5 px-3 hover:underline hover:cursor-pointer">Logout</a>
