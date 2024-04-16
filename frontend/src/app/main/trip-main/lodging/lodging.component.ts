@@ -7,6 +7,7 @@ import { TripStore } from '../trip.store';
 import { TripNotificationService } from '../trip-notification.service';
 import { LodgingDialogComponent } from './lodging-dialog/lodging-dialog.component';
 import { FormGroup } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-lodging',
@@ -25,11 +26,17 @@ export class LodgingComponent implements OnInit {
     private tripStore: TripStore,
     private notiSvc: TripNotificationService,
     ) {}
+
+  notiSub?: Subscription;
+
+  ngOnDestroy(): void {
+    this.notiSub?.unsubscribe();
+  }
   ngOnInit(): void {
     // console.log('Lodging init')
     this.tripId = this.route.snapshot.params['tripId'];
 
-    this.notiSvc.updateLodging$.subscribe(
+    this.notiSub = this.notiSvc.updateLodging$.subscribe(
       (lodgings) => {
         this.tripStore.setLodgings(lodgings);
       }
@@ -58,9 +65,11 @@ export class LodgingComponent implements OnInit {
   }
 
   deleteLodging(index: number) {
-    console.log(index)
-    const identity = {userId: Number(this.localStore.getUserId()), username: this.localStore.getUsername()} as IdentityToken;
-    this.tripStore.deleteLodging({identity, tripId: this.tripId, index})
+    const confirmed = window.confirm('Are you sure you want to delete this lodging detail?');
+    if (confirmed) {
+      const identity = {userId: Number(this.localStore.getUserId()), username: this.localStore.getUsername()} as IdentityToken;
+      this.tripStore.deleteLodging({identity, tripId: this.tripId, index})
+    }
   }
 
   addCosting(costing: Costing, index: number) {
@@ -75,13 +84,16 @@ export class LodgingComponent implements OnInit {
   }
 
   deleteCosting(i: number, flightIndex: number) {
-    this.tripStore.deleteLodgingCosting(
-      {
-        identity: {userId: Number(this.localStore.getUserId()), username: this.localStore.getUsername()},
-        tripId: this.tripId,
-        lodgingIndex: flightIndex,
-        costingIndex: i
-      }
-    )
+    const confirmed = window.confirm('Are you sure you want to delete this costing?');
+    if (confirmed) {
+      this.tripStore.deleteLodgingCosting(
+        {
+          identity: {userId: Number(this.localStore.getUserId()), username: this.localStore.getUsername()},
+          tripId: this.tripId,
+          lodgingIndex: flightIndex,
+          costingIndex: i
+        }
+      )
+    }
   }
 }

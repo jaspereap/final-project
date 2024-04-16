@@ -19,7 +19,10 @@ export class NavbarComponent implements OnInit {
     this.currentUser = this.localStore.getUser();
   }
   logout() {
-    this.localStore.clear();
-    this.router.navigate(['/auth/login'])
+    const confirmed = window.confirm('Are you sure you want to logout?');
+    if (confirmed) {
+      this.localStore.clear();
+      this.router.navigate(['/auth/login'])
+    }
   }
 }

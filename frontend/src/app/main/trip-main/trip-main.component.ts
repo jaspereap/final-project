@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { provideComponentStore } from '@ngrx/component-store';
 import { TripStore } from './trip.store';
 import { AuthStore } from '../../auth/auth.store';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { TripNotificationService } from './trip-notification.service';
 import { UserDTO } from '../../models/dtos';
 import { UserService } from '../../shared/services/user.service';
@@ -14,7 +14,7 @@ import { UserService } from '../../shared/services/user.service';
   styleUrl: './trip-main.component.scss',
   providers: [provideComponentStore(TripStore)]
 })
-export class TripMainComponent implements OnInit {
+export class TripMainComponent implements OnInit, OnDestroy {
   tripId!: string;
   currentTrip$ = this.tripStore.currentTrip$;
   days$ = this.tripStore.days$;
@@ -28,6 +28,11 @@ export class TripMainComponent implements OnInit {
     private tripStore: TripStore, 
     private userService: UserService, 
     private notificationService: TripNotificationService, ) {}
+
+  // Subscription Management
+
+  ngOnDestroy(): void {
+  }
 
   ngOnInit(): void {
     this.tripId = this.route.snapshot.params['tripId'];

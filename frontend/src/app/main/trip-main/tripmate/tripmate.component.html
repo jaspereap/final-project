@@ -1,10 +1,10 @@
 <div class="flex justify-between mt-4">
     <h2 class="text-md font-light text-gray-800 mb-4">Trip Buddies</h2>
-    <button (click)="openDialog()" class="rounded bg-sky-100 hover:bg-sky-200 h-5">+Trip Mate</button>
+    <button (click)="openTripDialog()" class="rounded bg-sky-100 hover:bg-sky-200 h-5">+Trip Mate</button>
 </div>
 <div class="flex flex-wrap justify-center items-center" *ngIf="currentTrip$ | async as trip">
     <ng-container *ngIf="currentUser$ | async as currentUser">
-        <div *ngFor="let user of tripMates$ | async" class="relative w-32 h-25 m-2 bg-blue-100 rounded-lg shadow">
+        <div *ngFor="let user of tripMates$ | async" class="relative w-32 h-25 m-2 bg-blue-100 rounded-lg shadow hover:-translate-y-1 transition-all">
             <div class="flex flex-col justify-center items-center p-2">
             @if (trip.ownerId == user.userId) {
                 <div class="text-gray-800 text-sm font-thin">{{ user.username }} (owner)</div>

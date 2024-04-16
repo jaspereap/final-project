@@ -41,14 +41,17 @@ export class PlaceComponent implements OnInit {
   }
 
   deletePlace() {
-    this.tripStore.deletePlace(
-      {
-        identity: {userId: Number(this.localStore.getUserId()), username: this.localStore.getUsername()},
-        tripId: this.tripId,
-        date: this.date,
-        rank: this.index
-      }
-    )
+    const confirmed = window.confirm('Are you sure you want to delete this place?');
+    if (confirmed) {
+      this.tripStore.deletePlace(
+        {
+          identity: {userId: Number(this.localStore.getUserId()), username: this.localStore.getUsername()},
+          tripId: this.tripId,
+          date: this.date,
+          rank: this.index
+        }
+      )
+    }
   }
 
   editTime() {
@@ -113,14 +116,17 @@ export class PlaceComponent implements OnInit {
   }
 
   deleteCosting(i: number) {
-    this.tripStore.deletePlaceCosting(
-      {
-        identity: {userId: Number(this.localStore.getUserId()), username: this.localStore.getUsername()},
-        tripId: this.tripId,
-        date: this.date,
-        rank: this.index,
-        costingIndex: i
-      }
-    )
+    const confirmed = window.confirm('Are you sure you want to delete this costing?');
+    if (confirmed) {
+      this.tripStore.deletePlaceCosting(
+        {
+          identity: {userId: Number(this.localStore.getUserId()), username: this.localStore.getUsername()},
+          tripId: this.tripId,
+          date: this.date,
+          rank: this.index,
+          costingIndex: i
+        }
+      )
+    }
   }
 }

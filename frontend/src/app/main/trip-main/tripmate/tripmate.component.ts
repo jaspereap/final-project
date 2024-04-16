@@ -31,11 +31,14 @@ export class TripmateComponent implements OnInit{
     this.tripStore.addTripMate({identity, tripId: this.tripId, username});
   }
   deleteTripMate(userId: number) {
+    const confirmed = window.confirm('Are you sure you want to delete this trip mate?');
     console.log(userId)
-    const identity = {userId: Number(this.localStore.getUserId()), username: this.localStore.getUsername()};
-    this.tripStore.deleteTripMate({identity, tripId: this.tripId, userId})
+    if (confirmed) {
+      const identity = {userId: Number(this.localStore.getUserId()), username: this.localStore.getUsername()};
+      this.tripStore.deleteTripMate({identity, tripId: this.tripId, userId})
+    }
   }
-  openDialog() {
+  openTripDialog() {
     const dialogRef = this.dialog.open(TripDialogComponent, {
       height:'500px',
       width:'300px'

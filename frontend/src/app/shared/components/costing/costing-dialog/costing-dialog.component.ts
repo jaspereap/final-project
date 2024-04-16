@@ -23,7 +23,7 @@ export class CostingDialogComponent implements OnInit{
   form: FormGroup = this.fb.group(
     {
       payer: this.fb.control<string>('', [Validators.required]),
-      cost: this.fb.control<number>(0, [Validators.required]),
+      cost: this.fb.control<number>(0, [Validators.required, Validators.min(0.01)]),
       currency: this.fb.control<string>('SGD', [Validators.required])
     }
   )

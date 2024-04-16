@@ -63,9 +63,11 @@ export class FlightComponent implements OnInit {
   }
 
   deleteFlight(index: number) {
-    console.log(index)
-    const identity = {userId: Number(this.localStore.getUserId()), username: this.localStore.getUsername()} as IdentityToken;
-    this.tripStore.deleteFlight({identity, tripId: this.tripId, index})
+    const confirmed = window.confirm('Are you sure you want to delete this flight detail?');
+    if (confirmed) {
+      const identity = {userId: Number(this.localStore.getUserId()), username: this.localStore.getUsername()} as IdentityToken;
+      this.tripStore.deleteFlight({identity, tripId: this.tripId, index})
+    }
   }
 
   addCosting(costing: Costing, index: number) {
@@ -80,13 +82,16 @@ export class FlightComponent implements OnInit {
   }
 
   deleteCosting(i: number, flightIndex: number) {
-    this.tripStore.deleteFlightCosting(
-      {
-        identity: {userId: Number(this.localStore.getUserId()), username: this.localStore.getUsername()},
-        tripId: this.tripId,
-        flightIndex: flightIndex,
-        costingIndex: i
-      }
-    )
+    const confirmed = window.confirm('Are you sure you want to delete this costing?');
+    if (confirmed) {
+      this.tripStore.deleteFlightCosting(
+        {
+          identity: {userId: Number(this.localStore.getUserId()), username: this.localStore.getUsername()},
+          tripId: this.tripId,
+          flightIndex: flightIndex,
+          costingIndex: i
+        }
+      )
+    }
   }
 }
