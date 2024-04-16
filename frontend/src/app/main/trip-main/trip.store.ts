@@ -9,6 +9,8 @@ import { LodgingService } from './lodging/lodging.service';
 import { ItineraryService } from './itinerary/itinerary.service';
 import { CostingsPlaceRequest, DeleteCostingPlaceRequest, DeletePlaceRequest, NewPlaceRequest, UpdatePlaceRequest } from '../../models/itinerary.requests';
 import { DeleteTripMateRequest, NewTripMateRequest } from '../../models/trip.requests';
+import { CostingsFlightRequest, DeleteCostingFlightRequest } from '../../models/flight.requests';
+import { CostingsLodgingRequest, DeleteCostingLodgingRequest } from '../../models/lodging.requests';
 
 export interface TripState {
   currentTrip: Trip | null;
@@ -183,7 +185,7 @@ export class TripStore extends ComponentStore<TripState> {
       })
     )
   )
-  readonly deleteCosting = this.effect((params$: Observable<DeleteCostingPlaceRequest>) =>
+  readonly deletePlaceCosting = this.effect((params$: Observable<DeleteCostingPlaceRequest>) =>
     params$.pipe(
       switchMap((params) => {
         return this.itineraryService.deleteCosting(params.identity, params.tripId, params.date, params.rank, params.costingIndex).pipe(
@@ -244,7 +246,37 @@ export class TripStore extends ComponentStore<TripState> {
     })
   )
   )
-
+  // To add costings to flight
+  readonly addCostingsToFlight = this.effect((params$: Observable<CostingsFlightRequest>) =>
+    params$.pipe(
+      switchMap((params) => {
+        return this.flightService.addCostingsToFlight(params.identity, params.tripId, params.flightIndex, params.costing).pipe(
+          tapResponse(
+            (resp: Flight[]) => {
+              this.setFlightDetails(resp)
+            },
+            (error) => console.error(error)
+          )
+        )
+      })
+    )
+  )
+  // To delete costings from flight
+  readonly deleteFlightCosting = this.effect((params$: Observable<DeleteCostingFlightRequest>) =>
+    params$.pipe(
+      switchMap((params) => {
+        return this.flightService.deleteFlightCosting(params.identity, params.tripId, params.flightIndex, params.costingIndex).pipe(
+          tapResponse(
+            (resp: Flight[]) => {
+              console.log('Server resp: ', resp)
+              this.setFlightDetails(resp)
+            },
+            (error) => console.error(error)
+          )
+        )
+      })
+    )
+  )
 // Set Lodgings
   readonly setLodgings = this.updater((state, newLodgings: Lodging[]) => {
     // If there's no currentTrip in the state, log an error or handle as appropriate
@@ -290,5 +322,36 @@ export class TripStore extends ComponentStore<TripState> {
       );
     })
   )
+  )
+  // To add costings to flight
+  readonly addCostingsToLodging = this.effect((params$: Observable<CostingsLodgingRequest>) =>
+    params$.pipe(
+      switchMap((params) => {
+        return this.lodgingService.addCostingsToLodging(params.identity, params.tripId, params.lodgingIndex, params.costing).pipe(
+          tapResponse(
+            (resp: Lodging[]) => {
+              this.setLodgings(resp)
+            },
+            (error) => console.error(error)
+          )
+        )
+      })
+    )
+  )
+  // To delete costings from flight
+  readonly deleteLodgingCosting = this.effect((params$: Observable<DeleteCostingLodgingRequest>) =>
+    params$.pipe(
+      switchMap((params) => {
+        return this.lodgingService.deleteLodgingCosting(params.identity, params.tripId, params.lodgingIndex, params.costingIndex).pipe(
+          tapResponse(
+            (resp: Lodging[]) => {
+              console.log('Server resp: ', resp)
+              this.setLodgings(resp)
+            },
+            (error) => console.error(error)
+          )
+        )
+      })
+    )
   )
 }

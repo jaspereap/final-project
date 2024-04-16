@@ -1,4 +1,4 @@
-import { UserDTO } from "../../models/dtos";
+import { UserDTO } from "../../../models/dtos";
 
 export interface ChatMessage {
     sender: UserDTO,

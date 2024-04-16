@@ -1,8 +1,8 @@
 import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { LocalStorageService } from '../../shared/services/local-storage.service';
+import { LocalStorageService } from '../../../shared/services/local-storage.service';
 import { ChatService } from '../chat.service';
 import { ActivatedRoute } from '@angular/router';
-import { UserDTO } from '../../models/dtos';
+import { UserDTO } from '../../../models/dtos';
 import { ChatMessage } from '../models/ChatMessage';
 
 @Component({

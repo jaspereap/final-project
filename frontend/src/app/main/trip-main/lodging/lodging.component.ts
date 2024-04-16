@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { IdentityToken, Lodging } from '../../../models/dtos';
+import { Costing, IdentityToken, Lodging } from '../../../models/dtos';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { LocalStorageService } from '../../../shared/services/local-storage.service';
@@ -36,7 +36,7 @@ export class LodgingComponent implements OnInit {
     )
   }
 
-  openDialog() {
+  openLodgingDialog() {
     const dialogRef = this.dialog.open(LodgingDialogComponent, {
       // Share data with dialog component
       data: {test: 'data'},
@@ -61,5 +61,27 @@ export class LodgingComponent implements OnInit {
     console.log(index)
     const identity = {userId: Number(this.localStore.getUserId()), username: this.localStore.getUsername()} as IdentityToken;
     this.tripStore.deleteLodging({identity, tripId: this.tripId, index})
+  }
+
+  addCosting(costing: Costing, index: number) {
+    this.tripStore.addCostingsToLodging(
+      {
+        identity: {userId: Number(this.localStore.getUserId()), username: this.localStore.getUsername()},
+        tripId: this.tripId,
+        lodgingIndex: index,
+        costing: costing
+      }
+    )
+  }
+
+  deleteCosting(i: number, flightIndex: number) {
+    this.tripStore.deleteLodgingCosting(
+      {
+        identity: {userId: Number(this.localStore.getUserId()), username: this.localStore.getUsername()},
+        tripId: this.tripId,
+        lodgingIndex: flightIndex,
+        costingIndex: i
+      }
+    )
   }
 }

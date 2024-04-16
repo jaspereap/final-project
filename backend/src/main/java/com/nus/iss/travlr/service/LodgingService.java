@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.nus.iss.travlr.models.Costing;
 import com.nus.iss.travlr.models.Lodging;
 import com.nus.iss.travlr.models.Trip;
 import com.nus.iss.travlr.models.DTO.Request.LodgingRequest;
@@ -39,6 +40,27 @@ public class LodgingService {
         } catch (Exception e) {
             return trip.getLodgings();
         }
+        return tripRepo.save(trip).getLodgings();
+    }
+    @Transactional
+    public List<Lodging> addLodgingCosting(String tripId, String lodgingIndex, Costing costing) {
+        Optional<Trip> optTrip = tripRepo.findById(tripId);
+        if (optTrip.isEmpty()) {
+            return null;
+        }
+        Trip trip = optTrip.get();
+        trip.getLodgings().get(Integer.parseInt(lodgingIndex)).getCostings().add(costing);
+        return tripRepo.save(trip).getLodgings();
+    }
+
+    @Transactional
+    public List<Lodging> deleteLodgingCosting(String tripId, String lodgingIndex, String costingIndex) {
+        Optional<Trip> optTrip = tripRepo.findById(tripId);
+        if (optTrip.isEmpty()) {
+            return null;
+        }
+        Trip trip = optTrip.get();
+        trip.getLodgings().get(Integer.parseInt(lodgingIndex)).getCostings().remove(Integer.parseInt(costingIndex));
         return tripRepo.save(trip).getLodgings();
     }
 }

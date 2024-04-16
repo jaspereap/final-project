@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { MessageService } from '../shared/services/message.service';
-import { MessageType, UserDTO } from '../models/dtos';
+import { MessageService } from '../../shared/services/message.service';
+import { MessageType, UserDTO } from '../../models/dtos';
 import { Subject } from 'rxjs';
 import { ChatMessage } from './models/ChatMessage';
 import { HttpClient } from '@angular/common/http';
-import { AuthStore } from '../auth/auth.store';
-import { environment as env } from "../../environments/environment";
+import { AuthStore } from '../../auth/auth.store';
+import { environment as env } from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'

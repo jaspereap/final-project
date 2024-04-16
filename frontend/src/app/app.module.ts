@@ -11,13 +11,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MessageService } from './shared/services/message.service';
 import { RxStompService } from './rx-stomp/rx-stomp.service';
 import { rxStompServiceFactory } from './rx-stomp/rx-stomp-service-factory';
-import { ChatroomComponent } from './chat/chatroom/chatroom.component';
+import { ChatroomComponent } from './main/chat/chatroom/chatroom.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MaterialModule } from './libraries/material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PrimengModule } from './libraries/primeng.module';
 import { LoginMainComponent } from './auth/login-main/login-main.component';
-import { NavbarComponent } from './main/navbar/navbar.component';
+import { NavbarComponent } from './shared/components/navbar/navbar.component';
 import { TripSummaryComponent } from './main/home/trip-summary/trip-summary.component';
 import { NewTripComponent } from './main/home/new-trip/new-trip.component';
 import {MatNativeDateModule} from '@angular/material/core';
@@ -36,9 +36,10 @@ import { TripNotificationService } from './main/trip-main/trip-notification.serv
 import { FlightDialogComponent } from './main/trip-main/flight/flight-dialog/flight-dialog.component';
 import { LodgingDialogComponent } from './main/trip-main/lodging/lodging-dialog/lodging-dialog.component';
 import { LandingComponent } from './main/landing/landing.component';
-import { CostingDialogComponent } from './main/trip-main/itinerary/day/place/costing-dialog/costing-dialog.component';
+import { CostingDialogComponent } from './shared/components/costing/costing-dialog/costing-dialog.component';
 import { TripDialogComponent } from './main/trip-main/tripmate/tripmate-dialog/trip-dialog.component';
 import { TripmateComponent } from './main/trip-main/tripmate/tripmate.component';
+import { CostingComponent } from './shared/components/costing/costing/costing.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { TripmateComponent } from './main/trip-main/tripmate/tripmate.component'
     LandingComponent,
     CostingDialogComponent,
     TripDialogComponent,
-    TripmateComponent
+    TripmateComponent,
+    CostingComponent
   ],
   imports: [
     BrowserModule,

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.nus.iss.travlr.models.Costing;
 import com.nus.iss.travlr.models.Flight;
 import com.nus.iss.travlr.models.Trip;
 import com.nus.iss.travlr.models.DTO.Request.FlightRequest;
@@ -39,6 +40,28 @@ public class FlightService {
         } catch (Exception e) {
             return trip.getFlightDetails();
         }
+        return tripRepo.save(trip).getFlightDetails();
+    }
+
+    @Transactional
+    public List<Flight> addFlightCosting(String tripId, String flightIndex, Costing costing) {
+        Optional<Trip> optTrip = tripRepo.findById(tripId);
+        if (optTrip.isEmpty()) {
+            return null;
+        }
+        Trip trip = optTrip.get();
+        trip.getFlightDetails().get(Integer.parseInt(flightIndex)).getCostings().add(costing);
+        return tripRepo.save(trip).getFlightDetails();
+    }
+
+    @Transactional
+    public List<Flight> deleteFlightCosting(String tripId, String flightIndex, String costingIndex) {
+        Optional<Trip> optTrip = tripRepo.findById(tripId);
+        if (optTrip.isEmpty()) {
+            return null;
+        }
+        Trip trip = optTrip.get();
+        trip.getFlightDetails().get(Integer.parseInt(flightIndex)).getCostings().remove(Integer.parseInt(costingIndex));
         return tripRepo.save(trip).getFlightDetails();
     }
 }

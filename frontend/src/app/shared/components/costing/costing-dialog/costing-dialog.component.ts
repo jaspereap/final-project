@@ -2,8 +2,8 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Observable, debounceTime, startWith, switchMap } from 'rxjs';
-import { UserDTO } from '../../../../../../models/dtos';
-import { UserService } from '../../../../../../shared/services/user.service';
+import { UserDTO } from '../../../../models/dtos';
+import { UserService } from '../../../services/user.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -24,7 +24,7 @@ export class CostingDialogComponent implements OnInit{
     {
       payer: this.fb.control<string>('', [Validators.required]),
       cost: this.fb.control<number>(0, [Validators.required]),
-      currency: this.fb.control<string>('', [Validators.required])
+      currency: this.fb.control<string>('SGD', [Validators.required])
     }
   )
 

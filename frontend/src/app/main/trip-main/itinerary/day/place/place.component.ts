@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { TripStore } from '../../../trip.store';
 import { LocalStorageService } from '../../../../../shared/services/local-storage.service';
 import { MatDialog } from '@angular/material/dialog';
-import { CostingDialogComponent } from './costing-dialog/costing-dialog.component';
+import { CostingDialogComponent } from '../../../../../shared/components/costing/costing-dialog/costing-dialog.component';
 import { FormGroup } from '@angular/forms';
 
 @Component({
@@ -84,9 +84,9 @@ export class PlaceComponent implements OnInit {
     this.editableNotes = this.place.notes;
     this.editingNotes = true;
   }
+
   saveNotes(notes: string) {
     console.log(this.date, notes)
-    // Call a service to save the notes for the place
     this.place.notes = notes;
     this.tripStore.savePlace(
       {
@@ -98,26 +98,6 @@ export class PlaceComponent implements OnInit {
       }
     )
     this.editingNotes = false;
-    // Update the place.notes with the new notes
-  }
-
-  openDialog() {
-    const dialogRef = this.dialog.open(CostingDialogComponent, {
-      // Share data with dialog component
-      data: {tripId: this.tripId},
-      // Dialog config
-      height:'400px',
-      width:'280px'
-    })
-
-    dialogRef.afterClosed().subscribe(result => {
-      const form = result as FormGroup;
-      console.log('after dialog closed result: ',result)
-      if (result !== undefined && result !== null && form.valid) {
-        const costingFormData: Costing =  form.value as Costing;
-        this.addCosting(costingFormData)
-      }
-    })
   }
 
   addCosting(costing: Costing) {
@@ -133,7 +113,7 @@ export class PlaceComponent implements OnInit {
   }
 
   deleteCosting(i: number) {
-    this.tripStore.deleteCosting(
+    this.tripStore.deletePlaceCosting(
       {
         identity: {userId: Number(this.localStore.getUserId()), username: this.localStore.getUsername()},
         tripId: this.tripId,

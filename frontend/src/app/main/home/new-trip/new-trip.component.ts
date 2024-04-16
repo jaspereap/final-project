@@ -3,7 +3,7 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
 import { TripService } from '../../trip-main/trip.service';
 import { TripRequest, UserDTO } from '../../../models/dtos';
 import { countries } from '../../../shared/components/store/country-data-store';
-import { Country } from '../../../shared/model/models';
+import { Country } from '../../../shared/model/shared-models';
 import { Observable, debounceTime, map, startWith, switchMap, tap } from 'rxjs';
 import { LocalStorageService } from '../../../shared/services/local-storage.service';
 import { Router } from '@angular/router';

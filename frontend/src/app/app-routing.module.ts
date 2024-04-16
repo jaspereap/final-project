@@ -4,7 +4,7 @@ import { AppComponent } from './app.component';
 import { MainComponent } from './main/home/home.component';
 import { LoginComponent } from './auth/login-main/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
-import { ChatroomComponent } from './chat/chatroom/chatroom.component';
+import { ChatroomComponent } from './main/chat/chatroom/chatroom.component';
 import { LoginMainComponent } from './auth/login-main/login-main.component';
 import { NewTripComponent } from './main/home/new-trip/new-trip.component';
 import { TripMainComponent } from './main/trip-main/trip-main.component';

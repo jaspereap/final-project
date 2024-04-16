@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.nus.iss.travlr.models.Flight;
 import com.nus.iss.travlr.models.MessageType;
+import com.nus.iss.travlr.models.DTO.Request.CostingsRequest;
 import com.nus.iss.travlr.models.DTO.Request.FlightRequest;
 import com.nus.iss.travlr.models.DTO.Request.IdentityToken;
 import com.nus.iss.travlr.service.FlightService;
@@ -47,6 +48,41 @@ public class FlightController {
     public ResponseEntity<String> deleteFlight(@PathVariable String tripId, @PathVariable String index, @RequestBody IdentityToken identity) {
         System.out.println("delete flight controller");
         List<Flight> flightDetails = flightSvc.deleteFlight(tripId, index);
+        JsonArrayBuilder flightDetailsArrBuilder = Json.createArrayBuilder();
+        for (Flight flight : flightDetails) {
+            flightDetailsArrBuilder.add(flight.toJson());
+        }
+        JsonArray flightDetailsArr = flightDetailsArrBuilder.build();
+        msgSvc.publishToTripWithAuthor(tripId, flightDetailsArr.toString(), MessageType.FLIGHT_MODIFIED, identity.getUsername());
+        return ResponseEntity.ok(flightDetailsArr.toString());
+    }
+// TODO
+    @PostMapping(path = "/costings/add/{tripId}/{flightIndex}")
+    public ResponseEntity<String> postAddCosting (
+        @PathVariable String tripId, 
+        @PathVariable String flightIndex,
+        @RequestBody CostingsRequest costingsRequest
+    ) {
+        System.out.println("post add costings controller");
+        System.out.println("costing req: " + costingsRequest);
+        List<Flight> flightDetails = flightSvc.addFlightCosting(tripId, flightIndex, costingsRequest.toCosting());
+        JsonArrayBuilder flightDetailsArrBuilder = Json.createArrayBuilder();
+        for (Flight flight : flightDetails) {
+            flightDetailsArrBuilder.add(flight.toJson());
+        }
+        JsonArray flightDetailsArr = flightDetailsArrBuilder.build();
+        msgSvc.publishToTripWithAuthor(tripId, flightDetailsArr.toString(), MessageType.FLIGHT_MODIFIED, costingsRequest.getIdentity().getUsername());
+        return ResponseEntity.ok(flightDetailsArr.toString());
+    }
+
+    @PutMapping(path = "/costings/delete/{tripId}/{flightIndex}/{costingIndex}")
+    public ResponseEntity<String> deleteCosting(            
+        @PathVariable String tripId, 
+        @PathVariable String flightIndex,
+        @PathVariable String costingIndex,
+        @RequestBody IdentityToken identity) {
+        System.out.println("delete costing controller");
+        List<Flight> flightDetails = flightSvc.deleteFlightCosting(tripId, flightIndex, costingIndex);
         JsonArrayBuilder flightDetailsArrBuilder = Json.createArrayBuilder();
         for (Flight flight : flightDetails) {
             flightDetailsArrBuilder.add(flight.toJson());

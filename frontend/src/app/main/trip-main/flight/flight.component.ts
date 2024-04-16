@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Flight, IdentityToken } from '../../../models/dtos';
+import { Costing, Flight, IdentityToken } from '../../../models/dtos';
 import { MatDialog } from '@angular/material/dialog';
 import { FlightDialogComponent } from './flight-dialog/flight-dialog.component';
 import { FlightService } from './flight.service';
@@ -8,6 +8,7 @@ import { LocalStorageService } from '../../../shared/services/local-storage.serv
 import { TripStore } from '../trip.store';
 import { TripNotificationService } from '../trip-notification.service';
 import { FormGroup } from '@angular/forms';
+import { CostingDialogComponent } from '../../../shared/components/costing/costing-dialog/costing-dialog.component';
 
 @Component({
   selector: 'app-flight',
@@ -28,7 +29,6 @@ export class FlightComponent implements OnInit {
     ) {}
 
   ngOnInit(): void {
-    // console.log('Flight init')
     this.tripId = this.route.snapshot.params['tripId'];
 
     this.notiSvc.updateFlight$.subscribe(
@@ -38,7 +38,7 @@ export class FlightComponent implements OnInit {
     )
   }
 
-  openDialog() {
+  openFlightDialog() {
     const dialogRef = this.dialog.open(FlightDialogComponent, {
       // Share data with dialog component
       data: {test: 'data'},
@@ -66,5 +66,27 @@ export class FlightComponent implements OnInit {
     console.log(index)
     const identity = {userId: Number(this.localStore.getUserId()), username: this.localStore.getUsername()} as IdentityToken;
     this.tripStore.deleteFlight({identity, tripId: this.tripId, index})
+  }
+
+  addCosting(costing: Costing, index: number) {
+    this.tripStore.addCostingsToFlight(
+      {
+        identity: {userId: Number(this.localStore.getUserId()), username: this.localStore.getUsername()},
+        tripId: this.tripId,
+        flightIndex: index,
+        costing: costing
+      }
+    )
+  }
+
+  deleteCosting(i: number, flightIndex: number) {
+    this.tripStore.deleteFlightCosting(
+      {
+        identity: {userId: Number(this.localStore.getUserId()), username: this.localStore.getUsername()},
+        tripId: this.tripId,
+        flightIndex: flightIndex,
+        costingIndex: i
+      }
+    )
   }
 }

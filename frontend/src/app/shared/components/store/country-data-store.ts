@@ -1,4 +1,4 @@
-import { Country } from "../../model/models";
+import { Country } from "../../model/shared-models";
 
 export var countries: Country [] = [
     { code: "AF", code3: "AFG", name: "Afghanistan", number: "004" },

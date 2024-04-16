@@ -27,9 +27,6 @@ export interface AuthData {
 }
 
 export enum MessageType {
-    ACK = 'ACK',
-    USER_JOINED = 'USER_JOINED',
-    USER_LEFT = 'USER_LEFT',
     CHAT = 'CHAT',
     MODIFIED = 'MODIFIED',
     ITINERARY_ADDED = 'ITINERARY_ADDED',

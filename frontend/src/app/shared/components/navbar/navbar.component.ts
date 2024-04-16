@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { LocalStorageService } from '../../shared/services/local-storage.service';
+import { LocalStorageService } from '../../services/local-storage.service';
 import { Router } from '@angular/router';
-import { UserDTO } from '../../models/dtos';
+import { UserDTO } from '../../../models/dtos';
 
 @Component({
   selector: 'app-navbar',
